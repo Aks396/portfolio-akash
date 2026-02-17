@@ -5,6 +5,7 @@ import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { Shield, Menu, X } from "lucide-react";
+import { ThemeToggle } from "./ui/ThemeToggle";
 
 const navLinks = [
     { name: "Expertise", href: "#expertise" },
@@ -71,35 +72,41 @@ export const Navbar = () => {
                             </Link>
                         </motion.div>
                     ))}
-                    <motion.div
-                        initial={{ opacity: 0, scale: 0.8 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        transition={{ delay: 0.5 }}
-                    >
-                        <Link
-                            href="#contact"
-                            className="px-5 py-2 rounded-full bg-primary text-primary-foreground text-sm font-semibold hover:bg-primary/90 transition-all shadow-lg hover:shadow-primary/20 flex items-center group"
+                    <div className="flex items-center space-x-4">
+                        <ThemeToggle />
+                        <motion.div
+                            initial={{ opacity: 0, scale: 0.8 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            transition={{ delay: 0.5 }}
                         >
-                            Get In Touch
-                            <motion.span
-                                animate={{ x: [0, 5, 0] }}
-                                transition={{ repeat: Infinity, duration: 1.5 }}
-                                className="ml-2"
+                            <Link
+                                href="#contact"
+                                className="px-5 py-2 rounded-full bg-primary text-primary-foreground text-sm font-semibold hover:bg-primary/90 transition-all shadow-lg hover:shadow-primary/20 flex items-center group"
                             >
-                                →
-                            </motion.span>
-                        </Link>
-                    </motion.div>
+                                Get In Touch
+                                <motion.span
+                                    animate={{ x: [0, 5, 0] }}
+                                    transition={{ repeat: Infinity, duration: 1.5 }}
+                                    className="ml-2"
+                                >
+                                    →
+                                </motion.span>
+                            </Link>
+                        </motion.div>
+                    </div>
                 </div>
 
-                {/* Mobile Toggle */}
-                <motion.button
-                    whileTap={{ scale: 0.9 }}
-                    className="md:hidden text-foreground"
-                    onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                >
-                    {mobileMenuOpen ? <X /> : <Menu />}
-                </motion.button>
+                {/* Mobile Area */}
+                <div className="flex items-center space-x-4 md:hidden">
+                    <ThemeToggle />
+                    <motion.button
+                        whileTap={{ scale: 0.9 }}
+                        className="text-foreground"
+                        onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                    >
+                        {mobileMenuOpen ? <X /> : <Menu />}
+                    </motion.button>
+                </div>
             </div>
 
             {/* Mobile Menu */}

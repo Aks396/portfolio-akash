@@ -60,9 +60,9 @@ export const Hero = () => {
                                 <ArrowRight className="ml-2 h-4 w-4 transform group-hover:translate-x-1 transition-transform" />
                             </motion.button>
                             <motion.button
-                                whileHover={{ scale: 1.05, backgroundColor: "rgba(30, 41, 59, 1)" }}
+                                whileHover={{ scale: 1.05, backgroundColor: "var(--secondary)", opacity: 0.9 }}
                                 whileTap={{ scale: 0.95 }}
-                                className="px-8 py-4 rounded-lg bg-secondary text-secondary-foreground font-bold transition-all flex items-center shadow-lg"
+                                className="px-8 py-4 rounded-lg bg-secondary text-secondary-foreground font-bold transition-all flex items-center shadow-lg border border-border"
                             >
                                 Download CV
                                 <Download className="ml-2 h-4 w-4" />
@@ -112,7 +112,7 @@ export const Hero = () => {
                         transition={{ duration: 0.6, delay: 0.2 }}
                         className="lg:col-span-5 relative"
                     >
-                        <div className="relative aspect-[4/5] w-full max-w-[400px] mx-auto overflow-hidden rounded-3xl border border-white/10 shadow-2xl group">
+                        <div className="relative aspect-[4/5] w-full max-w-[400px] mx-auto overflow-hidden rounded-3xl border border-border shadow-2xl group transition-colors duration-500">
                             <div className="absolute inset-0 bg-primary/20 mix-blend-overlay group-hover:opacity-0 transition-opacity duration-500" />
                             <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent opacity-60" />
                             <Image
@@ -124,7 +124,7 @@ export const Hero = () => {
                             />
 
                             {/* Decorative Frame */}
-                            <div className="absolute inset-4 border border-white/20 rounded-2xl pointer-events-none group-hover:inset-6 transition-all duration-500" />
+                            <div className="absolute inset-4 border border-primary/20 rounded-2xl pointer-events-none group-hover:inset-6 transition-all duration-500" />
                         </div>
 
                         {/* Experience Badge */}

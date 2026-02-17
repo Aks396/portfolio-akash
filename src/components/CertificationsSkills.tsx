@@ -41,7 +41,7 @@ const skills = [
 
 export const CertificationsSkills = () => {
     return (
-        <Section id="certifications" className="bg-slate-900/30">
+        <Section id="certifications" className="bg-muted/30 transition-colors duration-500">
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-16">
 
                 {/* Certifications */}

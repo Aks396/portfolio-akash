@@ -34,7 +34,7 @@ const projects = [
 
 export const ArchitectureSection = () => {
     return (
-        <Section id="projects" className="bg-slate-950/50">
+        <Section id="projects" className="bg-slate-50/50 dark:bg-slate-950/50 transition-colors duration-500">
             <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 space-y-4 md:space-y-0">
                 <div className="max-w-2xl">
                     <h2 className="text-sm font-mono text-primary uppercase tracking-[0.3em] mb-4">Engineering Portfolio</h2>
@@ -132,7 +132,7 @@ export const ArchitectureSection = () => {
                             </ul>
                         </div>
                     </div>
-                    <div className="relative aspect-video rounded-xl bg-slate-900 border border-border p-4 shadow-2xl overflow-hidden group">
+                    <div className="relative aspect-video rounded-xl bg-slate-100 dark:bg-slate-900 border border-border p-4 shadow-2xl overflow-hidden group transition-colors duration-500">
                         <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-transparent opacity-50" />
                         <div className="relative font-mono text-[10px] space-y-1 text-primary-200 opacity-80 group-hover:opacity-100 transition-opacity">
                             <p className="text-muted-foreground">// HikariCP Tuning - Performance Logs</p>

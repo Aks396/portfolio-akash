@@ -44,7 +44,7 @@ export const StreamingSecuritySection = () => {
                     </div>
 
                     {/* Visualizing Kafka Flow */}
-                    <div className="p-8 rounded-2xl bg-slate-900 border border-border relative overflow-hidden group shadow-2xl">
+                    <div className="p-8 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-border relative overflow-hidden group shadow-2xl transition-colors duration-500">
                         <div className="absolute top-0 right-0 p-4 opacity-10">
                             <Zap className="h-24 w-24" />
                         </div>
