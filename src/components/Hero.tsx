@@ -51,14 +51,22 @@ export const Hero = () => {
                         </motion.p>
 
                         <motion.div variants={fadeInUp} className="flex flex-wrap gap-4 mb-16">
-                            <button className="px-8 py-4 rounded-lg bg-primary text-primary-foreground font-bold hover:bg-primary/90 transition-all flex items-center group shadow-xl shadow-primary/20">
+                            <motion.button
+                                whileHover={{ scale: 1.05, boxShadow: "0 0 20px rgba(59, 130, 246, 0.4)" }}
+                                whileTap={{ scale: 0.95 }}
+                                className="px-8 py-4 rounded-lg bg-primary text-primary-foreground font-bold transition-all flex items-center group shadow-xl shadow-primary/20"
+                            >
                                 Explore Case Studies
                                 <ArrowRight className="ml-2 h-4 w-4 transform group-hover:translate-x-1 transition-transform" />
-                            </button>
-                            <button className="px-8 py-4 rounded-lg bg-secondary text-secondary-foreground font-bold hover:bg-secondary/80 transition-all flex items-center">
+                            </motion.button>
+                            <motion.button
+                                whileHover={{ scale: 1.05, backgroundColor: "rgba(30, 41, 59, 1)" }}
+                                whileTap={{ scale: 0.95 }}
+                                className="px-8 py-4 rounded-lg bg-secondary text-secondary-foreground font-bold transition-all flex items-center shadow-lg"
+                            >
                                 Download CV
                                 <Download className="ml-2 h-4 w-4" />
-                            </button>
+                            </motion.button>
                         </motion.div>
 
                         {/* Key Stats / Focus Areas */}
@@ -66,34 +74,34 @@ export const Hero = () => {
                             variants={fadeInUp}
                             className="grid grid-cols-2 md:grid-cols-4 gap-8 py-8 border-t border-border"
                         >
-                            <div className="space-y-1">
+                            <motion.div whileHover={{ y: -5 }} className="space-y-1 group cursor-default">
                                 <div className="flex items-center space-x-2 text-primary">
-                                    <Shield className="h-5 w-5" />
+                                    <Shield className="h-5 w-5 group-hover:rotate-12 transition-transform" />
                                     <span className="font-bold">Security</span>
                                 </div>
                                 <p className="text-xs text-muted-foreground uppercase tracking-widest font-mono">HIPAA / JWT / OWASP</p>
-                            </div>
-                            <div className="space-y-1">
+                            </motion.div>
+                            <motion.div whileHover={{ y: -5 }} className="space-y-1 group cursor-default">
                                 <div className="flex items-center space-x-2 text-primary">
-                                    <Zap className="h-5 w-5" />
+                                    <Zap className="h-5 w-5 group-hover:scale-110 transition-transform" />
                                     <span className="font-bold">Streaming</span>
                                 </div>
                                 <p className="text-xs text-muted-foreground uppercase tracking-widest font-mono">Kafka / Confluent</p>
-                            </div>
-                            <div className="space-y-1">
+                            </motion.div>
+                            <motion.div whileHover={{ y: -5 }} className="space-y-1 group cursor-default">
                                 <div className="flex items-center space-x-2 text-primary">
-                                    <Database className="h-5 w-5" />
+                                    <Database className="h-5 w-5 group-hover:rotate-[-10deg] transition-transform" />
                                     <span className="font-bold">Performance</span>
                                 </div>
                                 <p className="text-xs text-muted-foreground uppercase tracking-widest font-mono">HikariCP / SQL Tuning</p>
-                            </div>
-                            <div className="space-y-1">
+                            </motion.div>
+                            <motion.div whileHover={{ y: -5 }} className="space-y-1 group cursor-default">
                                 <div className="flex items-center space-x-2 text-primary">
-                                    <BadgeCheck className="h-5 w-5" />
+                                    <BadgeCheck className="h-5 w-5 group-hover:scale-110 transition-transform" />
                                     <span className="font-bold">Compliance</span>
                                 </div>
                                 <p className="text-xs text-muted-foreground uppercase tracking-widest font-mono">FHIR R4 / HL7 / EDI</p>
-                            </div>
+                            </motion.div>
                         </motion.div>
                     </motion.div>
 
@@ -120,12 +128,17 @@ export const Hero = () => {
                         </div>
 
                         {/* Experience Badge */}
-                        <div className="absolute -bottom-6 -right-6 md:right-0 p-6 rounded-2xl bg-card border border-border shadow-2xl">
+                        <motion.div
+                            initial={{ y: 0 }}
+                            animate={{ y: [0, -10, 0] }}
+                            transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                            className="absolute -bottom-6 -right-6 md:right-0 p-6 rounded-2xl bg-card border border-border shadow-2xl z-20"
+                        >
                             <div className="flex flex-col items-center">
                                 <span className="text-3xl font-bold text-primary">3+</span>
                                 <span className="text-[10px] font-mono uppercase tracking-[0.2em] text-muted-foreground">Years Exp.</span>
                             </div>
-                        </div>
+                        </motion.div>
                     </motion.div>
                 </div>
             </div>

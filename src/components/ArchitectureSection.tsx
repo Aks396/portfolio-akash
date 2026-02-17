@@ -51,38 +51,54 @@ export const ArchitectureSection = () => {
                         key={project.title}
                         initial={{ opacity: 0, y: 30 }}
                         whileInView={{ opacity: 1, y: 0 }}
+                        whileHover={{ y: -10, transition: { duration: 0.3 } }}
                         viewport={{ once: true }}
                         transition={{ delay: index * 0.1 }}
-                        className="group relative p-8 rounded-2xl bg-card border border-border hover:border-primary/50 transition-all duration-500 overflow-hidden"
+                        className="group relative p-8 rounded-2xl bg-card border border-border hover:border-primary/50 transition-all duration-500 overflow-hidden shadow-sm hover:shadow-2xl hover:shadow-primary/10"
                     >
                         {/* Hover Background Effect */}
-                        <div className="absolute top-0 right-0 -z-10 w-32 h-32 bg-primary/5 blur-3xl rounded-full group-hover:bg-primary/10 transition-colors" />
+                        <div className="absolute top-0 right-0 -z-10 w-32 h-32 bg-primary/5 blur-3xl rounded-full group-hover:bg-primary/20 transition-all duration-700 group-hover:scale-150" />
 
-                        <div className="mb-6 p-3 w-fit rounded-xl bg-primary/10 text-primary">
+                        <motion.div
+                            whileHover={{ rotate: [0, -10, 10, 0], transition: { duration: 0.5 } }}
+                            className="mb-6 p-3 w-fit rounded-xl bg-primary/10 text-primary"
+                        >
                             {project.icon}
-                        </div>
+                        </motion.div>
 
                         <div className="space-y-4">
                             <h4 className="text-xl font-bold group-hover:text-primary transition-colors">{project.title}</h4>
-                            <p className="text-xs font-bold text-success uppercase tracking-wider bg-success/10 w-fit px-2 py-1 rounded">
+                            <motion.p
+                                initial={{ opacity: 0.8 }}
+                                whileHover={{ opacity: 1, scale: 1.05 }}
+                                className="text-xs font-bold text-success uppercase tracking-wider bg-success/10 w-fit px-2 py-1 rounded cursor-default"
+                            >
                                 Impact: {project.impact}
-                            </p>
+                            </motion.p>
                             <p className="text-muted-foreground text-sm leading-relaxed">
                                 {project.description}
                             </p>
 
                             <div className="pt-4 flex flex-wrap gap-2">
                                 {project.tags.map(tag => (
-                                    <span key={tag} className="text-[10px] font-mono border border-border px-2 py-1 rounded bg-muted/50">
+                                    <motion.span
+                                        key={tag}
+                                        whileHover={{ scale: 1.1, backgroundColor: "rgba(59, 130, 246, 0.1)" }}
+                                        className="text-[10px] font-mono border border-border px-2 py-1 rounded bg-muted/50 transition-colors"
+                                    >
                                         {tag}
-                                    </span>
+                                    </motion.span>
                                 ))}
                             </div>
 
                             <div className="pt-6 border-t border-border mt-auto">
-                                <button className="text-xs font-bold flex items-center text-primary hover:underline">
-                                    View Architecture Diagram <ExternalLink className="ml-1 h-3 w-3" />
-                                </button>
+                                <motion.button
+                                    whileHover={{ x: 5 }}
+                                    className="text-xs font-bold flex items-center text-primary group/link"
+                                >
+                                    View Architecture Diagram
+                                    <ExternalLink className="ml-1 h-3 w-3 opacity-50 group-hover/link:opacity-100 transition-opacity" />
+                                </motion.button>
                             </div>
                         </div>
                     </motion.div>

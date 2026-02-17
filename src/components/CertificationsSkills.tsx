@@ -53,15 +53,22 @@ export const CertificationsSkills = () => {
 
                     <div className="space-y-4">
                         {certifications.map((cert) => (
-                            <div key={cert.name} className="p-6 rounded-2xl bg-card border border-border flex items-start space-x-4 shadow-lg hover:shadow-primary/5 transition-all">
-                                <div className="p-3 rounded-xl bg-primary/10 text-primary">
+                            <motion.div
+                                key={cert.name}
+                                whileHover={{ scale: 1.02, x: 5 }}
+                                className="p-6 rounded-2xl bg-card border border-border flex items-start space-x-4 shadow-lg hover:shadow-primary/5 transition-all group cursor-default"
+                            >
+                                <motion.div
+                                    whileHover={{ rotate: 15 }}
+                                    className="p-3 rounded-xl bg-primary/10 text-primary"
+                                >
                                     {cert.icon}
-                                </div>
+                                </motion.div>
                                 <div>
-                                    <h5 className="font-bold text-sm leading-tight">{cert.name}</h5>
+                                    <h5 className="font-bold text-sm leading-tight group-hover:text-primary transition-colors">{cert.name}</h5>
                                     <p className="text-xs text-muted-foreground mt-1">{cert.issuer} • {cert.date}</p>
                                 </div>
-                            </div>
+                            </motion.div>
                         ))}
                     </div>
 
@@ -85,12 +92,13 @@ export const CertificationsSkills = () => {
                                 </h5>
                                 <div className="flex flex-wrap gap-2">
                                     {group.items.map((item) => (
-                                        <span
+                                        <motion.span
                                             key={item}
-                                            className="px-3 py-1.5 rounded-lg bg-muted border border-border text-xs font-medium hover:bg-primary/5 hover:border-primary/30 transition-colors"
+                                            whileHover={{ scale: 1.1, backgroundColor: "rgba(59, 130, 246, 0.1)", borderColor: "rgba(59, 130, 246, 0.5)" }}
+                                            className="px-3 py-1.5 rounded-lg bg-muted border border-border text-xs font-medium transition-colors cursor-default"
                                         >
                                             {item}
-                                        </span>
+                                        </motion.span>
                                     ))}
                                 </div>
                             </div>
