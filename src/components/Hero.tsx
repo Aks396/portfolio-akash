@@ -121,6 +121,7 @@ export const Hero = () => {
                                 fill
                                 className="object-cover grayscale hover:grayscale-0 transition-all duration-700 scale-105 group-hover:scale-100"
                                 priority
+                                unoptimized
                             />
 
                             {/* Decorative Frame */}

@@ -1,33 +1,39 @@
 "use client";
+import React from "react";
 
 import { motion } from "framer-motion";
 import { Section } from "./ui/Section";
 import { Award, CheckCircle2, Cloud, Database, Code, Globe, ShieldCheck } from "lucide-react";
+import Image from "next/image";
 
 const certifications = [
     {
         name: "AWS Solutions Architect Associate (SAA-C03)",
         issuer: "Amazon Web Services",
         date: "2024",
-        icon: <Cloud className="h-5 w-5" />
+        icon: <Cloud className="h-5 w-5" />,
+        image: "/cert-aws-saa.png"
     },
     {
         name: "Confluent Certified Data Streaming Engineer",
         issuer: "Confluent",
         date: "2024",
-        icon: <Database className="h-5 w-5" />
+        icon: <Database className="h-5 w-5" />,
+        image: "/cert-confluent.png"
     },
     {
         name: "Rest API (Intermediate)",
         issuer: "HackerRank",
         date: "May 2025",
-        icon: <Code className="h-5 w-5" />
+        icon: <Code className="h-5 w-5" />,
+        image: "/cert-hackerrank.png"
     },
     {
         name: "AWS Cloud Practitioner Essentials",
         issuer: "Amazon Web Services (AWS)",
         date: "Sep 2025",
-        icon: <ShieldCheck className="h-5 w-5" />
+        icon: <ShieldCheck className="h-5 w-5" />,
+        image: ""
     }
 ];
 
@@ -38,6 +44,39 @@ const skills = [
     { category: "Healthcare Standards", items: ["FHIR R4", "HL7", "EDI 837/835", "HIPAA Compliance", "EHR Integration"] },
     { category: "AI & LLM", items: ["Multi-LLM Integration", "Prompt Engineering", "IDP Pipelines", "Vector DBs"] }
 ];
+
+const CertificationItem = ({ cert }: { cert: typeof certifications[0] }) => {
+    const [imageError, setImageError] = React.useState(false);
+
+    return (
+        <motion.div
+            whileHover={{ scale: 1.02, x: 5 }}
+            className="p-6 rounded-2xl bg-card border border-border flex items-start space-x-4 shadow-lg hover:shadow-primary/5 transition-all group cursor-default"
+        >
+            <motion.div
+                whileHover={{ rotate: 15, scale: 1.1 }}
+                className="p-3 rounded-xl bg-primary/10 text-primary relative overflow-hidden flex items-center justify-center w-14 h-14 shrink-0"
+            >
+                {cert.image && !imageError ? (
+                    <Image
+                        src={cert.image}
+                        alt={cert.name}
+                        fill
+                        className="object-contain p-1"
+                        onError={() => setImageError(true)}
+                        unoptimized
+                    />
+                ) : (
+                    cert.icon
+                )}
+            </motion.div>
+            <div>
+                <h5 className="font-bold text-sm leading-tight group-hover:text-primary transition-colors">{cert.name}</h5>
+                <p className="text-xs text-muted-foreground mt-1">{cert.issuer} • {cert.date}</p>
+            </div>
+        </motion.div>
+    );
+};
 
 export const CertificationsSkills = () => {
     return (
@@ -53,22 +92,7 @@ export const CertificationsSkills = () => {
 
                     <div className="space-y-4">
                         {certifications.map((cert) => (
-                            <motion.div
-                                key={cert.name}
-                                whileHover={{ scale: 1.02, x: 5 }}
-                                className="p-6 rounded-2xl bg-card border border-border flex items-start space-x-4 shadow-lg hover:shadow-primary/5 transition-all group cursor-default"
-                            >
-                                <motion.div
-                                    whileHover={{ rotate: 15 }}
-                                    className="p-3 rounded-xl bg-primary/10 text-primary"
-                                >
-                                    {cert.icon}
-                                </motion.div>
-                                <div>
-                                    <h5 className="font-bold text-sm leading-tight group-hover:text-primary transition-colors">{cert.name}</h5>
-                                    <p className="text-xs text-muted-foreground mt-1">{cert.issuer} • {cert.date}</p>
-                                </div>
-                            </motion.div>
+                            <CertificationItem key={cert.name} cert={cert} />
                         ))}
                     </div>
 

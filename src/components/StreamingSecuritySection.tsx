@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { Section } from "./ui/Section";
 import { Zap, Shield, Lock, Share2, AlertCircle, RefreshCcw } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 export const StreamingSecuritySection = () => {
     return (
@@ -44,63 +45,116 @@ export const StreamingSecuritySection = () => {
                     </div>
 
                     {/* Visualizing Kafka Flow */}
-                    <div className="p-8 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-border relative overflow-hidden group shadow-2xl transition-colors duration-500">
-                        <div className="absolute top-0 right-0 p-4 opacity-10">
-                            <Zap className="h-24 w-24" />
+                    <div className="p-10 rounded-3xl bg-slate-50 dark:bg-slate-900 border border-border relative overflow-hidden group shadow-2xl transition-all duration-500">
+                        {/* Background Pulsing Grid */}
+                        <div className="absolute inset-0 opacity-[0.03] dark:opacity-[0.05] pointer-events-none transition-colors"
+                            style={{ backgroundImage: 'radial-gradient(var(--primary) 1px, transparent 1px)', backgroundSize: '24px 24px' }} />
+
+                        <div className="absolute top-0 right-0 p-4 opacity-5">
+                            <Zap className="h-32 w-32" />
                         </div>
-                        <div className="flex items-center space-x-6">
-                            <motion.div
-                                whileHover={{ scale: 1.05, borderColor: "rgba(59, 130, 246, 0.8)" }}
-                                className="w-16 h-16 rounded-xl border border-primary/50 flex items-center justify-center text-[10px] font-mono bg-primary/5 shadow-inner"
-                            >
-                                APP
-                            </motion.div>
 
-                            <div className="flex-1 h-px bg-gradient-to-r from-primary/50 to-transparent relative">
-                                {[0, 1, 2].map((i) => (
+                        <div className="flex flex-col space-y-12 relative z-10">
+                            <div className="flex items-center justify-between">
+                                <div className="flex flex-col items-center space-y-2">
                                     <motion.div
-                                        key={i}
-                                        initial={{ left: "0%" }}
-                                        animate={{ left: "100%" }}
-                                        transition={{ duration: 2, repeat: Infinity, delay: i * 0.6, ease: "linear" }}
-                                        className="absolute top-1/2 -translate-y-1/2 w-1.5 h-1.5 rounded-full bg-primary blur-[1px]"
-                                    />
-                                ))}
-                            </div>
+                                        whileHover={{ scale: 1.1, borderColor: "var(--primary)" }}
+                                        className="w-20 h-20 rounded-2xl border border-primary/30 flex flex-col items-center justify-center bg-primary/5 shadow-xl backdrop-blur-sm"
+                                    >
+                                        <div className="text-[10px] font-mono text-primary/60 mb-1">PRODUCER</div>
+                                        <div className="font-bold text-xs uppercase tracking-tighter">API Source</div>
+                                    </motion.div>
+                                </div>
 
-                            <motion.div
-                                animate={{ scale: [1, 1.05, 1], boxShadow: ["0 0 0px var(--accent)", "0 0 20px var(--accent)", "0 0 0px var(--accent)"] }}
-                                transition={{ duration: 3, repeat: Infinity }}
-                                className="p-4 border-2 border-accent rounded-full text-accent font-bold text-xs bg-accent/5 z-10"
-                            >
-                                KAFKA CLUSTER
-                            </motion.div>
+                                <div className="flex-1 flex flex-col justify-center space-y-4 px-4">
+                                    {[0, 1, 2].map((path) => (
+                                        <div key={path} className="h-px bg-gradient-to-r from-primary/40 to-accent/40 relative">
+                                            {[0, 1, 2, 3].map((i) => (
+                                                <motion.div
+                                                    key={i}
+                                                    initial={{ left: "-10%" }}
+                                                    animate={{ left: "110%" }}
+                                                    transition={{
+                                                        duration: 2.5 + path * 0.5,
+                                                        repeat: Infinity,
+                                                        delay: i * 0.8 + path * 0.3,
+                                                        ease: "linear"
+                                                    }}
+                                                    className={cn(
+                                                        "absolute top-1/2 -translate-y-1/2 w-1.5 h-1.5 rounded-full blur-[1px] shadow-[0_0_8px_var(--primary)]",
+                                                        path === 1 ? "bg-accent" : "bg-primary"
+                                                    )}
+                                                />
+                                            ))}
+                                            {path === 1 && (
+                                                <div className="absolute -top-3 left-1/2 -translate-x-1/2 text-[8px] font-mono opacity-40 uppercase tracking-tighter text-center">
+                                                    clinical_vitals
+                                                </div>
+                                            )}
+                                        </div>
+                                    ))}
+                                </div>
 
-                            <div className="flex-1 h-px bg-gradient-to-r from-transparent to-primary/50 relative">
-                                {[0, 1, 2].map((i) => (
+                                <div className="relative">
                                     <motion.div
-                                        key={i}
-                                        initial={{ left: "0%" }}
-                                        animate={{ left: "100%" }}
-                                        transition={{ duration: 1.5, repeat: Infinity, delay: i * 0.5, ease: "linear" }}
-                                        className="absolute top-1/2 -translate-y-1/2 w-1.5 h-1.5 rounded-full bg-primary/80 blur-[1px]"
+                                        animate={{
+                                            rotate: 360,
+                                            boxShadow: ["0 0 20px rgba(14, 165, 233, 0.2)", "0 0 40px rgba(14, 165, 233, 0.4)", "0 0 20px rgba(14, 165, 233, 0.2)"]
+                                        }}
+                                        transition={{ rotate: { duration: 10, repeat: Infinity, ease: "linear" }, boxShadow: { duration: 2, repeat: Infinity } }}
+                                        className="w-24 h-24 rounded-full border-2 border-dashed border-accent/40 p-2"
                                     />
-                                ))}
-                            </div>
+                                    <motion.div
+                                        animate={{ scale: [1, 1.05, 1] }}
+                                        transition={{ duration: 2, repeat: Infinity }}
+                                        className="absolute inset-0 flex items-center justify-center"
+                                    >
+                                        <div className="w-16 h-16 rounded-full bg-accent/10 border-2 border-accent flex items-center justify-center text-accent font-bold text-[10px] text-center px-2 leading-tight">
+                                            KAFKA<br />CLUSTER
+                                        </div>
+                                    </motion.div>
+                                </div>
 
-                            <div className="grid grid-cols-1 gap-2">
-                                <motion.div
-                                    whileHover={{ scale: 1.1, x: 5 }}
-                                    className="w-12 h-6 border border-border rounded text-[8px] flex items-center justify-center bg-muted/50"
-                                >
-                                    WORKER 1
-                                </motion.div>
-                                <motion.div
-                                    whileHover={{ scale: 1.1, x: 5 }}
-                                    className="w-12 h-6 border border-border rounded text-[8px] flex items-center justify-center bg-muted/50"
-                                >
-                                    WORKER 2
-                                </motion.div>
+                                <div className="flex-1 flex flex-col justify-center space-y-4 px-4">
+                                    {[0, 1, 2].map((path) => (
+                                        <div key={path} className="h-px bg-gradient-to-r from-accent/40 to-success/40 relative">
+                                            {[0, 1, 2, 3].map((i) => (
+                                                <motion.div
+                                                    key={i}
+                                                    initial={{ left: "-10%" }}
+                                                    animate={{ left: "110%" }}
+                                                    transition={{
+                                                        duration: 2 + path * 0.4,
+                                                        repeat: Infinity,
+                                                        delay: i * 0.7 + path * 0.2,
+                                                        ease: "linear"
+                                                    }}
+                                                    className={cn(
+                                                        "absolute top-1/2 -translate-y-1/2 w-1.5 h-1.5 rounded-full blur-[1px] shadow-[0_0_8px_var(--success)]",
+                                                        path === 1 ? "bg-success" : "bg-accent"
+                                                    )}
+                                                />
+                                            ))}
+                                        </div>
+                                    ))}
+                                </div>
+
+                                <div className="grid grid-cols-1 gap-3">
+                                    <motion.div
+                                        whileHover={{ scale: 1.1, x: 5 }}
+                                        className="px-3 py-2 border border-border rounded-xl text-[10px] font-mono flex flex-col items-center justify-center bg-card shadow-lg"
+                                    >
+                                        <div className="text-success text-[8px] mb-1">ACTIVE</div>
+                                        <div>CONS-1</div>
+                                    </motion.div>
+                                    <motion.div
+                                        whileHover={{ scale: 1.1, x: 5 }}
+                                        className="px-3 py-2 border border-border rounded-xl text-[10px] font-mono flex flex-col items-center justify-center bg-card shadow-lg"
+                                    >
+                                        <div className="text-success text-[8px] mb-1">ACTIVE</div>
+                                        <div>CONS-2</div>
+                                    </motion.div>
+                                </div>
                             </div>
                         </div>
                     </div>
