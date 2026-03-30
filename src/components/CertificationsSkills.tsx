@@ -12,67 +12,65 @@ const certifications = [
         issuer: "Amazon Web Services",
         date: "2024",
         icon: <Cloud className="h-5 w-5" />,
-        image: "/cert-aws-saa.png"
+        validation: [
+            "Cloud Architecture & Scalability",
+            "Security & HIPAA Compliance",
+            "Cost Optimization Patterns",
+            "Disaster Recovery (High Availability)"
+        ]
     },
     {
         name: "Confluent Certified Data Streaming Engineer",
         issuer: "Confluent",
         date: "2024",
         icon: <Database className="h-5 w-5" />,
-        image: "/cert-confluent.png"
-    },
-    {
-        name: "Rest API (Intermediate)",
-        issuer: "HackerRank",
-        date: "May 2025",
-        icon: <Code className="h-5 w-5" />,
-        image: "/cert-hackerrank.png"
-    },
-    {
-        name: "AWS Cloud Practitioner Essentials",
-        issuer: "Amazon Web Services (AWS)",
-        date: "Sep 2025",
-        icon: <ShieldCheck className="h-5 w-5" />,
-        image: ""
+        validation: ["Event-Driven Microservices", "Kafka Cluster Optimization"]
     }
 ];
 
 const skills = [
-    { category: "Backend & Architecture", items: ["Java 17+", "Spring Boot 3", "Microservices", "System Design", "TDD", "REST APIs", "gRPC"] },
-    { category: "Cloud & DevOps", items: ["AWS (EC2, S3, RDS, Lambda)", "Docker", "Jenkins", "CI/CD", "SonarQube", "Kubernetes (Basics)"] },
-    { category: "Data & Streaming", items: ["Kafka", "Confluent", "RabbitMQ", "PostgreSQL", "MySQL", "HikariCP Tuning"] },
-    { category: "Healthcare Standards", items: ["FHIR R4", "HL7", "EDI 837/835", "HIPAA Compliance", "EHR Integration"] },
-    { category: "AI & LLM", items: ["Multi-LLM Integration", "Prompt Engineering", "IDP Pipelines", "Vector DBs"] }
+    { 
+        category: "Backend & Distributed Systems", 
+        items: ["Java 17+", "Spring Boot 3", "Microservices", "System Design", "TDD", "gRPC", "CompletableFuture Performance"] 
+    },
+    { 
+        category: "AI-Infrastructure (Support Layer)", 
+        items: ["PostgreSQL (pgvector & Hybrid Search)", "Redis (Inference Caching & RAG)", "Semantic Retrieval Readiness", "Vector Storage Architecture", "Spring AI Orchestration", "PHI-Safe Preprocessing"] 
+    },
+    { 
+        category: "Cloud & Data Streaming", 
+        items: ["AWS (RDS, MSK, EKS, Lambda, VPC)", "Kafka (Streaming Backbone for ML)", "Confluent", "Docker", "CI/CD (Jenkins)"] 
+    },
+    { 
+        category: "Compliance & Orchestration", 
+        items: ["HIPAA-Compliant AI Pipelines", "FHIR R4 Interoperability", "Orchestrating AI-facing APIs", "JUnit", "SonarQube", "TypeScript"] 
+    }
 ];
 
 const CertificationItem = ({ cert }: { cert: typeof certifications[0] }) => {
-    const [imageError, setImageError] = React.useState(false);
-
     return (
         <motion.div
             whileHover={{ scale: 1.02, x: 5 }}
             className="p-6 rounded-2xl bg-card border border-border flex items-start space-x-4 shadow-lg hover:shadow-primary/5 transition-all group cursor-default"
         >
-            <motion.div
-                whileHover={{ rotate: 15, scale: 1.1 }}
-                className="p-3 rounded-xl bg-primary/10 text-primary relative overflow-hidden flex items-center justify-center w-14 h-14 shrink-0"
-            >
-                {cert.image && !imageError ? (
-                    <Image
-                        src={cert.image}
-                        alt={cert.name}
-                        fill
-                        className="object-contain p-1"
-                        onError={() => setImageError(true)}
-                        unoptimized
-                    />
-                ) : (
-                    cert.icon
+            <div className="p-3 rounded-xl bg-primary/10 text-primary shrink-0">
+                {cert.icon}
+            </div>
+            <div className="space-y-2">
+                <div>
+                    <h5 className="font-bold text-sm leading-tight group-hover:text-primary transition-colors">{cert.name}</h5>
+                    <p className="text-[10px] text-muted-foreground mt-1 uppercase font-mono">{cert.issuer} • {cert.date}</p>
+                </div>
+                {cert.validation && (
+                    <ul className="space-y-1">
+                        {cert.validation.map((v, i) => (
+                            <li key={i} className="flex items-center text-[10px] text-muted-foreground">
+                                <CheckCircle2 className="h-3 w-3 text-primary mr-2 shrink-0" />
+                                {v}
+                            </li>
+                        ))}
+                    </ul>
                 )}
-            </motion.div>
-            <div>
-                <h5 className="font-bold text-sm leading-tight group-hover:text-primary transition-colors">{cert.name}</h5>
-                <p className="text-xs text-muted-foreground mt-1">{cert.issuer} • {cert.date}</p>
             </div>
         </motion.div>
     );

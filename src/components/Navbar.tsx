@@ -38,17 +38,19 @@ export const Navbar = () => {
         >
             <div className="container mx-auto px-4 md:px-6 flex items-center justify-between">
                 <motion.div
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
                 >
                     <Link href="/" className="flex items-center space-x-2 group">
-                        <Shield className="h-8 w-8 text-primary group-hover:rotate-12 transition-transform duration-300" />
+                        <div className="p-2 rounded-lg bg-primary/10 text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-all duration-300 shadow-sm border border-primary/20">
+                            <Shield className="h-5 w-5" />
+                        </div>
                         <div className="flex flex-col">
-                            <span className="font-bold text-xl tracking-tighter leading-none group-hover:text-primary transition-colors">
+                            <span className="font-bold text-lg tracking-tighter leading-none group-hover:text-primary transition-colors">
                                 AKASH SONI
                             </span>
-                            <span className="text-[10px] text-muted-foreground font-mono uppercase tracking-widest">
-                                Architect / Engineer
+                            <span className="text-[10px] text-muted-foreground font-mono uppercase tracking-[0.2em] mt-0.5">
+                                Senior Backend Engineer
                             </span>
                         </div>
                     </Link>

@@ -2,46 +2,46 @@
 
 import { motion } from "framer-motion";
 import { Section } from "./ui/Section";
-import { Database, Server, ExternalLink, Activity, Layers, Terminal } from "lucide-react";
+import { Database, Server, ExternalLink, Activity, Layers, Terminal, Shield } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const projects = [
     {
-        title: "Healthcare Microservices Ecosystem",
-        role: "Lead Backend Engineer",
-        impact: "99.99% Reliability | 40% Latency Reduction",
-        description: "Designed and implemented a suite of Spring Boot microservices for high-volume patient data processing, focusing on HikariCP stability and PostgreSQL optimization.",
-        tags: ["Spring Boot 3", "PostgreSQL", "AWS S3", "Docker"],
-        icon: <Server className="h-6 w-6" />
-    },
-    {
-        title: "FHIR R4 Interoperability Layer",
-        role: "System Architect",
-        impact: "HIPAA Compliant | Real-time Sync",
-        description: "Architected a secure data exchange platform between hospitals and insurers using FHIR R4 standards and Kafka for event-driven synchronization.",
-        tags: ["Kafka", "FHIR R4", "Java 17", "Spring Security"],
+        title: "Semantic Search Microservice Architecture",
+        role: "Senior Backend Engineer",
+        impact: "pgvector + Hybrid Search | 40% Latency Red.",
+        description: "Architected a Java microservice acting as a RAG orchestration layer. Implemented dual-storage (PostgreSQL for metadata, Redis for vector caching) and integrated pgvector for high-dimensional document retrieval.",
+        tags: ["Java 17", "Spring Boot", "pgvector", "Redis Cluster", "AWS ECS"],
         icon: <Layers className="h-6 w-6" />
     },
     {
-        title: "AI Medical Document Processor",
-        role: "Full Stack Engineer",
-        impact: "85% Automation Gain",
-        description: "Built an intelligent processing pipeline for EDI 837 and UB-92 forms using multi-LLM configurations and queue-based backend architecture.",
-        tags: ["LLM", "Python", "React", "RabbitMQ"],
-        icon: <Terminal className="h-6 w-6" />
+        title: "Streaming Ingestion for Intelligent Analytics",
+        role: "Distributed Systems Engineer",
+        impact: "10k+ Events/Sec | Real-time ML Enrichment",
+        description: "Built an event-driven Kafka pipeline to capture and enrich CDC events from MySQL with historical context from Redis, delivering ML-ready datasets to inference platforms with end-to-end encryption.",
+        tags: ["Kafka", "Spring Cloud Stream", "Redis", "MySQL CDC", "AWS KMS"],
+        icon: <Activity className="h-6 w-6" />
+    },
+    {
+        title: "Healthcare Interoperability & PHI Security",
+        role: "Backend Lead",
+        impact: "HIPAA Compliant | 99.99% Reliability",
+        description: "Designed secure, FHIR-compliant gateways with PHI-safe preprocessing layers. Optimized HikariCP and RDS schemas to ensure mission-critical availability for sensitive clinical data.",
+        tags: ["Spring Boot", "FHIR R4", "PostgreSQL", "HIPAA", "Security"],
+        icon: <Shield className="h-6 w-6" />
     }
 ];
 
 export const ArchitectureSection = () => {
     return (
-        <Section id="projects" className="bg-slate-50/50 dark:bg-slate-950/50 transition-colors duration-500">
+        <Section id="projects" className="bg-slate-50/50 dark:bg-slate-950/20 transition-colors duration-500">
             <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 space-y-4 md:space-y-0">
                 <div className="max-w-2xl">
-                    <h2 className="text-sm font-mono text-primary uppercase tracking-[0.3em] mb-4">Engineering Portfolio</h2>
-                    <h3 className="text-3xl md:text-4xl font-bold tracking-tight">Enterprise Case Studies</h3>
+                    <h2 className="text-sm font-mono text-primary uppercase tracking-[0.3em] mb-4">Production Systems</h2>
+                    <h3 className="text-3xl md:text-4xl font-bold tracking-tight">Engineering Case Studies</h3>
                 </div>
                 <p className="text-muted-foreground font-mono text-xs uppercase tracking-widest">
-                    Scroll to explore systems architecture
+                    Action Verb + System + Scale + Impact
                 </p>
             </div>
 
@@ -121,13 +121,16 @@ export const ArchitectureSection = () => {
                             </p>
                             <ul className="space-y-3 font-mono text-xs">
                                 <li className="flex items-start">
-                                    <span className="text-primary mr-2">/</span> Stabilized database performance by optimizing connection wait times.
+                                    <span className="text-primary mr-2">/</span> Optimized Redis-based inference performance by 40% for retrieval-augmented systems.
                                 </li>
                                 <li className="flex items-start">
-                                    <span className="text-primary mr-2">/</span> Implemented complex query rewrites reducing execution time by 60%.
+                                    <span className="text-primary mr-2">/</span> Architected Kafka CDC pipelines for real-time synchronization with vector databases.
                                 </li>
                                 <li className="flex items-start">
-                                    <span className="text-primary mr-2">/</span> Designed robust domain models for sensitive healthcare entities.
+                                    <span className="text-primary mr-2">/</span> Provisioned scalable AWS infrastructure (SAA-C03) for high-burst ML data preprocessing.
+                                </li>
+                                <li className="flex items-start">
+                                    <span className="text-primary mr-2">/</span> Implemented pgvector strategies for hybrid search combining relational + vector data.
                                 </li>
                             </ul>
                         </div>

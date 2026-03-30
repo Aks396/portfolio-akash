@@ -14,9 +14,9 @@ const firaCode = Fira_Code({
 });
 
 export const metadata: Metadata = {
-  title: "Akash Soni | AWS-Certified Healthcare Backend & Streaming Architect",
-  description: "Senior Backend Engineer specializing in secure healthcare microservices, FHIR R4 interoperability, and AI-driven document processing systems.",
-  keywords: ["AWS Certified", "Healthcare IT", "FHIR R4", "Spring Boot", "Kafka", "Data Streaming", "Backend Architect"],
+  title: "Akash Soni | Senior Backend Engineer | Java, Spring Boot, AI-Ready Systems",
+  description: "Senior Backend Engineer with 3+ years experience. AWS Certified Solutions Architect specializing in scalable microservices, real-time Kafka pipelines, and AI-supportive data infrastructure.",
+  keywords: ["Senior Backend Engineer", "Java Developer", "Spring Boot Engineer", "AWS Certified Solutions Architect Associate", "SAA-C03", "AI Infrastructure", "Semantic Retrieval", "Data Pipelines", "Microservices Architect", "System Design"],
 };
 
 import { ThemeProvider } from "@/components/ThemeProvider";
