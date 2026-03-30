@@ -51,13 +51,13 @@ export const ArchitectureSection = () => {
                         key={project.title}
                         initial={{ opacity: 0, y: 30 }}
                         whileInView={{ opacity: 1, y: 0 }}
-                        whileHover={{ y: -10, transition: { duration: 0.3 } }}
+                        whileHover={{ y: -10, scale: 1.02, transition: { duration: 0.3 } }}
                         viewport={{ once: true }}
                         transition={{ delay: index * 0.1 }}
-                        className="group relative p-8 rounded-2xl bg-card border border-border hover:border-primary/50 transition-all duration-500 overflow-hidden shadow-sm hover:shadow-2xl hover:shadow-primary/10"
+                        className="group relative p-8 rounded-2xl bg-card border border-border hover:border-primary/50 transition-all duration-500 overflow-hidden shadow-sm hover:shadow-[0_0_40px_rgba(59,130,246,0.15)]"
                     >
                         {/* Hover Background Effect */}
-                        <div className="absolute top-0 right-0 -z-10 w-32 h-32 bg-primary/5 blur-3xl rounded-full group-hover:bg-primary/20 transition-all duration-700 group-hover:scale-150" />
+                        <div className="absolute -top-24 -right-24 -z-10 w-48 h-48 bg-primary/10 blur-[80px] rounded-full group-hover:bg-primary/30 transition-all duration-700 group-hover:scale-110" />
 
                         <motion.div
                             whileHover={{ rotate: [0, -10, 10, 0], transition: { duration: 0.5 } }}
