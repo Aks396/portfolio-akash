@@ -7,7 +7,7 @@ import { cn } from "@/lib/utils";
 
 export const StreamingSecuritySection = () => {
     return (
-        <Section id="systems" className="relative group">
+        <Section id="security" className="relative group">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
                 {/* Streaming Section */}
                 <div className="space-y-8">

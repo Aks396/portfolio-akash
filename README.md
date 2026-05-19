@@ -1,54 +1,37 @@
-# Portfolio: Akash Soni - Senior Backend & Streaming Architect
+# Portfolio: Akash Soni - Backend & Streaming Engineer
 
-![Project Overview](https://img.shields.io/badge/Status-Production--Ready-success)
-![Framework](https://img.shields.io/badge/Framework-Next.js%2015-black)
-![Styling](https://img.shields.io/badge/Styling-Tailwind--CSS-31b6f2)
-![Animations](https://img.shields.io/badge/Animations-Framer--Motion-ff0055)
+A premium, modern, dashboard-style personal portfolio website for a Backend Engineer specializing in Java, Spring Boot, Distributed Systems, AI Platforms, Kafka, AWS, and Microservices.
 
-A world-class, enterprise-grade portfolio designed for a senior-level healthcare systems architect. This site focuses on technical depth, production reliability, and domain expertise.
+Designed with an aesthetic combining Vercel, Linear, Railway, and Supabase UI patterns.
 
-## Core Features
+## Key Features
 
-- **Architect Positioning:** High-density data aesthetics with a focus on systems design.
-- **Specialized Sections:**
-    - **Architecture & Performance:** Deep dives into HikariCP tuning and SQL optimization.
-    - **Streaming & Event-Driven:** Dedicated Kafka/Confluent visualization.
-    - **Security & Compliance:** HIPAA-aligned security engineering highlights.
-    - **Healthcare Interoperability:** FHIR R4 and EDI standards expertise.
-- **Premium UI:** Dark mode by default, glassmorphism navigation, and staggered Framer Motion animations.
-- **SEO Optimized:** Metadata and structured data for high-visibility professional indexing.
-
-## Tech Stack
-
-- **Frontend:** Next.js 15 (App Router), TypeScript.
-- **Styling:** Tailwind CSS, Lucide React.
-- **Animations:** Framer Motion.
-- **Deployment:** Optimized for Vercel.
+- **Floating Command Palette**: Instantly triggerable command navigation overlay (`Ctrl+K` or `⌘ K`) for high-speed navigation and quick terminal commands.
+- **Interactive Projects Dashboard**: Includes 4 browser-simulated widgets showcasing code orchestration:
+  - **IDP Intel Engine**: Interactive node-based OCR document processing pipeline.
+  - **MultiModel-LLM**: Streaming chatbot playground with real-time model swapping, latency counters, and Redis caching hits.
+  - **Label Process**: Live EU MDR compliance audit scanner.
+  - **FHIR R4 Interoperability**: Real-time event broker stream visualizer.
+- **Live Infrastructure Topology Map**: Detailed visual node-map representing system ingress through gateways, JWT validations, Kafka messaging, caching layers, and database clusters.
+- **GitHub Contributions Grid**: Custom commits grid demonstrating code activity.
+- **Dynamic Contact Terminal**: A mock REST client JSON preview that automatically updates as the visitor types their name, email, and message.
+- **Mouse Hover Gradient Glows**: Relative mouse tracking CSS glow grids applied across Tech Stack & Certifications.
 
 ## Getting Started
 
-1. Clone the repository.
-2. Install dependencies:
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/Aks396/portfolio-akash.git
+   ```
+2. Install the dependencies:
    ```bash
    npm install
    ```
-3. Run the development server:
+3. Start the local developer server:
    ```bash
    npm run dev
    ```
-4. Build for production:
+4. Build static optimized production code:
    ```bash
    npm run build
    ```
-
-## Folder Architecture
-
-```text
-src/
-├── app/            # Next.js App Router (Layout, Page, Styles)
-├── components/     # High-end UI components
-│   ├── ui/         # Base UI library
-│   └── ...         # Feature-specific sections
-├── lib/            # Shared utilities (Tailwind merge, etc.)
-└── ...
-```

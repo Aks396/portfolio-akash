@@ -106,10 +106,32 @@
     color: var(--foreground);
     font-feature-settings: "cv02", "cv03", "cv04", "ss01";
     -webkit-font-smoothing: antialiased;
+    letter-spacing: -0.011em;
   }
-  h1, h2, h3, h4, h5, h6 {
-    @apply font-bold tracking-tight;
+  h1 {
+    @apply text-5xl md:text-6xl font-extrabold tracking-tighter leading-[1.1];
   }
+  h2 {
+    @apply text-2xl md:text-3xl font-bold tracking-tight mb-8;
+  }
+  h3 {
+    @apply text-xl font-bold tracking-tight mb-4;
+  }
+  p {
+    @apply leading-relaxed text-muted-foreground;
+  }
+}
+
+.section-padding {
+  @apply py-16 md:py-24;
+}
+
+.container-tight {
+  @apply container mx-auto px-4 md:px-6 max-w-6xl;
+}
+
+.mono-label {
+  @apply text-xs font-mono font-bold uppercase tracking-widest text-primary mb-4 block;
 }
 
 /* Custom Scrollbar */
@@ -144,4 +166,73 @@
   backdrop-filter: blur(24px);
   border: 1px solid rgba(255, 255, 255, 0.05);
   box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.5);
+}
+
+/* Futuristic Dashboard Utilities */
+.neon-glow-blue {
+  box-shadow: 0 0 25px rgba(59, 130, 246, 0.2);
+}
+
+.neon-glow-cyan {
+  box-shadow: 0 0 25px rgba(14, 165, 233, 0.25);
+}
+
+.glow-card {
+  position: relative;
+  overflow: hidden;
+}
+
+.glow-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(800px circle at var(--mouse-x, 0) var(--mouse-y, 0), rgba(255, 255, 255, 0.06), transparent 40%);
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+.glow-card:hover::before {
+  opacity: 1;
+}
+
+/* Animations */
+@keyframes border-pulse {
+  0%, 100% { border-color: rgba(59, 130, 246, 0.2); }
+  50% { border-color: rgba(14, 165, 233, 0.6); }
+}
+
+.animate-border-pulse {
+  animation: border-pulse 4s infinite;
+}
+
+@keyframes grid-move {
+  0% { background-position: 0 0; }
+  100% { background-position: 32px 32px; }
+}
+
+.animate-grid-move {
+  animation: grid-move 20s linear infinite;
+}
+
+@keyframes scan-line {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(100%); }
+}
+
+.animate-scan-line {
+  animation: scan-line 3s linear infinite;
+}
+
+/* Custom Hide Scrollbar */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
