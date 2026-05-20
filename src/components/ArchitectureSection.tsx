@@ -1,573 +1,457 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { Server, Shield, Database, Activity, Layers, Play, RefreshCw, Send, Terminal, AlertTriangle, CheckCircle2 } from "lucide-react";
+import React, { useState, useRef } from "react";
+import { motion, useInView, AnimatePresence } from "framer-motion";
+import { Play, RefreshCw, Terminal, CheckCircle2, AlertTriangle } from "lucide-react";
 
-interface Project {
-    id: string;
-    title: string;
-    role: string;
-    impact: string;
-    description: string;
-    contributions: string[];
-    tags: string[];
-}
-
-const projects: Project[] = [
-    {
-        id: "idp",
-        title: "IDP Intel Engine — Intelligent Document Processing Platform",
-        role: "Backend & AI Engineer",
-        impact: "Gemini AI | Multi-Tenant SaaS",
-        description: "Built a multi-tenant SaaS Intelligent Document Processing platform automated to extract, analyze, and digitize clinical insurance forms using Google Gemini vision models.",
-        contributions: [
-            "Designed FastAPI microservices with JWT-based role isolation filters, securing multi-tenant operations.",
-            "Integrated Tesseract OCR with Gemini Vision prompt models for high-fidelity clinical text extraction.",
-            "Structured human-in-the-loop audit verification gateways before final database commits."
-        ],
-        tags: ["FastAPI", "Python", "Google Gemini AI", "Tesseract OCR", "MySQL", "JWT", "Docker"]
-    },
-    {
-        id: "llm",
-        title: "MultiModel-LLM — Unified Multi-Provider AI Platform",
-        role: "Backend & Systems Engineer",
-        impact: "Spring Boot | Unified AI Gateway",
-        description: "Developed a secure gateway model integrating OpenAI, Gemini, Claude, and Llama APIs under a unified streaming routing proxy.",
-        contributions: [
-            "Architected reactive Spring WebFlux backends for scalable non-blocking event-stream responses.",
-            "Implemented Redis-based caching patterns, reducing API overhead by 85% on duplicate queries.",
-            "Built a key management service securing client API key vaults with AES-256 encryption."
-        ],
-        tags: ["Java", "Spring Boot", "Spring WebFlux", "Redis", "AES-256", "JWT", "TypeScript"]
-    },
-    {
-        id: "compliance",
-        title: "Label Process — AI-Powered MDR Compliance Audit System",
-        role: "AI & Full Stack Developer",
-        impact: "OCR + Gemini | EU MDR Compliance",
-        description: "Created an automated compliance audit dashboard validating medical device product labels against EU MDR 2017/745 regulations.",
-        contributions: [
-            "Developed Gemini multimodal prompt matrices detecting missing ISO 15223-1 medical symbols.",
-            "Designed automated compliance score cards and PDF audit report generation backend scripts.",
-            "Engineered overlay coordinate systems placing target verification rectangles on labels."
-        ],
-        tags: ["FastAPI", "Python", "React", "Tesseract OCR", "Google Gemini", "MySQL"]
-    },
-    {
-        id: "fhir",
-        title: "FHIR R4 Healthcare Interoperability Platform",
-        role: "Backend Engineer",
-        impact: "PostgreSQL + Kafka | FHIR R4 Interop",
-        description: "Developed high-throughput FHIR R4-compliant integrations automating care routing events across client EHR services.",
-        contributions: [
-            "Implemented Spring Boot event-driven services parser aligning clinical data to HL7 FHIR R4 spec.",
-            "Engineered Kafka message queues guaranteeing zero-loss delivery of patient vitals events.",
-            "Optimized connection pool parameters and PostgreSQL write locks for heavy ingestion flows."
-        ],
-        tags: ["Java", "Spring Boot", "Apache Kafka", "PostgreSQL", "Microservices", "JUnit"]
-    }
+const projects = [
+  {
+    id: "idp",
+    num: "01",
+    title: "IDP Intel Engine",
+    subtitle: "Intelligent Document Processing Platform",
+    role: "Backend & AI Engineer",
+    impact: "Gemini AI · Multi-Tenant SaaS",
+    accentColor: "#06b6d4",
+    description: "Multi-tenant SaaS platform automating clinical insurance form extraction using Google Gemini vision models and Tesseract OCR with a human-in-the-loop verification gateway.",
+    metrics: [
+      { label: "Extraction Accuracy", value: "98%" },
+      { label: "Processing Speed", value: "<2s" },
+      { label: "Tenants Supported", value: "Multi" },
+    ],
+    contributions: [
+      "Designed FastAPI microservices with JWT-based role isolation for multi-tenant security",
+      "Integrated Tesseract OCR with Gemini Vision prompt models for clinical text extraction",
+      "Built human-in-the-loop audit gates before final database commits",
+    ],
+    tags: ["FastAPI", "Python", "Gemini AI", "Tesseract OCR", "MySQL", "JWT", "Docker"],
+  },
+  {
+    id: "llm",
+    num: "02",
+    title: "MultiModel-LLM",
+    subtitle: "Unified Multi-Provider AI Gateway",
+    role: "Backend & Systems Engineer",
+    impact: "Spring Boot · 4 AI Providers",
+    accentColor: "#8b5cf6",
+    description: "Secure gateway unifying OpenAI, Gemini, Claude, and Llama APIs under a single streaming routing proxy with AES-256 key vaulting and Redis-based deduplication cache.",
+    metrics: [
+      { label: "API Overhead Reduction", value: "85%" },
+      { label: "AI Providers", value: "4" },
+      { label: "Encryption", value: "AES-256" },
+    ],
+    contributions: [
+      "Architected reactive Spring WebFlux backends for non-blocking event-stream responses",
+      "Implemented Redis caching reducing API overhead by 85% on duplicate queries",
+      "Built AES-256 key management vaulting client API credentials securely",
+    ],
+    tags: ["Java", "Spring WebFlux", "Redis", "AES-256", "JWT", "TypeScript"],
+  },
+  {
+    id: "compliance",
+    num: "03",
+    title: "Label Process",
+    subtitle: "AI-Powered MDR Compliance Audit",
+    role: "AI & Full Stack Developer",
+    impact: "EU MDR 2017/745 Compliance",
+    accentColor: "#f59e0b",
+    description: "Automated compliance audit dashboard validating medical device product labels against EU MDR 2017/745 regulations using Gemini multimodal AI and ISO 15223-1 symbol verification.",
+    metrics: [
+      { label: "Compliance Score", value: "94%" },
+      { label: "Regulations", value: "EU MDR" },
+      { label: "Checks", value: "Automated" },
+    ],
+    contributions: [
+      "Developed Gemini multimodal prompt matrices detecting missing ISO 15223-1 symbols",
+      "Designed automated compliance scorecard and PDF audit report generation",
+      "Engineered overlay coordinate systems placing verification rectangles on labels",
+    ],
+    tags: ["FastAPI", "Python", "React", "Tesseract OCR", "Google Gemini", "MySQL"],
+  },
+  {
+    id: "fhir",
+    num: "04",
+    title: "FHIR R4 Platform",
+    subtitle: "Healthcare Interoperability Platform",
+    role: "Backend Engineer",
+    impact: "PostgreSQL · Kafka · FHIR R4",
+    accentColor: "#10b981",
+    description: "High-throughput FHIR R4-compliant integration layer automating care routing events across distributed healthcare EHR services with zero-loss Kafka message delivery guarantees.",
+    metrics: [
+      { label: "Message Delivery", value: "Zero-loss" },
+      { label: "Standard", value: "FHIR R4" },
+      { label: "Event Throughput", value: "10k+/s" },
+    ],
+    contributions: [
+      "Implemented Spring Boot event-driven services parsing HL7 FHIR R4 clinical data",
+      "Engineered Kafka message queues with zero-loss patient vitals delivery",
+      "Optimized PostgreSQL connection pools for heavy concurrent ingestion flows",
+    ],
+    tags: ["Java", "Spring Boot", "Kafka", "PostgreSQL", "Microservices", "JUnit"],
+  },
 ];
 
-// Project 1 Ingestion Simulator Node
+// Simulator components (kept from original, visually elevated)
 const IDPSimulator = () => {
-    const [step, setStep] = useState(0);
-    const [logs, setLogs] = useState<string[]>(["System Idle - Awaiting Document Input"]);
+  const [step, setStep] = useState(0);
+  const [logs, setLogs] = useState<string[]>(["System Idle — Awaiting Document Input"]);
+  const nodes = ["File Ingest", "OCR Extract", "Gemini Validation", "Audit Check", "DB Persist"];
 
-    const triggerSimulation = () => {
-        setStep(1);
-        setLogs(["[Ingest] Inbound document received: claim_form_109.pdf"]);
-        
-        setTimeout(() => {
-            setStep(2);
-            setLogs((prev) => [...prev, "[OCR] Parsing PDF. Extracted 4 text blocks using Tesseract OCR"]);
-        }, 1200);
-
-        setTimeout(() => {
-            setStep(3);
-            setLogs((prev) => [...prev, "[Gemini AI] Validating key-value attributes. Confidence: 98%"]);
-        }, 2400);
-
-        setTimeout(() => {
-            setStep(4);
-            setLogs((prev) => [...prev, "[Human-Audit] Ingestion score 94. Bypassing manual approval gate"]);
-        }, 3600);
-
-        setTimeout(() => {
-            setStep(5);
-            setLogs((prev) => [...prev, "[Storage] Record persistent in MySQL. Client notified: claim_processed"]);
-        }, 4800);
-    };
-
-    return (
-        <div className="space-y-4">
-            <div className="flex justify-between items-center text-xs font-mono">
-                <span className="text-primary font-bold">PIPELINE SCHEMATIC</span>
-                <button
-                    onClick={triggerSimulation}
-                    disabled={step > 0 && step < 5}
-                    className="flex items-center space-x-1.5 px-3 py-1 rounded bg-primary/10 border border-primary/20 text-primary hover:bg-primary/20 disabled:opacity-50"
-                >
-                    <Play className="h-3 w-3" />
-                    <span>Run Simulation</span>
-                </button>
-            </div>
-
-            {/* Pipeline nodes */}
-            <div className="grid grid-cols-5 gap-2 relative py-4">
-                {[
-                    { label: "File Ingest", id: 1 },
-                    { label: "OCR Extract", id: 2 },
-                    { label: "Gemini Validation", id: 3 },
-                    { label: "Audit Check", id: 4 },
-                    { label: "DB Persist", id: 5 }
-                ].map((node) => (
-                    <div
-                        key={node.id}
-                        className={`p-2 rounded text-center border text-[9px] font-mono transition-all ${
-                            step === node.id
-                                ? "bg-primary/20 border-primary text-white scale-105 shadow-[0_0_15px_rgba(59,130,246,0.25)]"
-                                : step > node.id
-                                ? "bg-success/15 border-success/30 text-success"
-                                : "bg-muted/40 border-border/80 text-muted-foreground"
-                        }`}
-                    >
-                        {node.label}
-                    </div>
-                ))}
-            </div>
-
-            {/* Ingestion console logs */}
-            <div className="p-4 rounded-xl bg-slate-950 border border-border/40 font-mono text-[10px] text-slate-400 space-y-1">
-                <div className="flex items-center justify-between border-b border-border/20 pb-2 mb-2 text-slate-500">
-                    <span>CONSOLE LOGS</span>
-                    <span className="animate-pulse w-1.5 h-1.5 rounded-full bg-success" />
-                </div>
-                <div className="h-[80px] overflow-y-auto no-scrollbar space-y-0.5">
-                    {logs.map((log, i) => (
-                        <p key={i}>{log}</p>
-                    ))}
-                </div>
-            </div>
-        </div>
-    );
-};
-
-// Project 2 AI Chatbot Simulator
-const LLMSimulator = () => {
-    const [model, setModel] = useState("gemini-pro");
-    const [input, setInput] = useState("");
-    const [messages, setMessages] = useState<Array<{ sender: "user" | "ai"; text: string }>>([
-        { sender: "ai", text: "Unified AI API proxy online. Select a model to begin." }
-    ]);
-    const [streaming, setStreaming] = useState(false);
-    const [metrics, setMetrics] = useState({ latency: 0, cache: "MISS", size: 0 });
-
-    const presets = [
-        "Optimize a Java connection pool config",
-        "Explain Kafka offset commits configurations"
+  const run = () => {
+    setStep(1); setLogs(["[Ingest] Inbound document received: claim_form_109.pdf"]);
+    const msgs = [
+      "[OCR] Parsing PDF. Extracted 4 text blocks via Tesseract",
+      "[Gemini AI] Validating attributes. Confidence: 98%",
+      "[Audit] Score: 94 — Bypassing manual approval gate",
+      "[Storage] Persisted in MySQL. Client notified ✓",
     ];
+    msgs.forEach((m, i) => setTimeout(() => {
+      setStep(i + 2); setLogs((p) => [...p, m]);
+    }, (i + 1) * 1200));
+  };
 
-    const sendMessage = (textToSend: string) => {
-        if (!textToSend.trim() || streaming) return;
-
-        setMessages((prev) => [...prev, { sender: "user", text: textToSend }]);
-        setInput("");
-        setStreaming(true);
-
-        const latency = textToSend.includes("caching") || textToSend.includes("Optimize") ? 15 : 240;
-        const cacheHit = latency === 15 ? "HIT (Redis)" : "MISS (API Call)";
-
-        setTimeout(() => {
-            setMessages((prev) => [...prev, { sender: "ai", text: "" }]);
-            
-            const responseText = model === "gemini-pro"
-                ? "Google Gemini Pro proxy routed successfully. Secure AES-256 validation check passed. Resource returned claim: success."
-                : `Routed through ${model.toUpperCase()}. Thread optimization parameters parsed in microsecond speeds. Payload processing: OK.`;
-            
-            let i = 0;
-            const interval = setInterval(() => {
-                setMessages((prev) => {
-                    const next = [...prev];
-                    const lastIdx = next.length - 1;
-                    next[lastIdx] = { sender: "ai", text: responseText.substring(0, i + 1) };
-                    return next;
-                });
-                i++;
-                if (i >= responseText.length) {
-                    clearInterval(interval);
-                    setStreaming(false);
-                    setMetrics({
-                        latency,
-                        cache: cacheHit,
-                        size: responseText.length
-                    });
-                }
-            }, 15);
-        }, 800);
-    };
-
-    return (
-        <div className="space-y-4">
-            <div className="flex justify-between items-center">
-                <span className="text-[10px] font-mono text-primary font-bold">LIVE AI PROXY DEMO</span>
-                {/* Model switcher dropdown */}
-                <select
-                    value={model}
-                    onChange={(e) => setModel(e.target.value)}
-                    className="bg-slate-900 border border-border text-[10px] font-mono rounded px-2 py-1 focus:outline-none text-slate-300 focus:border-primary"
-                >
-                    <option value="gemini-pro">Gemini Pro (default)</option>
-                    <option value="gpt-4o">OpenAI GPT-4o</option>
-                    <option value="claude-3">Claude 3 Sonnet</option>
-                    <option value="llama-3">Meta Llama 3</option>
-                </select>
-            </div>
-
-            {/* Chat Area */}
-            <div className="h-[120px] rounded-xl bg-slate-950 border border-border/40 p-3 overflow-y-auto no-scrollbar font-mono text-[10px] space-y-2 flex flex-col">
-                {messages.map((msg, i) => (
-                    <div
-                        key={i}
-                        className={`max-w-[85%] p-2 rounded ${
-                            msg.sender === "user"
-                                ? "bg-primary/10 border border-primary/20 self-end text-right"
-                                : "bg-muted/40 border border-border/40 self-start"
-                        }`}
-                    >
-                        <span className="text-[8px] text-slate-500 uppercase block mb-1">
-                            {msg.sender === "user" ? "Client Payload" : "API Proxy Server"}
-                        </span>
-                        <p className="text-slate-300">{msg.text}</p>
-                    </div>
-                ))}
-            </div>
-
-            {/* Presets / Input */}
-            <div className="space-y-2">
-                <div className="flex flex-wrap gap-1.5">
-                    {presets.map((preset) => (
-                        <button
-                            key={preset}
-                            onClick={() => sendMessage(preset)}
-                            disabled={streaming}
-                            className="text-[8px] font-mono border border-border px-2 py-0.5 rounded bg-card hover:border-primary/40 disabled:opacity-50 text-slate-400 hover:text-white"
-                        >
-                            {preset}
-                        </button>
-                    ))}
-                </div>
-
-                <form
-                    onSubmit={(e) => {
-                        e.preventDefault();
-                        sendMessage(input);
-                    }}
-                    className="flex space-x-2"
-                >
-                    <input
-                        type="text"
-                        value={input}
-                        onChange={(e) => setInput(e.target.value)}
-                        placeholder="Or type custom prompt..."
-                        disabled={streaming}
-                        className="w-full bg-slate-900 border border-border/85 rounded-lg px-3 py-1.5 text-[10px] font-mono focus:outline-none text-slate-300 focus:border-primary disabled:opacity-50"
-                    />
-                    <button
-                        type="submit"
-                        disabled={streaming}
-                        className="bg-primary hover:bg-primary/95 text-white px-3 py-1.5 rounded-lg font-mono text-[10px] flex items-center space-x-1 disabled:opacity-50"
-                    >
-                        <Send className="h-3 w-3" />
-                    </button>
-                </form>
-            </div>
-
-            {/* Gateway Metrics */}
-            <div className="grid grid-cols-3 gap-2 text-center text-[9px] font-mono pt-2 border-t border-border/30">
-                <div className="p-1 bg-card rounded border border-border/50">
-                    <span className="text-slate-500 block uppercase">LATENCY</span>
-                    <span className="font-bold text-foreground">{metrics.latency} ms</span>
-                </div>
-                <div className="p-1 bg-card rounded border border-border/50">
-                    <span className="text-slate-500 block uppercase">REDIS CACHE</span>
-                    <span className="font-bold text-success">{metrics.cache}</span>
-                </div>
-                <div className="p-1 bg-card rounded border border-border/50">
-                    <span className="text-slate-500 block uppercase">ENCRYPTION VAULT</span>
-                    <span className="font-bold text-primary">AES-255 ACTIVE</span>
-                </div>
-            </div>
-        </div>
-    );
+  return (
+    <div className="space-y-4">
+      <div className="flex justify-between items-center">
+        <span className="text-[10px] font-mono font-bold" style={{ color: "#06b6d4" }}>PIPELINE SIMULATION</span>
+        <button onClick={run} disabled={step > 0 && step < 5}
+          className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[10px] font-mono font-bold transition-all disabled:opacity-40"
+          style={{ background: "rgba(6,182,212,0.08)", border: "1px solid rgba(6,182,212,0.2)", color: "#06b6d4" }}>
+          <Play className="w-3 h-3" /> Run
+        </button>
+      </div>
+      <div className="grid grid-cols-5 gap-1.5">
+        {nodes.map((n, i) => (
+          <div key={n} className="p-1.5 rounded-lg text-center text-[8px] font-mono font-bold border transition-all"
+            style={{
+              background: step === i + 1 ? "rgba(6,182,212,0.15)" : step > i + 1 ? "rgba(16,185,129,0.08)" : "rgba(255,255,255,0.02)",
+              borderColor: step === i + 1 ? "#06b6d4" : step > i + 1 ? "#10b981" : "rgba(255,255,255,0.06)",
+              color: step === i + 1 ? "#06b6d4" : step > i + 1 ? "#10b981" : "#475569",
+              boxShadow: step === i + 1 ? "0 0 12px rgba(6,182,212,0.2)" : "none",
+            }}>{n}</div>
+        ))}
+      </div>
+      <div className="p-3 rounded-xl font-mono text-[10px] space-y-1 h-20 overflow-y-auto no-scrollbar"
+        style={{ background: "rgba(0,0,0,0.4)", border: "1px solid rgba(255,255,255,0.05)" }}>
+        {logs.map((l, i) => <p key={i} className="text-slate-400">{l}</p>)}
+      </div>
+    </div>
+  );
 };
 
-// Project 3 EU MDR compliance check
+const LLMSimulator = () => {
+  const [model, setModel] = useState("gemini-pro");
+  const [messages, setMessages] = useState<Array<{ sender: "user" | "ai"; text: string }>>([
+    { sender: "ai", text: "Unified AI proxy online. Select model and send a query." },
+  ]);
+  const [streaming, setStreaming] = useState(false);
+  const [metrics, setMetrics] = useState({ latency: 0, cache: "—", size: 0 });
+
+  const send = (text: string) => {
+    if (!text.trim() || streaming) return;
+    setMessages((p) => [...p, { sender: "user", text }]);
+    setStreaming(true);
+    const latency = text.includes("Optimize") ? 15 : 240;
+    setTimeout(() => {
+      const resp = `Routed via ${model.toUpperCase()}. AES-256 validation passed. Response time: ${latency}ms.`;
+      setMessages((p) => [...p, { sender: "ai", text: "" }]);
+      let i = 0;
+      const iv = setInterval(() => {
+        setMessages((p) => { const n = [...p]; n[n.length - 1] = { sender: "ai", text: resp.slice(0, i + 1) }; return n; });
+        if (++i >= resp.length) { clearInterval(iv); setStreaming(false); setMetrics({ latency, cache: latency === 15 ? "HIT" : "MISS", size: resp.length }); }
+      }, 15);
+    }, 800);
+  };
+
+  return (
+    <div className="space-y-3">
+      <div className="flex justify-between items-center">
+        <span className="text-[10px] font-mono font-bold" style={{ color: "#8b5cf6" }}>LIVE AI PROXY</span>
+        <select value={model} onChange={(e) => setModel(e.target.value)}
+          className="text-[10px] font-mono rounded-lg px-2 py-1 focus:outline-none"
+          style={{ background: "#060c1a", border: "1px solid rgba(255,255,255,0.08)", color: "#94a3b8" }}>
+          <option value="gemini-pro">Gemini Pro</option>
+          <option value="gpt-4o">GPT-4o</option>
+          <option value="claude-3">Claude 3</option>
+          <option value="llama-3">Llama 3</option>
+        </select>
+      </div>
+      <div className="h-28 rounded-xl p-3 space-y-2 overflow-y-auto no-scrollbar flex flex-col"
+        style={{ background: "rgba(0,0,0,0.4)", border: "1px solid rgba(255,255,255,0.05)" }}>
+        {messages.map((m, i) => (
+          <div key={i} className={`max-w-[85%] p-2 rounded-lg text-[10px] font-mono ${m.sender === "user" ? "self-end" : "self-start"}`}
+            style={{ background: m.sender === "user" ? "rgba(139,92,246,0.12)" : "rgba(255,255,255,0.04)", border: `1px solid ${m.sender === "user" ? "rgba(139,92,246,0.2)" : "rgba(255,255,255,0.06)"}`, color: "#94a3b8" }}>
+            {m.text || <span className="animate-blink inline-block w-1.5 h-3 bg-purple-400" />}
+          </div>
+        ))}
+      </div>
+      <div className="flex gap-2">
+        {["Optimize a Java connection pool", "Explain Kafka offsets"].map((p) => (
+          <button key={p} onClick={() => send(p)} disabled={streaming}
+            className="text-[9px] font-mono px-2 py-1 rounded-lg transition-all disabled:opacity-40"
+            style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.07)", color: "#64748b" }}>
+            {p}
+          </button>
+        ))}
+      </div>
+      <div className="grid grid-cols-3 gap-2 text-center text-[9px] font-mono">
+        {[{ l: "Latency", v: `${metrics.latency}ms`, c: "#06b6d4" }, { l: "Cache", v: metrics.cache, c: "#10b981" }, { l: "Vault", v: "AES-256", c: "#8b5cf6" }].map((m) => (
+          <div key={m.l} className="p-2 rounded-lg" style={{ background: "rgba(0,0,0,0.3)", border: "1px solid rgba(255,255,255,0.05)" }}>
+            <div className="text-slate-600 uppercase mb-0.5">{m.l}</div>
+            <div className="font-bold" style={{ color: m.c }}>{m.v}</div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
+
 const ComplianceSimulator = () => {
-    const [scanning, setScanning] = useState(false);
-    const [score, setScore] = useState<number | null>(null);
-    const [checks, setChecks] = useState<Array<{ name: string; status: "success" | "warning" | "idle" }>>([
-        { name: "CE Certificate Validation Mark", status: "idle" },
-        { name: "Sterility ISO Symbol Validation", status: "idle" },
-        { name: "Expiry Date Formats Alignment", status: "idle" },
-        { name: "Manufacturing Reference String Check", status: "idle" }
-    ]);
+  const [scanning, setScanning] = useState(false);
+  const [score, setScore] = useState<number | null>(null);
+  const [checks, setChecks] = useState<Array<{ name: string; status: "idle" | "success" | "warning" }>>([
+    { name: "CE Certificate Mark Validation", status: "idle" },
+    { name: "Sterility ISO Symbol Check", status: "idle" },
+    { name: "Expiry Date Format Alignment", status: "idle" },
+    { name: "Manufacturing Reference String", status: "idle" },
+  ]);
 
-    const runAudit = () => {
-        setScanning(true);
-        setScore(null);
-        setChecks((prev) => prev.map((c) => ({ ...c, status: "idle" })));
+  const run = () => {
+    setScanning(true); setScore(null);
+    setChecks((p) => p.map((c) => ({ ...c, status: "idle" })));
+    const outcomes: Array<"success" | "warning"> = ["success", "warning", "success", "success"];
+    outcomes.forEach((o, i) => {
+      setTimeout(() => {
+        setChecks((p) => p.map((c, ci) => ci === i ? { ...c, status: o } : c));
+        if (i === outcomes.length - 1) { setScore(94); setScanning(false); }
+      }, (i + 1) * 800);
+    });
+  };
 
-        // Trigger sequence
-        setTimeout(() => {
-            setChecks((prev) => [
-                { ...prev[0], status: "success" },
-                prev[1], prev[2], prev[3]
-            ]);
-        }, 800);
-
-        setTimeout(() => {
-            setChecks((prev) => [
-                prev[0],
-                { ...prev[1], status: "warning" },
-                prev[2], prev[3]
-            ]);
-        }, 1600);
-
-        setTimeout(() => {
-            setChecks((prev) => [
-                prev[0], prev[1],
-                { ...prev[2], status: "success" },
-                prev[3]
-            ]);
-        }, 2400);
-
-        setTimeout(() => {
-            setChecks((prev) => [
-                prev[0], prev[1], prev[2],
-                { ...prev[3], status: "success" }
-            ]);
-            setScore(94);
-            setScanning(false);
-        }, 3200);
-    };
-
-    return (
-        <div className="space-y-4">
-            <div className="flex justify-between items-center text-xs font-mono">
-                <span className="text-primary font-bold">MDR AUDIT CLIENT</span>
-                <button
-                    onClick={runAudit}
-                    disabled={scanning}
-                    className="flex items-center space-x-1.5 px-3 py-1 rounded bg-primary/10 border border-primary/20 text-primary hover:bg-primary/20 disabled:opacity-50"
-                >
-                    <RefreshCw className={`h-3 w-3 ${scanning ? 'animate-spin' : ''}`} />
-                    <span>Scan Compliance</span>
-                </button>
-            </div>
-
-            {/* Label Visual Mock */}
-            <div className="relative border border-border/80 rounded-xl p-4 bg-muted/20 font-mono text-[9px] text-slate-300 space-y-2 h-[100px] overflow-hidden">
-                {scanning && (
-                    <motion.div
-                        initial={{ top: 0 }}
-                        animate={{ top: "100%" }}
-                        transition={{ repeat: Infinity, duration: 1.5, ease: "linear" }}
-                        className="absolute left-0 w-full h-0.5 bg-primary/50 shadow-[0_0_8px_rgba(59,130,246,0.8)] z-10"
-                    />
-                )}
-                <div className="flex justify-between">
-                    <span>REF: DEV-MDR-9812</span>
-                    <span className="text-primary font-bold">[CE 0123]</span>
-                </div>
-                <p>EXPIRY: 2028-09-12 // STERILE R (Warning: Missing Symbol Overlay)</p>
-                <div className="w-16 h-8 bg-slate-900 border border-border/60 flex items-center justify-center text-[8px] text-slate-500">
-                    BARCODE PLACEHOLDER
-                </div>
-            </div>
-
-            {/* Audit Checklist */}
-            <div className="space-y-2">
-                {checks.map((c) => (
-                    <div key={c.name} className="flex items-center justify-between text-[10px] font-mono border border-border/30 p-2 rounded bg-slate-950">
-                        <span className="text-slate-400">{c.name}</span>
-                        {c.status === "idle" && <span className="text-slate-500">WAITING</span>}
-                        {c.status === "success" && (
-                            <span className="text-success flex items-center">
-                                <CheckCircle2 className="h-3.5 w-3.5 mr-1 shrink-0" />
-                                VERIFIED
-                            </span>
-                        )}
-                        {c.status === "warning" && (
-                            <span className="text-warning flex items-center animate-pulse">
-                                <AlertTriangle className="h-3.5 w-3.5 mr-1 shrink-0" />
-                                SYM MISSING
-                            </span>
-                        )}
-                    </div>
-                ))}
-            </div>
-
-            {/* Scorecard */}
-            {score !== null && (
-                <div className="p-3 bg-success/5 border border-success/20 rounded-xl text-center">
-                    <span className="text-[10px] font-mono text-success uppercase block">AUDIT COMPLIANCE SCORE</span>
-                    <span className="text-2xl font-bold font-mono text-success">{score}%</span>
-                </div>
-            )}
+  return (
+    <div className="space-y-4">
+      <div className="flex justify-between items-center">
+        <span className="text-[10px] font-mono font-bold" style={{ color: "#f59e0b" }}>MDR COMPLIANCE AUDIT</span>
+        <button onClick={run} disabled={scanning}
+          className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[10px] font-mono font-bold transition-all disabled:opacity-40"
+          style={{ background: "rgba(245,158,11,0.08)", border: "1px solid rgba(245,158,11,0.2)", color: "#f59e0b" }}>
+          <RefreshCw className={`w-3 h-3 ${scanning ? "animate-spin" : ""}`} /> Scan
+        </button>
+      </div>
+      <div className="relative p-3 rounded-xl overflow-hidden" style={{ background: "rgba(0,0,0,0.4)", border: "1px solid rgba(255,255,255,0.05)" }}>
+        {scanning && (
+          <motion.div initial={{ top: 0 }} animate={{ top: "100%" }} transition={{ repeat: Infinity, duration: 1.2, ease: "linear" }}
+            className="absolute left-0 w-full h-0.5 z-10"
+            style={{ background: "rgba(245,158,11,0.5)", boxShadow: "0 0 8px rgba(245,158,11,0.8)" }} />
+        )}
+        <div className="font-mono text-[10px] text-slate-500 space-y-1">
+          <div className="flex justify-between"><span>REF: DEV-MDR-9812</span><span style={{ color: "#f59e0b" }}>[CE 0123]</span></div>
+          <p>EXPIRY: 2028-09-12 // STERILE R</p>
         </div>
-    );
+      </div>
+      <div className="space-y-1.5">
+        {checks.map((c) => (
+          <div key={c.name} className="flex items-center justify-between p-2.5 rounded-lg text-[10px] font-mono"
+            style={{ background: "rgba(0,0,0,0.3)", border: "1px solid rgba(255,255,255,0.05)" }}>
+            <span className="text-slate-500">{c.name}</span>
+            {c.status === "idle" && <span className="text-slate-600">WAITING</span>}
+            {c.status === "success" && <span className="flex items-center gap-1" style={{ color: "#10b981" }}><CheckCircle2 className="w-3 h-3" />VERIFIED</span>}
+            {c.status === "warning" && <span className="flex items-center gap-1 animate-pulse" style={{ color: "#f59e0b" }}><AlertTriangle className="w-3 h-3" />WARN</span>}
+          </div>
+        ))}
+      </div>
+      {score !== null && (
+        <div className="p-3 rounded-xl text-center" style={{ background: "rgba(16,185,129,0.05)", border: "1px solid rgba(16,185,129,0.15)" }}>
+          <div className="text-[10px] font-mono uppercase tracking-wider text-emerald-600 mb-1">Compliance Score</div>
+          <div className="text-2xl font-black font-mono text-emerald-400">{score}%</div>
+        </div>
+      )}
+    </div>
+  );
 };
 
-// Project 4 Kafka Payload queue stream
-const KafkaFHIRSimulator = () => {
-    const [logs, setLogs] = useState<string[]>(["Topic 'fhir_inbound_patient' initialized"]);
-    const [running, setRunning] = useState(false);
+const KafkaSimulator = () => {
+  const [logs, setLogs] = useState<string[]>(["Topic 'fhir_inbound_patient' initialized"]);
+  const [running, setRunning] = useState(false);
 
-    const publishPayload = () => {
-        if (running) return;
-        setRunning(true);
+  const publish = () => {
+    if (running) return;
+    setRunning(true);
+    const payloads = [
+      '{"resourceType":"Observation","code":"8867-4","value":72}',
+      '{"resourceType":"Observation","code":"8480-6","value":120}',
+    ];
+    payloads.forEach((p, i) => {
+      setTimeout(() => {
+        setLogs((prev) => [
+          ...prev,
+          `[Broker] Partition: ${i % 2} Offset: ${Math.floor(Math.random() * 100)}`,
+          `[Consumer] Payload: ${p}`,
+        ]);
+        if (i === payloads.length - 1) setRunning(false);
+      }, (i + 1) * 1200);
+    });
+  };
 
-        const vitalPayloads = [
-            `{"resourceType": "Observation", "status": "final", "code": "8867-4" (Heart Rate), "valueQuantity": {"value": 72}}`,
-            `{"resourceType": "Observation", "status": "final", "code": "8480-6" (Blood Pressure), "valueQuantity": {"value": 120}}`
-        ];
-
-        let index = 0;
-        const interval = setInterval(() => {
-            if (index < vitalPayloads.length) {
-                setLogs((prev) => [
-                    ...prev,
-                    `[Kafka Broker] Ingested message partition: ${index % 2} Offset: ${Math.floor(Math.random() * 100)}`,
-                    `[Microservice] Consumed payload: ${vitalPayloads[index]}`
-                ]);
-                index++;
-            } else {
-                clearInterval(interval);
-                setRunning(false);
-            }
-        }, 1200);
-    };
-
-    return (
-        <div className="space-y-4">
-            <div className="flex justify-between items-center text-xs font-mono">
-                <span className="text-primary font-bold">KAFKA EVENT LOGS</span>
-                <button
-                    onClick={publishPayload}
-                    disabled={running}
-                    className="flex items-center space-x-1.5 px-3 py-1 rounded bg-primary/10 border border-primary/20 text-primary hover:bg-primary/20 disabled:opacity-50"
-                >
-                    <Play className="h-3 w-3" />
-                    <span>Publish FHIR Vitals</span>
-                </button>
-            </div>
-
-            {/* Ingestion stream logs */}
-            <div className="p-4 rounded-xl bg-slate-950 border border-border/40 font-mono text-[10px] text-slate-400 space-y-1">
-                <div className="flex items-center justify-between border-b border-border/20 pb-2 mb-2 text-slate-500">
-                    <span>BROKER CONSOLE</span>
-                    <span className="animate-pulse w-1.5 h-1.5 rounded-full bg-success" />
-                </div>
-                <div className="h-[150px] overflow-y-auto no-scrollbar space-y-1">
-                    {logs.map((log, i) => (
-                        <p key={i} className={log.includes("Payload") ? "text-accent-400" : log.includes("Ingested") ? "text-success-400" : "text-slate-500"}>
-                            {log}
-                        </p>
-                    ))}
-                </div>
-            </div>
+  return (
+    <div className="space-y-4">
+      <div className="flex justify-between items-center">
+        <span className="text-[10px] font-mono font-bold" style={{ color: "#10b981" }}>KAFKA EVENT STREAM</span>
+        <button onClick={publish} disabled={running}
+          className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[10px] font-mono font-bold transition-all disabled:opacity-40"
+          style={{ background: "rgba(16,185,129,0.08)", border: "1px solid rgba(16,185,129,0.2)", color: "#10b981" }}>
+          <Play className="w-3 h-3" /> Publish FHIR Vitals
+        </button>
+      </div>
+      <div className="p-3 rounded-xl font-mono text-[10px] space-y-1 h-36 overflow-y-auto no-scrollbar"
+        style={{ background: "rgba(0,0,0,0.4)", border: "1px solid rgba(255,255,255,0.05)" }}>
+        <div className="flex justify-between text-slate-600 border-b border-white/5 pb-1.5 mb-1.5">
+          <span>BROKER CONSOLE</span>
+          <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
         </div>
-    );
+        {logs.map((l, i) => (
+          <p key={i} style={{ color: l.includes("Payload") ? "#06b6d4" : l.includes("Broker") ? "#10b981" : "#475569" }}>{l}</p>
+        ))}
+      </div>
+    </div>
+  );
 };
+
+const simulators = { idp: IDPSimulator, llm: LLMSimulator, compliance: ComplianceSimulator, fhir: KafkaSimulator };
 
 export const ArchitectureSection = () => {
-    const [activeIndex, setActiveIndex] = useState(0);
+  const ref = useRef<HTMLDivElement>(null);
+  const inView = useInView(ref, { once: true, margin: "-80px" });
+  const [activeId, setActiveId] = useState("idp");
 
-    return (
-        <section id="projects" className="bg-muted/30 border-t border-border/50">
-            <div className="container-tight section-padding">
-                <div className="mb-12">
-                    <span className="mono-label">Case Studies</span>
-                    <h2 className="text-3xl font-bold tracking-tight">Technical Projects & Interactive Demos</h2>
-                    <p className="text-sm text-muted-foreground mt-2 font-mono">
-                        Select a case study below to explore the architecture contributions and trigger the interactive simulation.
-                    </p>
+  const active = projects.find((p) => p.id === activeId)!;
+  const Simulator = simulators[activeId as keyof typeof simulators];
+
+  return (
+    <section id="projects" ref={ref} className="relative border-t" style={{ borderColor: "rgba(255,255,255,0.04)", background: "#030810" }}>
+      <div className="absolute inset-0 grid-pattern-sm opacity-50 pointer-events-none" />
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[1px]"
+        style={{ background: "linear-gradient(90deg, transparent, rgba(6,182,212,0.3), transparent)" }} />
+
+      <div className="container-tight section-padding">
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={inView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.6 }} className="mb-14">
+          <span className="mono-label">Case Studies</span>
+          <h2 className="text-3xl md:text-4xl font-black tracking-[-0.03em] text-white"
+            style={{ fontFamily: "var(--font-geist), sans-serif" }}>
+            Technical <span className="gradient-text-cyan">Projects</span>
+          </h2>
+          <p className="mt-3 text-sm font-mono text-slate-600">
+            Select a project to explore the architecture and trigger the live simulation.
+          </p>
+        </motion.div>
+
+        {/* Project selector tabs */}
+        <div className="flex gap-2 mb-8 flex-wrap">
+          {projects.map((p) => (
+            <motion.button key={p.id} onClick={() => setActiveId(p.id)}
+              whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}
+              className="px-4 py-2 rounded-xl text-[10px] font-mono font-bold uppercase tracking-wider transition-all"
+              style={{
+                background: activeId === p.id ? `${p.accentColor}15` : "rgba(255,255,255,0.02)",
+                border: `1px solid ${activeId === p.id ? p.accentColor : "rgba(255,255,255,0.06)"}`,
+                color: activeId === p.id ? p.accentColor : "#475569",
+                boxShadow: activeId === p.id ? `0 0 20px ${p.accentColor}20` : "none",
+              }}>
+              {p.num} {p.id.toUpperCase()}
+            </motion.button>
+          ))}
+        </div>
+
+        <AnimatePresence mode="wait">
+          <motion.div key={activeId}
+            initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -16 }}
+            transition={{ duration: 0.35, ease: "easeOut" }}
+            className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+
+            {/* LEFT: Project info */}
+            <div className="p-7 rounded-2xl relative overflow-hidden"
+              style={{ background: "#060c1a", border: `1px solid ${active.accentColor}20` }}>
+              {/* Top color bar */}
+              <div className="absolute top-0 left-0 right-0 h-[2px]"
+                style={{ background: `linear-gradient(90deg, transparent, ${active.accentColor}, transparent)` }} />
+              {/* Bg glow */}
+              <div className="absolute top-0 right-0 w-48 h-48 opacity-5 rounded-full"
+                style={{ background: active.accentColor, filter: "blur(40px)" }} />
+
+              <div className="relative space-y-5">
+                <div className="flex items-start justify-between gap-4">
+                  <div>
+                    <div className="text-[10px] font-mono uppercase tracking-widest mb-2" style={{ color: active.accentColor }}>
+                      {active.impact}
+                    </div>
+                    <h3 className="text-xl font-black tracking-[-0.02em] text-white"
+                      style={{ fontFamily: "var(--font-geist), sans-serif" }}>
+                      {active.title}
+                    </h3>
+                    <p className="text-xs font-mono text-slate-500 mt-0.5">{active.subtitle}</p>
+                  </div>
+                  <span className="text-[9px] font-mono px-2 py-1 rounded-lg shrink-0"
+                    style={{ background: `${active.accentColor}10`, border: `1px solid ${active.accentColor}25`, color: active.accentColor }}>
+                    {active.role}
+                  </span>
                 </div>
 
-                <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-                    {/* Left pane: Project Selection & Descriptions (span 6) */}
-                    <div className="lg:col-span-6 space-y-6">
-                        {/* Selector Tabs */}
-                        <div className="flex flex-wrap gap-2">
-                            {projects.map((proj, idx) => (
-                                <button
-                                    key={proj.id}
-                                    onClick={() => setActiveIndex(idx)}
-                                    className={`px-4 py-2.5 rounded-xl border font-mono text-[10px] uppercase font-bold tracking-wider transition-all ${
-                                        activeIndex === idx
-                                            ? "bg-primary text-white border-primary shadow-[0_0_15px_rgba(59,130,246,0.2)]"
-                                            : "bg-card border-border hover:border-muted-foreground/40 text-muted-foreground hover:text-foreground"
-                                    }`}
-                                >
-                                    {proj.id.toUpperCase()}
-                                </button>
-                            ))}
-                        </div>
+                <p className="text-[12px] font-mono text-slate-500 leading-relaxed">{active.description}</p>
 
-                        {/* Project Info Card */}
-                        <div className="p-6 rounded-2xl bg-card border border-border space-y-4">
-                            <div className="flex justify-between items-center">
-                                <span className="text-[10px] font-mono font-bold text-success bg-success/5 px-2.5 py-0.5 rounded border border-success/15">
-                                    {projects[activeIndex].impact}
-                                </span>
-                                <span className="text-[9px] font-mono text-slate-500 uppercase">Role: {projects[activeIndex].role}</span>
-                            </div>
-
-                            <h3 className="text-xl font-bold text-foreground">{projects[activeIndex].title}</h3>
-                            <p className="text-xs text-muted-foreground leading-relaxed">{projects[activeIndex].description}</p>
-
-                            <div className="space-y-2 pt-2">
-                                <h4 className="text-[10px] font-mono uppercase text-primary font-bold">Key Technical Contributions</h4>
-                                <ul className="space-y-2">
-                                    {projects[activeIndex].contributions.map((item, idx) => (
-                                        <li key={idx} className="flex items-start text-xs leading-relaxed text-slate-300">
-                                            <span className="text-primary mr-2 mt-1.5 h-1.5 w-1.5 rounded-full bg-primary shrink-0" />
-                                            {item}
-                                        </li>
-                                    ))}
-                                </ul>
-                            </div>
-
-                            <div className="flex flex-wrap gap-1.5 pt-4 border-t border-border/40">
-                                {projects[activeIndex].tags.map((tag) => (
-                                    <span key={tag} className="text-[9px] font-mono border border-border px-2 py-0.5 rounded bg-muted/30">
-                                        {tag}
-                                    </span>
-                                ))}
-                            </div>
-                        </div>
+                {/* Metrics row */}
+                <div className="grid grid-cols-3 gap-2">
+                  {active.metrics.map((m) => (
+                    <div key={m.label} className="p-3 rounded-xl text-center"
+                      style={{ background: "rgba(0,0,0,0.3)", border: "1px solid rgba(255,255,255,0.04)" }}>
+                      <div className="text-base font-black font-mono" style={{ color: active.accentColor }}>{m.value}</div>
+                      <div className="text-[9px] font-mono text-slate-600 mt-0.5 uppercase">{m.label}</div>
                     </div>
-
-                    {/* Right pane: Interactive Simulation (span 6) */}
-                    <div className="lg:col-span-6 p-6 rounded-2xl bg-card border border-border lg:sticky lg:top-24 min-h-[350px] flex flex-col justify-between">
-                        <div className="border-b border-border/40 pb-3 mb-4 flex items-center justify-between">
-                            <h4 className="text-xs font-mono font-bold text-foreground uppercase tracking-widest flex items-center">
-                                <Terminal className="h-4 w-4 mr-2 text-primary" />
-                                Simulator: {projects[activeIndex].id.toUpperCase()}
-                            </h4>
-                            <span className="text-[9px] font-mono text-muted-foreground uppercase">SIMULATION WIDGET</span>
-                        </div>
-
-                        <div className="flex-grow flex flex-col justify-center">
-                            {projects[activeIndex].id === "idp" && <IDPSimulator />}
-                            {projects[activeIndex].id === "llm" && <LLMSimulator />}
-                            {projects[activeIndex].id === "compliance" && <ComplianceSimulator />}
-                            {projects[activeIndex].id === "fhir" && <KafkaFHIRSimulator />}
-                        </div>
-                    </div>
+                  ))}
                 </div>
+
+                {/* Contributions */}
+                <div className="space-y-2">
+                  <p className="text-[9px] font-mono uppercase tracking-widest font-bold" style={{ color: active.accentColor }}>
+                    Key Contributions
+                  </p>
+                  {active.contributions.map((c, i) => (
+                    <div key={i} className="flex items-start gap-2 text-[11px] font-mono text-slate-400 leading-relaxed">
+                      <span className="mt-1.5 w-1 h-1 rounded-full shrink-0" style={{ background: active.accentColor }} />
+                      {c}
+                    </div>
+                  ))}
+                </div>
+
+                {/* Tags */}
+                <div className="flex flex-wrap gap-1.5 pt-2 border-t" style={{ borderColor: "rgba(255,255,255,0.04)" }}>
+                  {active.tags.map((t) => (
+                    <span key={t} className="px-2 py-0.5 rounded-md text-[9px] font-mono"
+                      style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.06)", color: "#475569" }}>
+                      {t}
+                    </span>
+                  ))}
+                </div>
+              </div>
             </div>
-        </section>
-    );
+
+            {/* RIGHT: Simulator */}
+            <div className="p-7 rounded-2xl lg:sticky lg:top-24" style={{ background: "#060c1a", border: "1px solid rgba(255,255,255,0.06)" }}>
+              <div className="flex items-center gap-2 pb-4 mb-4 border-b" style={{ borderColor: "rgba(255,255,255,0.05)" }}>
+                <Terminal className="w-4 h-4" style={{ color: active.accentColor }} />
+                <span className="text-xs font-mono font-bold uppercase tracking-widest text-white">
+                  Simulator · {active.id.toUpperCase()}
+                </span>
+                <span className="ml-auto text-[9px] font-mono px-2 py-0.5 rounded"
+                  style={{ background: `${active.accentColor}10`, border: `1px solid ${active.accentColor}20`, color: active.accentColor }}>
+                  LIVE DEMO
+                </span>
+              </div>
+              <Simulator />
+            </div>
+          </motion.div>
+        </AnimatePresence>
+      </div>
+    </section>
+  );
 };

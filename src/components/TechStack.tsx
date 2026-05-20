@@ -1,106 +1,115 @@
 "use client";
 
-import React, { useRef } from "react";
-import { motion } from "framer-motion";
-import { Database, Server, Cloud, Activity, Code, ShieldCheck } from "lucide-react";
+import { useRef } from "react";
+import { motion, useInView } from "framer-motion";
 
-const stack = [
-    {
-        category: "Backend & Frameworks",
-        icon: <Server className="h-4 w-4" />,
-        items: ["Spring Boot", "Spring MVC", "Spring Data JPA", "Spring Security", "Hibernate", "FastAPI", "REST APIs", "JWT Authentication", "Microservices Architecture", "Event-Driven Architecture"]
-    },
-    {
-        category: "Distributed Messaging",
-        icon: <Activity className="h-4 w-4" />,
-        items: ["Apache Kafka", "Redis Caching", "Asynchronous Processing", "Caching Strategies", "Pub/Sub Messaging", "Distributed Systems", "System Design", "Design Patterns", "Scalability Engineering", "Low-Latency Systems"]
-    },
-    {
-        category: "Cloud & DevOps",
-        icon: <Cloud className="h-4 w-4" />,
-        items: ["AWS (EC2, S3, RDS, Lambda, API Gateway)", "Docker", "Kubernetes (Basics)", "Jenkins CI/CD", "GitHub Actions", "SonarQube Core"]
-    },
-    {
-        category: "Languages & Databases",
-        icon: <Database className="h-4 w-4" />,
-        items: ["Java Enterprise", "Python", "SQL Query Tuning", "MySQL Tuning", "PostgreSQL Clusters"]
-    },
-    {
-        category: "Testing & Quality",
-        icon: <ShieldCheck className="h-4 w-4" />,
-        items: ["JUnit", "Mockito", "TestNG", "JMeter Testing", "Test-Driven Development (TDD)", "Logging & Monitoring", "Application Debugging", "Performance Tuning"]
-    },
-    {
-        category: "Frontend & Tools",
-        icon: <Code className="h-4 w-4" />,
-        items: ["React", "TypeScript", "Vite", "Tailwind CSS", "Git / GitHub", "Postman Client", "Swagger/OpenAPI", "Jira System"]
-    }
+const categories = [
+  {
+    label: "Languages",
+    color: "#06b6d4",
+    skills: ["Java 17+", "Python 3.x", "TypeScript", "SQL", "Bash"],
+  },
+  {
+    label: "Frameworks",
+    color: "#3b82f6",
+    skills: ["Spring Boot", "Spring WebFlux", "FastAPI", "React.js", "Next.js", "JUnit / Mockito"],
+  },
+  {
+    label: "Infrastructure",
+    color: "#8b5cf6",
+    skills: ["Apache Kafka", "Redis", "Docker", "Kubernetes", "AWS", "Jenkins", "GitHub Actions", "PostgreSQL", "MySQL"],
+  },
+  {
+    label: "AI & Integrations",
+    color: "#10b981",
+    skills: ["Google Gemini", "OpenAI GPT-4", "Claude", "Llama", "Tesseract OCR", "FHIR R4 / HL7", "Spring Security", "OAuth2 / JWT"],
+  },
 ];
 
-const TechCard = ({ category, icon, items }: typeof stack[0]) => {
-    const cardRef = useRef<HTMLDivElement>(null);
-
-    const handleMouseMove = (e: React.MouseEvent) => {
-        if (!cardRef.current) return;
-        const rect = cardRef.current.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-        cardRef.current.style.setProperty("--mouse-x", `${x}px`);
-        cardRef.current.style.setProperty("--mouse-y", `${y}px`);
-    };
-
-    return (
-        <div
-            ref={cardRef}
-            onMouseMove={handleMouseMove}
-            className="glow-card p-6 rounded-2xl bg-card border border-border/60 hover:border-primary/40 transition-all flex flex-col space-y-4 shadow-sm"
-        >
-            <div className="flex items-center space-x-3 text-primary relative z-10">
-                <div className="p-2 rounded-lg bg-primary/10">
-                    {icon}
-                </div>
-                <h4 className="font-bold text-xs uppercase tracking-wider">{category}</h4>
-            </div>
-            <div className="flex flex-wrap gap-1.5 relative z-10">
-                {items.map((item) => (
-                    <span
-                        key={item}
-                        className="text-[10px] font-mono px-2 py-1 rounded bg-muted/40 border border-border/50 text-slate-300 hover:text-white hover:border-primary/30 transition-all cursor-default"
-                    >
-                        {item}
-                    </span>
-                ))}
-            </div>
-        </div>
-    );
-};
-
 export const TechStack = () => {
-    return (
-        <section id="skills" className="bg-background border-t border-border/50">
-            <div className="container-tight section-padding">
-                <div className="mb-12">
-                    <span className="mono-label">Core Matrix</span>
-                    <h2 className="text-3xl font-bold tracking-tight">Technical Ecosystem</h2>
-                    <p className="text-sm text-muted-foreground mt-2 font-mono">
-                        Categorized technologies, frameworks, and tools validated in production environments.
-                    </p>
-                </div>
+  const ref = useRef<HTMLDivElement>(null);
+  const inView = useInView(ref, { once: true, margin: "-80px" });
 
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    {stack.map((group, index) => (
-                        <motion.div
-                            key={group.category}
-                            initial={{ opacity: 0, y: 15 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ delay: index * 0.05 }}
-                        >
-                            <TechCard {...group} />
-                        </motion.div>
-                    ))}
-                </div>
+  return (
+    <section id="skills" ref={ref} className="relative border-t" style={{ borderColor: "rgba(255,255,255,0.04)", background: "#010208" }}>
+      <div className="absolute inset-0 grid-pattern opacity-40 pointer-events-none" />
+
+      <div className="container-tight section-padding">
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={inView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.6 }} className="mb-14 text-center">
+          <span className="mono-label">Technology Stack</span>
+          <h2 className="text-3xl md:text-4xl font-black tracking-[-0.03em] text-white"
+            style={{ fontFamily: "var(--font-geist), sans-serif" }}>
+            Engineering <span className="gradient-text-cyan">Arsenal</span>
+          </h2>
+          <p className="mt-3 text-sm font-mono text-slate-600 max-w-md mx-auto">
+            Production-grade tools I use daily to build and operate distributed systems.
+          </p>
+        </motion.div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {categories.map((cat, ci) => (
+            <motion.div key={cat.label}
+              initial={{ opacity: 0, y: 30 }} animate={inView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.6, delay: ci * 0.1 }}
+              className="p-6 rounded-2xl card-hover relative overflow-hidden"
+              style={{ background: "#060c1a", border: "1px solid rgba(255,255,255,0.06)" }}>
+              {/* Colored top strip */}
+              <div className="absolute top-0 left-0 right-0 h-[2px]"
+                style={{ background: `linear-gradient(90deg, transparent, ${cat.color}80, transparent)` }} />
+              {/* Corner glow */}
+              <div className="absolute top-0 left-0 w-24 h-24 rounded-br-full opacity-5"
+                style={{ background: cat.color }} />
+
+              <div className="flex items-center gap-2 mb-5">
+                <div className="w-2 h-2 rounded-full" style={{ background: cat.color, boxShadow: `0 0 8px ${cat.color}` }} />
+                <span className="text-[10px] font-mono uppercase tracking-[0.2em] font-bold" style={{ color: cat.color }}>
+                  {cat.label}
+                </span>
+              </div>
+
+              <div className="flex flex-wrap gap-2">
+                {cat.skills.map((skill, si) => (
+                  <motion.span key={skill}
+                    initial={{ opacity: 0, scale: 0.9 }} animate={inView ? { opacity: 1, scale: 1 } : {}}
+                    transition={{ delay: ci * 0.1 + si * 0.04 }}
+                    whileHover={{ scale: 1.06, y: -2 }}
+                    className="px-3 py-1.5 rounded-lg text-[11px] font-mono font-medium cursor-default transition-all"
+                    style={{
+                      background: `${cat.color}08`,
+                      border: `1px solid ${cat.color}20`,
+                      color: "#94a3b8",
+                    }}>
+                    {skill}
+                  </motion.span>
+                ))}
+              </div>
+            </motion.div>
+          ))}
+        </div>
+
+        {/* Proficiency bars */}
+        <div className="mt-10 grid grid-cols-1 md:grid-cols-2 gap-4">
+          {[
+            { name: "Java / Spring Boot", pct: 90, color: "#06b6d4" },
+            { name: "Apache Kafka", pct: 82, color: "#3b82f6" },
+            { name: "Python / FastAPI", pct: 78, color: "#10b981" },
+            { name: "AWS / Cloud Infra", pct: 80, color: "#8b5cf6" },
+          ].map((item) => (
+            <div key={item.name} className="space-y-2">
+              <div className="flex justify-between text-[11px] font-mono text-slate-500">
+                <span>{item.name}</span>
+                <span style={{ color: item.color }}>{item.pct}%</span>
+              </div>
+              <div className="h-1 rounded-full overflow-hidden" style={{ background: "rgba(255,255,255,0.05)" }}>
+                <motion.div className="h-full rounded-full" style={{ background: item.color }}
+                  initial={{ width: 0 }} animate={inView ? { width: `${item.pct}%` } : {}}
+                  transition={{ duration: 1.2, delay: 0.3, ease: "easeOut" }} />
+              </div>
             </div>
-        </section>
-    );
+          ))}
+        </div>
+      </div>
+    </section>
+  );
 };

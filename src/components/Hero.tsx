@@ -1,350 +1,354 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import { motion } from "framer-motion";
-import { Terminal, Shield, ArrowRight, Download, Activity, Code } from "lucide-react";
-
-const fadeInUp = {
-    initial: { opacity: 0, y: 20 },
-    animate: { opacity: 1, y: 0 },
-    transition: { duration: 0.5 }
-};
-
-const staggerContainer = {
-    animate: {
-        transition: {
-            staggerChildren: 0.1
-        }
-    }
-};
+import { useEffect, useRef, useState, useCallback } from "react";
+import { motion, useMotionValue, useSpring, useTransform, type Variants } from "framer-motion";
+import { ArrowRight, ChevronDown, Cpu, Database, Zap, Bot, Activity } from "lucide-react";
 
 const techBadges = [
-    "Java", "Spring Boot", "Kafka", "Redis", "AWS", "Docker", "Kubernetes", "FastAPI", "React", "AI/LLMs"
+  { label: "Java", color: "#f97316" },
+  { label: "Spring Boot", color: "#6abf69" },
+  { label: "Kafka", color: "#1a97f5" },
+  { label: "Redis", color: "#ef4444" },
+  { label: "AWS", color: "#f59e0b" },
+  { label: "Docker", color: "#06b6d4" },
+  { label: "Kubernetes", color: "#3b82f6" },
+  { label: "FastAPI", color: "#10b981" },
+  { label: "AI/LLMs", color: "#8b5cf6" },
+  { label: "PostgreSQL", color: "#60a5fa" },
 ];
 
-const terminalLogs = [
-    "Initializing Spring Boot container context...",
-    "Establishing connection to Kafka event cluster...",
-    "Pre-checking Redis distributed cache pools...",
-    "Securing API Gateway via OAuth2 & JWT checks...",
-    "Health-Check status: UP & HEALTHY // 100% SLA"
+const terminalLines = [
+  { text: "$ Initializing Spring Boot microservice cluster...", delay: 0 },
+  { text: "> Establishing Kafka event pipeline @ 10k msg/sec", delay: 600 },
+  { text: "> Redis cache layer: READY [hit-ratio: 94.2%]", delay: 1200 },
+  { text: "> AI inference gateway: ONLINE [models: 4]", delay: 1800 },
+  { text: "> System health: ALL SERVICES OPERATIONAL ✓", delay: 2400 },
+];
+
+const stats = [
+  { value: "3.4+", label: "Years", icon: Activity },
+  { value: "99.9%", label: "SLA", icon: Zap },
+  { value: "10k+", label: "Events/sec", icon: Database },
+  { value: "4", label: "AI Models", icon: Bot },
+];
+
+const tickerItems = [
+  "FHIR R4 Interoperability",
+  "Kafka Event Pipelines · 10k+ msg/sec",
+  "AWS Certified Solutions Architect",
+  "3.4+ Years Production Experience",
+  "AI-Powered Document Processing",
+  "Spring Boot Microservices",
+  "Redis Distributed Caching · 94% Hit Ratio",
+  "Docker · Kubernetes · CI/CD",
 ];
 
 export const Hero = () => {
-    const canvasRef = useRef<HTMLCanvasElement>(null);
-    const [typedText, setTypedText] = useState("");
-    const [logIndex, setLogIndex] = useState(0);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const heroRef = useRef<HTMLDivElement>(null);
+  const [visibleLines, setVisibleLines] = useState<number[]>([]);
+  const [isLoaded, setIsLoaded] = useState(false);
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+  const springX = useSpring(mouseX, { stiffness: 60, damping: 20 });
+  const springY = useSpring(mouseY, { stiffness: 60, damping: 20 });
+  const spotlightX = useTransform(springX, (v) => `${v}px`);
+  const spotlightY = useTransform(springY, (v) => `${v}px`);
 
-    // Particle Background Effect
-    useEffect(() => {
-        const canvas = canvasRef.current;
-        if (!canvas) return;
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+    let rafId: number;
+    let w = (canvas.width = window.innerWidth);
+    let h = (canvas.height = window.innerHeight);
+    let mX = w / 2, mY = h / 2;
 
-        const ctx = canvas.getContext("2d");
-        if (!ctx) return;
+    type P = { x: number; y: number; vx: number; vy: number; size: number; opacity: number; colorIdx: number };
+    const cols = ["6,182,212", "59,130,246", "139,92,246"];
+    const pts: P[] = Array.from({ length: 80 }, () => ({
+      x: Math.random() * w, y: Math.random() * h,
+      vx: (Math.random() - 0.5) * 0.3, vy: (Math.random() - 0.5) * 0.3,
+      size: Math.random() * 1.5 + 0.5,
+      opacity: Math.random() * 0.4 + 0.1,
+      colorIdx: Math.floor(Math.random() * 3),
+    }));
 
-        let animationFrameId: number;
-        let width = (canvas.width = window.innerWidth);
-        let height = (canvas.height = window.innerHeight);
+    const onResize = () => { w = canvas.width = window.innerWidth; h = canvas.height = window.innerHeight; };
+    const onMouse = (e: MouseEvent) => { mX = e.clientX; mY = e.clientY; };
+    window.addEventListener("resize", onResize);
+    window.addEventListener("mousemove", onMouse);
 
-        const particles: Array<{
-            x: number;
-            y: number;
-            vx: number;
-            vy: number;
-            size: number;
-            color: string;
-        }> = [];
+    const draw = () => {
+      ctx.clearRect(0, 0, w, h);
+      ctx.strokeStyle = "rgba(6,182,212,0.025)";
+      ctx.lineWidth = 0.5;
+      const gs = 50;
+      for (let x = 0; x < w; x += gs) { ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, h); ctx.stroke(); }
+      for (let y = 0; y < h; y += gs) { ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(w, y); ctx.stroke(); }
 
-        // Generate particles
-        for (let i = 0; i < 55; i++) {
-            particles.push({
-                x: Math.random() * width,
-                y: Math.random() * height,
-                vx: (Math.random() - 0.5) * 0.4,
-                vy: (Math.random() - 0.5) * 0.4,
-                size: Math.random() * 2 + 1,
-                color: Math.random() > 0.5 ? "rgba(59, 130, 246, 0.35)" : "rgba(14, 165, 233, 0.35)"
-            });
+      pts.forEach((p) => {
+        const dx = mX - p.x, dy = mY - p.y;
+        const dist = Math.hypot(dx, dy);
+        if (dist < 200) { p.vx += dx * 0.0003; p.vy += dy * 0.0003; }
+        p.vx *= 0.99; p.vy *= 0.99;
+        p.x = (p.x + p.vx + w) % w;
+        p.y = (p.y + p.vy + h) % h;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(${cols[p.colorIdx]},${p.opacity})`;
+        ctx.fill();
+      });
+
+      for (let i = 0; i < pts.length; i++) {
+        for (let j = i + 1; j < pts.length; j++) {
+          const d = Math.hypot(pts[i].x - pts[j].x, pts[i].y - pts[j].y);
+          if (d < 120) {
+            ctx.beginPath();
+            ctx.moveTo(pts[i].x, pts[i].y);
+            ctx.lineTo(pts[j].x, pts[j].y);
+            ctx.strokeStyle = `rgba(6,182,212,${0.07 * (1 - d / 120)})`;
+            ctx.lineWidth = 0.4;
+            ctx.stroke();
+          }
         }
+      }
+      rafId = requestAnimationFrame(draw);
+    };
+    draw();
 
-        const handleResize = () => {
-            if (!canvas) return;
-            width = canvas.width = window.innerWidth;
-            height = canvas.height = window.innerHeight;
-        };
+    return () => {
+      cancelAnimationFrame(rafId);
+      window.removeEventListener("resize", onResize);
+      window.removeEventListener("mousemove", onMouse);
+    };
+  }, []);
 
-        window.addEventListener("resize", handleResize);
+  useEffect(() => {
+    terminalLines.forEach((line, i) => {
+      setTimeout(() => setVisibleLines((prev) => [...prev, i]), line.delay + 800);
+    });
+    setTimeout(() => setIsLoaded(true), 400);
+  }, []);
 
-        let mouseX = 0;
-        let mouseY = 0;
+  const handleMouseMove = useCallback((e: React.MouseEvent) => {
+    mouseX.set(e.clientX);
+    mouseY.set(e.clientY);
+  }, [mouseX, mouseY]);
 
-        const handleMouseMove = (e: MouseEvent) => {
-            mouseX = e.clientX;
-            mouseY = e.clientY;
-        };
+  const scrollTo = (id: string) => document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
 
-        window.addEventListener("mousemove", handleMouseMove);
+  const cV: Variants = { hidden: {}, visible: { transition: { staggerChildren: 0.12, delayChildren: 0.5 } } };
+  const iV: Variants = {
+    hidden: { opacity: 0, y: 30, filter: "blur(8px)" },
+    visible: { opacity: 1, y: 0, filter: "blur(0px)", transition: { duration: 0.8, ease: "easeOut" } },
+  };
+  const bV: Variants = {
+    hidden: { opacity: 0, scale: 0.8 },
+    visible: (i: number) => ({ opacity: 1, scale: 1, transition: { delay: 1.2 + i * 0.06, duration: 0.4, ease: "backOut" as const } }),
+  };
 
-        const render = () => {
-            ctx.clearRect(0, 0, width, height);
+  return (
+    <section ref={heroRef} onMouseMove={handleMouseMove}
+      className="relative min-h-screen flex flex-col justify-center overflow-hidden"
+      style={{ background: "linear-gradient(180deg, #010208 0%, #030712 100%)" }}>
 
-            // Grid background simulation (SVG style)
-            ctx.strokeStyle = "rgba(255, 255, 255, 0.015)";
-            ctx.lineWidth = 1;
-            const gridSize = 45;
-            for (let x = 0; x < width; x += gridSize) {
-                ctx.beginPath();
-                ctx.moveTo(x, 0);
-                ctx.lineTo(x, height);
-                ctx.stroke();
-            }
-            for (let y = 0; y < height; y += gridSize) {
-                ctx.beginPath();
-                ctx.moveTo(0, y);
-                ctx.lineTo(width, y);
-                ctx.stroke();
-            }
+      <canvas ref={canvasRef} className="absolute inset-0 pointer-events-none z-0" />
 
-            particles.forEach((p) => {
-                p.x += p.vx;
-                p.y += p.vy;
+      {/* Gradient orbs */}
+      <div className="absolute inset-0 z-0 pointer-events-none">
+        <div className="absolute top-[-20%] left-[-10%] w-[600px] h-[600px] rounded-full opacity-[0.15]"
+          style={{ background: "radial-gradient(circle, #06b6d4, transparent 70%)", filter: "blur(80px)" }} />
+        <div className="absolute top-[10%] right-[-15%] w-[500px] h-[500px] rounded-full opacity-[0.1]"
+          style={{ background: "radial-gradient(circle, #8b5cf6, transparent 70%)", filter: "blur(100px)" }} />
+        <div className="absolute bottom-[-10%] left-[30%] w-[400px] h-[400px] rounded-full opacity-[0.08]"
+          style={{ background: "radial-gradient(circle, #3b82f6, transparent 70%)", filter: "blur(80px)" }} />
+      </div>
 
-                // Border check
-                if (p.x < 0 || p.x > width) p.vx *= -1;
-                if (p.y < 0 || p.y > height) p.vy *= -1;
+      {/* Mouse spotlight */}
+      <motion.div className="absolute pointer-events-none z-0"
+        style={{
+          left: spotlightX, top: spotlightY,
+          width: "800px", height: "800px",
+          marginLeft: "-400px", marginTop: "-400px",
+          background: "radial-gradient(circle, rgba(6,182,212,0.04) 0%, transparent 60%)",
+          borderRadius: "50%",
+        }} />
 
-                // Mouse interaction pull
-                const dx = mouseX - p.x;
-                const dy = mouseY - p.y;
-                const dist = Math.hypot(dx, dy);
-                if (dist < 120) {
-                    p.x += dx * 0.005;
-                    p.y += dy * 0.005;
-                }
+      {/* Scan line */}
+      <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden opacity-[0.03]">
+        <div className="animate-scan-line absolute left-0 w-full h-[2px]"
+          style={{ background: "linear-gradient(90deg, transparent, #06b6d4, transparent)" }} />
+      </div>
 
-                ctx.beginPath();
-                ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-                ctx.fillStyle = p.color;
-                ctx.fill();
-            });
+      {/* Content */}
+      <div className="container-tight relative z-10 pt-28 pb-20">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
 
-            // Draw link lines between close particles
-            for (let i = 0; i < particles.length; i++) {
-                for (let j = i + 1; j < particles.length; j++) {
-                    const pi = particles[i];
-                    const pj = particles[j];
-                    const dist = Math.hypot(pi.x - pj.x, pi.y - pj.y);
-                    if (dist < 100) {
-                        ctx.beginPath();
-                        ctx.moveTo(pi.x, pi.y);
-                        ctx.lineTo(pj.x, pj.y);
-                        ctx.strokeStyle = `rgba(59, 130, 246, ${0.1 * (1 - dist / 100)})`;
-                        ctx.lineWidth = 0.5;
-                        ctx.stroke();
-                    }
-                }
-            }
+          {/* LEFT */}
+          <motion.div variants={cV} initial="hidden" animate={isLoaded ? "visible" : "hidden"} className="flex flex-col space-y-8">
+            <motion.div variants={iV}>
+              <div className="inline-flex items-center gap-2.5 px-3 py-1.5 rounded-full text-[10px] font-mono font-bold tracking-widest uppercase"
+                style={{ background: "rgba(16,185,129,0.08)", border: "1px solid rgba(16,185,129,0.2)", color: "#10b981" }}>
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                Available for Opportunities
+              </div>
+            </motion.div>
 
-            animationFrameId = requestAnimationFrame(render);
-        };
+            <motion.div variants={iV} className="space-y-2">
+              <div className="font-mono text-xs tracking-[0.3em] uppercase text-slate-500 mb-3">&lt; Portfolio /&gt;</div>
+              <h1 className="text-5xl md:text-7xl font-black tracking-[-0.04em] leading-[0.95]"
+                style={{ fontFamily: "var(--font-geist), sans-serif" }}>
+                <span className="gradient-text-white">AKASH</span><br />
+                <span className="gradient-text-cyan glow-text-cyan">SONI</span>
+              </h1>
+            </motion.div>
 
-        render();
+            <motion.div variants={iV} className="space-y-2">
+              <p className="text-lg md:text-xl font-semibold text-slate-300 tracking-tight"
+                style={{ fontFamily: "var(--font-geist), sans-serif" }}>
+                Backend Engineer <span className="mx-2 text-slate-600">·</span>
+                <span className="gradient-text-cyan">AI Infrastructure</span>
+                <span className="mx-2 text-slate-600">·</span>Distributed Systems
+              </p>
+              <p className="text-sm text-slate-500 font-mono leading-relaxed max-w-lg">
+                Building scalable cloud-native systems and AI-powered platforms that handle millions of events per second.
+              </p>
+            </motion.div>
 
-        return () => {
-            window.removeEventListener("resize", handleResize);
-            window.removeEventListener("mousemove", handleMouseMove);
-            cancelAnimationFrame(animationFrameId);
-        };
-    }, []);
+            <motion.div variants={iV} className="flex flex-wrap gap-2">
+              {techBadges.map((badge, i) => (
+                <motion.span key={badge.label} custom={i} variants={bV} initial="hidden" animate="visible"
+                  whileHover={{ scale: 1.08, y: -2 }}
+                  className="px-3 py-1 rounded-lg text-[11px] font-mono font-semibold cursor-default"
+                  style={{ background: `${badge.color}12`, border: `1px solid ${badge.color}30`, color: badge.color }}>
+                  {badge.label}
+                </motion.span>
+              ))}
+            </motion.div>
 
-    // Typist effect
-    useEffect(() => {
-        let currentString = terminalLogs[logIndex];
-        let currentLen = 0;
-        let isDeleting = false;
-        let typingSpeed = 50;
+            <motion.div variants={iV} className="flex flex-wrap gap-3 pt-2">
+              <motion.button whileHover={{ scale: 1.03, y: -2 }} whileTap={{ scale: 0.97 }}
+                onClick={() => scrollTo("projects")} className="btn-primary">
+                Explore Projects <ArrowRight className="w-3.5 h-3.5" />
+              </motion.button>
+              <motion.button whileHover={{ scale: 1.03, y: -2 }} whileTap={{ scale: 0.97 }}
+                onClick={() => scrollTo("architecture")} className="btn-ghost">
+                <Cpu className="w-3.5 h-3.5" /> View Architecture
+              </motion.button>
+              <motion.button whileHover={{ scale: 1.03, y: -2 }} whileTap={{ scale: 0.97 }}
+                onClick={() => scrollTo("contact")} className="btn-ghost">
+                Contact
+              </motion.button>
+            </motion.div>
 
-        const handleType = () => {
-            if (!isDeleting) {
-                setTypedText(currentString.substring(0, currentLen + 1));
-                currentLen++;
-
-                if (currentLen === currentString.length) {
-                    isDeleting = true;
-                    typingSpeed = 3000; // Delay before starting to delete
-                } else {
-                    typingSpeed = 40;
-                }
-            } else {
-                setTypedText(currentString.substring(0, currentLen - 1));
-                currentLen--;
-
-                if (currentLen === 0) {
-                    isDeleting = false;
-                    setLogIndex((prev) => (prev + 1) % terminalLogs.length);
-                    typingSpeed = 500;
-                } else {
-                    typingSpeed = 15;
-                }
-            }
-
-            setTimeout(handleType, typingSpeed);
-        };
-
-        const timeoutId = setTimeout(handleType, typingSpeed);
-        return () => clearTimeout(timeoutId);
-    }, [logIndex]);
-
-    return (
-        <section className="relative overflow-hidden bg-background min-h-screen flex items-center">
-            {/* Canvas Background particles */}
-            <canvas ref={canvasRef} className="absolute inset-0 pointer-events-none -z-10" />
-
-            {/* Glowing blur effects */}
-            <div className="absolute top-[20%] left-[10%] w-[350px] h-[350px] bg-primary/10 blur-[100px] rounded-full -z-10" />
-            <div className="absolute bottom-[20%] right-[10%] w-[300px] h-[300px] bg-accent/10 blur-[100px] rounded-full -z-10" />
-
-            <div className="container-tight pt-32 pb-16">
-                <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-                    
-                    {/* Left: Headline and Copy (span 7) */}
-                    <div className="lg:col-span-7 flex flex-col space-y-8 text-left">
-                        <motion.div
-                            variants={staggerContainer}
-                            initial="initial"
-                            animate="animate"
-                            className="space-y-6"
-                        >
-                            <motion.div variants={fadeInUp} className="inline-flex items-center space-x-2 bg-primary/5 border border-primary/20 px-3 py-1 rounded-full text-[10px] font-mono font-bold tracking-widest text-primary uppercase">
-                                <Shield className="h-3.5 w-3.5" />
-                                <span>Enterprise Systems Architect</span>
-                            </motion.div>
-
-                            <motion.h1 variants={fadeInUp} className="text-4xl md:text-6xl font-extrabold tracking-tighter text-white leading-tight">
-                                AKASH SONI<br />
-                                <span className="text-primary bg-clip-text text-transparent bg-gradient-to-r from-primary to-accent">
-                                    Backend Engineer
-                                </span>
-                            </motion.h1>
-
-                            <motion.p variants={fadeInUp} className="text-sm md:text-base text-slate-400 max-w-xl leading-relaxed">
-                                Specializing in Java, Spring Boot, distributed microservices, event-driven pipelines (Kafka), 
-                                low-latency persistent structures, and secure multi-provider AI routing cores.
-                            </motion.p>
-
-                            {/* Tech Badges */}
-                            <motion.div variants={fadeInUp} className="flex flex-wrap gap-2 pt-2">
-                                {techBadges.map((badge) => (
-                                    <span
-                                        key={badge}
-                                        className="text-[10px] font-mono px-2.5 py-1 rounded bg-muted/40 border border-border/80 text-slate-300 hover:text-primary hover:border-primary/20 transition-all cursor-default"
-                                    >
-                                        {badge}
-                                    </span>
-                                ))}
-                            </motion.div>
-
-                            <motion.div variants={fadeInUp} className="flex flex-wrap gap-4 pt-4">
-                                <button
-                                    onClick={() => {
-                                        document.getElementById("projects")?.scrollIntoView({ behavior: "smooth" });
-                                    }}
-                                    className="px-6 py-3.5 rounded-xl bg-primary text-white font-mono font-bold text-xs flex items-center hover:bg-primary/95 transition-all shadow-lg hover:shadow-primary/20 cursor-pointer"
-                                >
-                                    <span>EXPLORE PROJECTS</span>
-                                    <ArrowRight className="ml-2 h-4 w-4" />
-                                </button>
-                                <button
-                                    onClick={() => {
-                                        document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" });
-                                    }}
-                                    className="px-6 py-3.5 rounded-xl bg-slate-900 border border-slate-800 text-slate-300 font-mono font-bold text-xs flex items-center hover:bg-slate-850 hover:text-white transition-all cursor-pointer"
-                                >
-                                    <span>CONTACT ME</span>
-                                </button>
-                            </motion.div>
-                        </motion.div>
-                    </div>
-
-                    {/* Right: Simulated System Monitor Interface (span 5) */}
-                    <div className="lg:col-span-5 p-6 rounded-2xl bg-slate-950 border border-border/80 shadow-2xl relative overflow-hidden font-mono text-xs text-slate-300 space-y-4">
-                        <div className="absolute top-0 left-0 w-full h-[3px] bg-gradient-to-r from-primary to-accent" />
-                        
-                        {/* Terminal Header */}
-                        <div className="flex justify-between items-center text-[10px] text-slate-500 pb-2 border-b border-border/20">
-                            <span className="flex items-center space-x-1.5">
-                                <Terminal className="h-4 w-4 text-primary" />
-                                <span>CORE MONITOR // TATA_ELXSI</span>
-                            </span>
-                            <span className="flex items-center space-x-1.5">
-                                <span className="w-1.5 h-1.5 rounded-full bg-success animate-pulse" />
-                                <span>ONLINE</span>
-                            </span>
-                        </div>
-
-                        {/* Interactive Typing Stream */}
-                        <div className="min-h-[45px] text-[11px] text-success leading-relaxed flex items-start">
-                            <span className="text-primary mr-2 shrink-0">$</span>
-                            <p>
-                                {typedText}
-                                <span className="w-1.5 h-3.5 bg-success ml-1 inline-block animate-pulse" />
-                            </p>
-                        </div>
-
-                        {/* System Stats Block */}
-                        <div className="grid grid-cols-2 gap-4 pt-4 border-t border-border/20 text-[10px]">
-                            <div className="space-y-1">
-                                <span className="text-slate-500 uppercase">SYS THROUGHPUT</span>
-                                <p className="text-white font-bold flex items-center">
-                                    <Activity className="h-3.5 w-3.5 text-primary mr-1 shrink-0" />
-                                    <span>10k+ events/sec</span>
-                                </p>
-                            </div>
-                            <div className="space-y-1">
-                                <span className="text-slate-500 uppercase">LATENCY PROFILE</span>
-                                <p className="text-white font-bold flex items-center">
-                                    <Code className="h-3.5 w-3.5 text-accent mr-1 shrink-0" />
-                                    <span>sub-50ms average</span>
-                                </p>
-                            </div>
-                        </div>
-
-                        {/* Visual Node Cluster Representation */}
-                        <div className="pt-2 flex items-center space-x-2 text-[9px] text-slate-500">
-                            <span>REPLICAS:</span>
-                            <span className="px-1.5 py-0.5 rounded bg-primary/10 border border-primary/20 text-primary">FHIR-01</span>
-                            <span className="px-1.5 py-0.5 rounded bg-primary/10 border border-primary/20 text-primary">FHIR-02</span>
-                            <span className="px-1.5 py-0.5 rounded bg-accent/10 border border-accent/20 text-accent">IDP-01</span>
-                        </div>
-                    </div>
-
+            <motion.div variants={iV} className="grid grid-cols-4 gap-3 pt-4 border-t"
+              style={{ borderColor: "rgba(255,255,255,0.05)" }}>
+              {stats.map(({ value, label, icon: Icon }) => (
+                <div key={label} className="text-center">
+                  <Icon className="w-3 h-3 mx-auto mb-1 text-slate-600" />
+                  <div className="text-lg font-black font-mono gradient-text-cyan">{value}</div>
+                  <div className="text-[9px] font-mono uppercase tracking-wider text-slate-600">{label}</div>
                 </div>
-            </div>
-            
-            {/* Credibility Strip */}
-            <div className="absolute bottom-0 left-0 w-full border-y border-border/40 bg-muted/20 backdrop-blur-sm z-10">
-                <div className="container-tight py-4 overflow-x-auto no-scrollbar">
-                    <div className="flex items-center justify-between min-w-max gap-8 px-4 text-[10px] font-mono font-bold uppercase tracking-[0.2em] text-slate-400">
-                        <div className="flex items-center space-x-2">
-                            <span className="text-primary">/</span>
-                            <span>FHIR R4 Interoperability</span>
-                        </div>
-                        <div className="flex items-center space-x-2">
-                            <span className="text-primary">/</span>
-                            <span>Kafka Event Pipelines</span>
-                        </div>
-                        <div className="flex items-center space-x-2">
-                            <span className="text-primary">/</span>
-                            <span>3.4+ Years Experience</span>
-                        </div>
-                        <div className="flex items-center space-x-2">
-                            <span className="text-primary">/</span>
-                            <span>AWS Solutions Architect</span>
-                        </div>
-                    </div>
+              ))}
+            </motion.div>
+          </motion.div>
+
+          {/* RIGHT — Terminal */}
+          <motion.div initial={{ opacity: 0, x: 40, filter: "blur(10px)" }}
+            animate={{ opacity: 1, x: 0, filter: "blur(0px)" }}
+            transition={{ duration: 1, delay: 0.8, ease: [0.23, 1, 0.32, 1] }} className="relative">
+
+            <div className="absolute -inset-2 rounded-2xl opacity-30"
+              style={{ background: "radial-gradient(ellipse, rgba(6,182,212,0.15), transparent 70%)", filter: "blur(20px)" }} />
+
+            <div className="relative rounded-2xl overflow-hidden animate-border-pulse"
+              style={{ background: "#060c1a", border: "1px solid rgba(6,182,212,0.12)" }}>
+              <div className="flex items-center justify-between px-5 py-3.5 border-b"
+                style={{ borderColor: "rgba(255,255,255,0.05)", background: "rgba(0,0,0,0.3)" }}>
+                <div className="flex items-center gap-2">
+                  <div className="flex gap-1.5">
+                    <div className="w-3 h-3 rounded-full" style={{ background: "rgba(239,68,68,0.7)" }} />
+                    <div className="w-3 h-3 rounded-full" style={{ background: "rgba(245,158,11,0.7)" }} />
+                    <div className="w-3 h-3 rounded-full" style={{ background: "rgba(16,185,129,0.7)" }} />
+                  </div>
+                  <span className="font-mono text-[10px] text-slate-500 ml-2">system_monitor.sh</span>
                 </div>
+                <div className="flex items-center gap-1.5">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                  <span className="font-mono text-[10px] text-emerald-400">LIVE</span>
+                </div>
+              </div>
+
+              <div className="p-5 space-y-2 font-mono text-[11px] min-h-[180px]">
+                {terminalLines.map((line, i) => (
+                  <motion.div key={i}
+                    initial={{ opacity: 0, x: -10 }}
+                    animate={visibleLines.includes(i) ? { opacity: 1, x: 0 } : { opacity: 0, x: -10 }}
+                    transition={{ duration: 0.4 }}
+                    className={i === terminalLines.length - 1 ? "text-emerald-400" : "text-slate-400"}>
+                    {line.text}
+                  </motion.div>
+                ))}
+                {visibleLines.length < terminalLines.length && (
+                  <span className="inline-block w-2 h-3.5 bg-cyan-400 animate-blink" />
+                )}
+              </div>
+
+              <div className="grid grid-cols-2 gap-px border-t" style={{ borderColor: "rgba(255,255,255,0.05)" }}>
+                {[
+                  { label: "Throughput", value: "12,420 rps", color: "#06b6d4" },
+                  { label: "Avg Latency", value: "< 24 ms", color: "#10b981" },
+                  { label: "Cache Hit", value: "94.2%", color: "#8b5cf6" },
+                  { label: "SLA Uptime", value: "99.99%", color: "#f59e0b" },
+                ].map((m) => (
+                  <div key={m.label} className="p-4" style={{ background: "rgba(0,0,0,0.2)" }}>
+                    <div className="text-[9px] font-mono uppercase tracking-wider text-slate-600 mb-1">{m.label}</div>
+                    <div className="text-base font-bold font-mono" style={{ color: m.color }}>{m.value}</div>
+                  </div>
+                ))}
+              </div>
+
+              <div className="px-5 py-3 border-t flex items-center gap-2 flex-wrap"
+                style={{ borderColor: "rgba(255,255,255,0.05)" }}>
+                <span className="text-[9px] font-mono text-slate-600 uppercase tracking-wider">Active Services:</span>
+                {["FHIR-01", "FHIR-02", "IDP-01", "LLM-GW"].map((s, i) => (
+                  <span key={s} className="text-[9px] font-mono px-1.5 py-0.5 rounded"
+                    style={{
+                      background: i < 2 ? "rgba(6,182,212,0.1)" : "rgba(139,92,246,0.1)",
+                      border: `1px solid ${i < 2 ? "rgba(6,182,212,0.2)" : "rgba(139,92,246,0.2)"}`,
+                      color: i < 2 ? "#06b6d4" : "#8b5cf6",
+                    }}>{s}</span>
+                ))}
+              </div>
             </div>
-        </section>
-    );
+          </motion.div>
+        </div>
+      </div>
+
+      {/* Ticker */}
+      <div className="absolute bottom-0 left-0 w-full border-t overflow-hidden"
+        style={{ borderColor: "rgba(255,255,255,0.05)", background: "rgba(6,182,212,0.02)" }}>
+        <div className="flex animate-ticker whitespace-nowrap py-3">
+          {[0, 1].map((rep) => (
+            <div key={rep} className="flex items-center gap-8 shrink-0 pr-8">
+              {tickerItems.map((item) => (
+                <span key={item} className="font-mono text-[10px] uppercase tracking-widest text-slate-600 flex items-center gap-2">
+                  <span style={{ color: "#164e63" }}>▸</span>{item}
+                </span>
+              ))}
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Scroll cue */}
+      <motion.div className="absolute bottom-16 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 opacity-30"
+        animate={{ y: [0, 8, 0] }} transition={{ repeat: Infinity, duration: 2 }}>
+        <span className="text-[9px] font-mono uppercase tracking-widest text-slate-500">Scroll</span>
+        <ChevronDown className="w-4 h-4 text-slate-500" />
+      </motion.div>
+    </section>
+  );
 };

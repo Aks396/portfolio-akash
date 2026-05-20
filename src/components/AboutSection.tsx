@@ -1,183 +1,136 @@
 "use client";
 
-import React, { useState } from "react";
-import { motion } from "framer-motion";
-import { GraduationCap, Briefcase, Zap, Cpu, BarChart2, Star, Shield } from "lucide-react";
+import { useRef } from "react";
+import { motion, type Variants, useInView } from "framer-motion";
+import { MapPin, Briefcase, GraduationCap, Award, Code2, Server } from "lucide-react";
 
-interface TimelineItem {
-    year: string;
-    role: string;
-    org: string;
-    description: string;
-    icon: React.ReactNode;
-    type: "work" | "edu";
-}
+const metrics = [
+  { value: "3.4+", label: "Years Experience", color: "#06b6d4" },
+  { value: "99.9%", label: "SLA Maintained", color: "#10b981" },
+  { value: "10k+", label: "Events / Second", color: "#8b5cf6" },
+  { value: "45%", label: "Perf. Improvement", color: "#f59e0b" },
+];
 
-const timeline: TimelineItem[] = [
-    {
-        year: "JAN 2023 — PRESENT",
-        role: "Software Developer (Backend Engineering)",
-        org: "Tata Elxsi Ltd.",
-        description: "Designing microservices, asynchronous Kafka event pipelines, secure Spring Boot frameworks, and optimizing persistent data queries.",
-        icon: <Briefcase className="h-4 w-4" />,
-        type: "work"
-    },
-    {
-        year: "2018 — 2022",
-        role: "B.Tech in Information Technology (7.77 CGPA)",
-        org: "Madhav Institute of Technology & Science (MITS)",
-        description: "Studied core software systems engineering, relational databases, data structures, algorithms, and distributed computing models.",
-        icon: <GraduationCap className="h-4 w-4" />,
-        type: "edu"
-    }
+const highlights = [
+  { icon: Server, label: "Backend Architecture", desc: "Microservices, event-driven systems, API gateways" },
+  { icon: Code2, label: "AI Engineering", desc: "LLM routing, OCR pipelines, multimodal AI" },
+  { icon: Award, label: "Cloud Infrastructure", desc: "AWS certified, Docker, Kubernetes, CI/CD" },
 ];
 
 export const AboutSection = () => {
-    const [activeTab, setActiveTab] = useState<"philosophy" | "metrics">("philosophy");
+  const ref = useRef<HTMLDivElement>(null);
+  const inView = useInView(ref, { once: true, margin: "-100px" });
 
-    return (
-        <section id="about" className="bg-background relative border-t border-border/50">
-            <div className="absolute inset-0 grid-pattern opacity-[0.06] -z-10" />
-            
-            <div className="container-tight section-padding">
-                <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-start">
-                    
-                    {/* Left: Bio & Stats Cards (span 7) */}
-                    <div className="lg:col-span-7 space-y-8">
-                        <div>
-                            <span className="mono-label">Architectural Identity</span>
-                            <h2 className="text-3xl font-bold tracking-tight text-white">Engineering Scale & Reliability</h2>
-                            <p className="text-sm text-muted-foreground mt-2 leading-relaxed">
-                                Bridging scalable core Java enterprise systems with cutting-edge AI orchestration layers.
-                            </p>
-                        </div>
+  const sV: Variants = { hidden: {}, visible: { transition: { staggerChildren: 0.1 } } };
+  const iV: Variants = {
+    hidden: { opacity: 0, y: 24 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: "easeOut" } },
+  };
 
-                        {/* Engineering Metrics Grid */}
-                        <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-                            <div className="p-4 rounded-xl bg-card border border-border/60 hover:border-primary/40 transition-colors">
-                                <h4 className="text-2xl font-bold text-foreground font-mono">3.4+ Yrs</h4>
-                                <p className="text-[10px] text-muted-foreground uppercase font-mono mt-1">Prod Experience</p>
-                            </div>
-                            <div className="p-4 rounded-xl bg-card border border-border/60 hover:border-primary/40 transition-colors">
-                                <h4 className="text-2xl font-bold text-foreground font-mono">10+</h4>
-                                <p className="text-[10px] text-muted-foreground uppercase font-mono mt-1">Backend Projects</p>
-                            </div>
-                            <div className="p-4 rounded-xl bg-card border border-border/60 hover:border-primary/40 transition-colors">
-                                <h4 className="text-2xl font-bold text-foreground font-mono">99.9%</h4>
-                                <p className="text-[10px] text-muted-foreground uppercase font-mono mt-1">API Reliability</p>
-                            </div>
-                            <div className="p-4 rounded-xl bg-card border border-border/60 hover:border-primary/40 transition-colors">
-                                <h4 className="text-2xl font-bold text-foreground font-mono">+30%</h4>
-                                <p className="text-[10px] text-muted-foreground uppercase font-mono mt-1">Throughput Gain</p>
-                            </div>
-                            <div className="p-4 rounded-xl bg-card border border-border/60 hover:border-primary/40 transition-colors">
-                                <h4 className="text-2xl font-bold text-foreground font-mono">-25%</h4>
-                                <p className="text-[10px] text-muted-foreground uppercase font-mono mt-1">Latency Reduced</p>
-                            </div>
-                            <div className="p-4 rounded-xl bg-card border border-border/60 hover:border-primary/40 transition-colors">
-                                <h4 className="text-2xl font-bold text-foreground font-mono">-45%</h4>
-                                <p className="text-[10px] text-muted-foreground uppercase font-mono mt-1">CPU Overhead Saved</p>
-                            </div>
-                        </div>
+  return (
+    <section id="about" ref={ref} className="relative border-t" style={{ borderColor: "rgba(255,255,255,0.04)", background: "#030810" }}>
+      <div className="absolute inset-0 grid-pattern-sm opacity-60 pointer-events-none" />
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[1px]"
+        style={{ background: "linear-gradient(90deg, transparent, rgba(6,182,212,0.3), transparent)" }} />
 
-                        {/* Interactive Philosophy Panel */}
-                        <div className="space-y-4">
-                            <div className="flex border-b border-border/40">
-                                <button
-                                    onClick={() => setActiveTab("philosophy")}
-                                    className={`pb-3 text-xs font-mono font-bold uppercase tracking-wider transition-colors border-b-2 ${
-                                        activeTab === "philosophy" ? "text-primary border-primary" : "text-muted-foreground border-transparent hover:text-foreground"
-                                    } mr-6`}
-                                >
-                                    Engineering Mindset
-                                </button>
-                                <button
-                                    onClick={() => setActiveTab("metrics")}
-                                    className={`pb-3 text-xs font-mono font-bold uppercase tracking-wider transition-colors border-b-2 ${
-                                        activeTab === "metrics" ? "text-primary border-primary" : "text-muted-foreground border-transparent hover:text-foreground"
-                                    }`}
-                                >
-                                    Target Core KPIs
-                                </button>
-                            </div>
+      <div className="container-tight section-padding">
+        <motion.div variants={sV} initial="hidden" animate={inView ? "visible" : "hidden"}
+          className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
 
-                            <div className="min-h-[120px] text-sm text-muted-foreground leading-relaxed font-mono py-2">
-                                {activeTab === "philosophy" ? (
-                                    <div className="space-y-3">
-                                        <p>
-                                            &gt; I design microservices-based backends using Java and Spring Boot, focusing on loose coupling and clear boundaries.
-                                        </p>
-                                        <p>
-                                            &gt; I prioritize asynchronous event pipelines (Kafka) and caching structures (Redis) to decouple slow systems and provide sub-millisecond query responses.
-                                        </p>
-                                    </div>
-                                ) : (
-                                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                                        <div className="flex items-start space-x-2">
-                                            <Zap className="h-4 w-4 text-primary mt-0.5 shrink-0" />
-                                            <span>API response latency target: &lt; 50ms</span>
-                                        </div>
-                                        <div className="flex items-start space-x-2">
-                                            <Cpu className="h-4 w-4 text-primary mt-0.5 shrink-0" />
-                                            <span>Thread contention overhead: &lt; 2%</span>
-                                        </div>
-                                        <div className="flex items-start space-x-2">
-                                            <BarChart2 className="h-4 w-4 text-primary mt-0.5 shrink-0" />
-                                            <span>Unit testing statement coverage: &gt; 75%</span>
-                                        </div>
-                                        <div className="flex items-start space-x-2">
-                                            <Shield className="h-4 w-4 text-primary mt-0.5 shrink-0" />
-                                            <span>Zero-trust JWT authentication schemas</span>
-                                        </div>
-                                    </div>
-                                )}
-                            </div>
-                        </div>
-                    </div>
+          {/* LEFT: Bio */}
+          <div className="space-y-8">
+            <motion.div variants={iV}>
+              <span className="mono-label">About</span>
+              <h2 className="text-3xl md:text-4xl font-black tracking-[-0.03em] text-white mt-2"
+                style={{ fontFamily: "var(--font-geist), sans-serif" }}>
+                Engineering Systems{" "}
+                <span className="gradient-text-cyan">That Scale</span>
+              </h2>
+            </motion.div>
 
-                    {/* Right: Timeline (span 5) */}
-                    <div className="lg:col-span-5 p-6 rounded-2xl bg-card border border-border space-y-6">
-                        <div className="flex items-center justify-between pb-3 border-b border-border/40">
-                            <span className="text-xs font-mono font-bold text-muted-foreground uppercase">Interactive Timeline</span>
-                            <span className="text-[10px] text-primary font-mono">STATUS: ACTIVE</span>
-                        </div>
+            <motion.div variants={iV} className="space-y-4 text-sm text-slate-400 font-mono leading-relaxed">
+              <p>
+                Software Developer at <span className="text-cyan-400 font-semibold">Tata Elxsi</span>, specializing in backend engineering for healthcare and AI platforms. I build distributed systems that handle real-time clinical data, AI inference pipelines, and multi-provider LLM routing at scale.
+              </p>
+              <p>
+                My engineering philosophy: every system should be observable, resilient, and built for 10x traffic without rearchitecting. I approach software like infrastructure — designed once, operated forever.
+              </p>
+            </motion.div>
 
-                        <div className="relative pl-6 border-l border-border/60 space-y-8">
-                            {timeline.map((item, index) => (
-                                <motion.div
-                                    key={index}
-                                    initial={{ opacity: 0, x: -10 }}
-                                    whileInView={{ opacity: 1, x: 0 }}
-                                    transition={{ delay: index * 0.1 }}
-                                    className="relative space-y-2 group"
-                                >
-                                    {/* Icon badge */}
-                                    <div className="absolute -left-[37px] top-0 p-1.5 rounded-full bg-card border border-border text-primary group-hover:border-primary transition-colors">
-                                        {item.icon}
-                                    </div>
-
-                                    <div>
-                                        <span className="text-[10px] font-mono text-muted-foreground bg-muted/60 px-2 py-0.5 rounded">
-                                            {item.year}
-                                        </span>
-                                        <h4 className="text-sm font-bold text-foreground mt-2 group-hover:text-primary transition-colors">
-                                            {item.role}
-                                        </h4>
-                                        <p className="text-xs font-mono text-primary/80 font-medium">
-                                            {item.org}
-                                        </p>
-                                    </div>
-
-                                    <p className="text-xs text-muted-foreground leading-relaxed">
-                                        {item.description}
-                                    </p>
-                                </motion.div>
-                            ))}
-                        </div>
-                    </div>
-
+            <motion.div variants={iV} className="space-y-2">
+              {[
+                { icon: Briefcase, text: "Tata Elxsi Ltd. — Software Developer" },
+                { icon: MapPin, text: "Pune, India" },
+                { icon: GraduationCap, text: "B.E. Computer Engineering" },
+                { icon: Award, text: "AWS Certified Solutions Architect – Associate" },
+              ].map(({ icon: Icon, text }) => (
+                <div key={text} className="flex items-center gap-3 text-[12px] font-mono text-slate-500">
+                  <Icon className="w-3.5 h-3.5 shrink-0" style={{ color: "#06b6d4" }} />
+                  {text}
                 </div>
+              ))}
+            </motion.div>
+
+            {/* Capability highlights */}
+            <motion.div variants={iV} className="space-y-3">
+              {highlights.map(({ icon: Icon, label, desc }) => (
+                <div key={label} className="flex items-start gap-3 p-3 rounded-xl card-hover cursor-default"
+                  style={{ background: "rgba(6,182,212,0.03)", border: "1px solid rgba(255,255,255,0.05)" }}>
+                  <div className="w-7 h-7 rounded-lg flex items-center justify-center shrink-0"
+                    style={{ background: "rgba(6,182,212,0.1)", border: "1px solid rgba(6,182,212,0.2)" }}>
+                    <Icon className="w-3.5 h-3.5" style={{ color: "#06b6d4" }} />
+                  </div>
+                  <div>
+                    <div className="text-xs font-mono font-bold text-slate-200">{label}</div>
+                    <div className="text-[11px] font-mono text-slate-600 mt-0.5">{desc}</div>
+                  </div>
+                </div>
+              ))}
+            </motion.div>
+          </div>
+
+          {/* RIGHT: Metrics */}
+          <motion.div variants={iV} className="space-y-4">
+            {/* Metrics grid */}
+            <div className="grid grid-cols-2 gap-3">
+              {metrics.map(({ value, label, color }) => (
+                <div key={label} className="p-5 rounded-2xl card-hover relative overflow-hidden group"
+                  style={{ background: "#060c1a", border: "1px solid rgba(255,255,255,0.06)" }}>
+                  <div className="absolute top-0 left-0 right-0 h-[2px]"
+                    style={{ background: `linear-gradient(90deg, transparent, ${color}, transparent)` }} />
+                  <div className="text-2xl md:text-3xl font-black font-mono mb-1" style={{ color }}>{value}</div>
+                  <div className="text-[10px] font-mono uppercase tracking-wider text-slate-600">{label}</div>
+                </div>
+              ))}
             </div>
-        </section>
-    );
+
+            {/* Experience card */}
+            <div className="p-6 rounded-2xl" style={{ background: "#060c1a", border: "1px solid rgba(255,255,255,0.06)" }}>
+              <div className="flex items-center justify-between mb-4">
+                <span className="text-[10px] font-mono uppercase tracking-widest text-slate-600">Professional Timeline</span>
+                <span className="text-[10px] font-mono text-emerald-400 flex items-center gap-1.5">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                  Current
+                </span>
+              </div>
+              <div className="space-y-4">
+                <div className="relative pl-4 border-l" style={{ borderColor: "rgba(6,182,212,0.2)" }}>
+                  <div className="absolute -left-1.5 top-1 w-2.5 h-2.5 rounded-full"
+                    style={{ background: "#06b6d4", boxShadow: "0 0 10px rgba(6,182,212,0.5)" }} />
+                  <div className="text-xs font-mono font-bold text-white">Tata Elxsi Ltd.</div>
+                  <div className="text-[10px] font-mono text-slate-500">Software Developer · Jan 2023 – Present</div>
+                  <div className="text-[10px] font-mono text-cyan-400 mt-0.5">Backend Engineering · Healthcare · AI</div>
+                </div>
+                <div className="relative pl-4 border-l" style={{ borderColor: "rgba(255,255,255,0.05)" }}>
+                  <div className="absolute -left-1.5 top-1 w-2.5 h-2.5 rounded-full bg-slate-700" />
+                  <div className="text-xs font-mono font-bold text-slate-400">B.E. Computer Engineering</div>
+                  <div className="text-[10px] font-mono text-slate-600">University · 2019 – 2023</div>
+                </div>
+              </div>
+            </div>
+          </motion.div>
+        </motion.div>
+      </div>
+    </section>
+  );
 };

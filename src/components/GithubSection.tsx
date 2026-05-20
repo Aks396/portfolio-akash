@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 import { motion } from "framer-motion";
 import { Github, Code2, GitCommit, GitFork, Star, BarChart3, Clock, Flame } from "lucide-react";
 

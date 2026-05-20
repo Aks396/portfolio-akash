@@ -1,137 +1,160 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
-import { motion } from "framer-motion";
-import { Shield, Activity, Cpu, Database, AlertCircle, CheckCircle2 } from "lucide-react";
+import React, { useState, useEffect, useRef } from "react";
+import { motion, useInView } from "framer-motion";
+import { Activity } from "lucide-react";
 
 const achievements = [
-    "Architected scalable microservices-based backend systems using Java and Spring Boot, improving service modularity and reducing cross-service dependencies by 40%.",
-    "Engineered high-throughput RESTful APIs and API gateway integrations, increasing system throughput by 30% while reducing API latency by 25% under peak load conditions.",
-    "Optimized backend application performance by 45% through asynchronous processing, Kafka-based event pipelines, query optimization, and refactoring legacy services.",
-    "Implemented caching strategies (Redis) and optimized database interactions for low-latency API responses and improved backend scalability.",
-    "Developed secure authentication and authorization workflows using JWT and Spring Security for enterprise-grade healthcare platforms.",
-    "Increased automated test coverage from below 50% to 77% using JUnit, Mockito, and TestNG, reducing production defects by 20%.",
-    "Collaborated with DevOps teams to implement CI/CD pipelines using Jenkins, Docker, and GitHub Actions workflows, improving deployment reliability and reducing deployment failures by 30%.",
-    "Integrated third-party healthcare APIs and real-time data services enabling seamless interoperability across distributed healthcare ecosystems.",
-    "Participated in production support, debugging, performance tuning, and monitoring activities for scalable distributed systems deployed in enterprise environments."
+  "Architected scalable microservices using Java and Spring Boot, improving service modularity and reducing cross-service dependencies by 40%.",
+  "Engineered high-throughput RESTful APIs and API gateway integrations, increasing system throughput by 30% while reducing API latency by 25%.",
+  "Optimized backend performance by 45% through async processing, Kafka-based event pipelines, query optimization, and service refactoring.",
+  "Implemented caching strategies (Redis) and optimized database interactions for low-latency API responses and improved backend scalability.",
+  "Developed secure authentication workflows using JWT and Spring Security for enterprise-grade healthcare platforms.",
+  "Increased automated test coverage from below 50% to 77% using JUnit, Mockito, and TestNG, reducing production defects by 20%.",
+  "Collaborated with DevOps to implement CI/CD pipelines using Jenkins, Docker, and GitHub Actions, reducing deployment failures by 30%.",
+  "Integrated third-party healthcare APIs and real-time FHIR data services enabling seamless interoperability across distributed ecosystems.",
 ];
 
-const tags = [
-    "Java", "Spring Boot", "Kafka", "Redis", "AWS", "Docker", "Jenkins", "JUnit", "Spring Security", "TDD"
+const telemetryRows = [
+  { label: "SERVICE SLA", value: "99.99%", color: "#10b981", sub: "UPTIME" },
+  { label: "AVG LATENCY", value: "24 ms", color: "#06b6d4", sub: "P50" },
+  { label: "THROUGHPUT", value: "12,420 rps", color: "#8b5cf6", sub: "PEAK" },
+  { label: "TEST COVERAGE", value: "77%", color: "#f59e0b", sub: "UNIT/INT" },
 ];
 
 export const Experience = () => {
-    const [currentTime, setCurrentTime] = useState("");
-    
-    useEffect(() => {
-        const updateClock = () => {
-            const now = new Date();
-            setCurrentTime(now.toLocaleTimeString());
-        };
-        updateClock();
-        const interval = setInterval(updateClock, 1000);
-        return () => clearInterval(interval);
-    }, []);
+  const ref = useRef<HTMLDivElement>(null);
+  const inView = useInView(ref, { once: true, margin: "-80px" });
+  const [clock, setClock] = useState("");
 
-    return (
-        <section id="experience" className="bg-background relative border-t border-border/50">
-            <div className="absolute inset-0 grid-pattern opacity-[0.06] -z-10" />
-            <div className="container-tight section-padding">
-                <div className="mb-12">
-                    <span className="mono-label">Professional History</span>
-                    <h2 className="text-3xl font-bold tracking-tight">Work Experience</h2>
-                    <p className="text-sm text-muted-foreground mt-2 font-mono">
-                        Detailed roles, responsibilities, and runtime production telemetry.
-                    </p>
+  useEffect(() => {
+    const update = () => setClock(new Date().toLocaleTimeString("en-US", { hour12: false }));
+    update();
+    const id = setInterval(update, 1000);
+    return () => clearInterval(id);
+  }, []);
+
+  return (
+    <section id="experience" ref={ref} className="relative border-t"
+      style={{ borderColor: "rgba(255,255,255,0.04)", background: "#030810" }}>
+      <div className="absolute inset-0 grid-pattern-sm opacity-40 pointer-events-none" />
+
+      <div className="container-tight section-padding">
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={inView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.6 }} className="mb-14">
+          <span className="mono-label">Work History</span>
+          <h2 className="text-3xl md:text-4xl font-black tracking-[-0.03em] text-white"
+            style={{ fontFamily: "var(--font-geist), sans-serif" }}>
+            Professional <span className="gradient-text-cyan">Experience</span>
+          </h2>
+        </motion.div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+
+          {/* Main role card */}
+          <motion.div initial={{ opacity: 0, x: -20 }} animate={inView ? { opacity: 1, x: 0 } : {}}
+            transition={{ duration: 0.7, delay: 0.1 }}
+            className="lg:col-span-8 rounded-2xl overflow-hidden"
+            style={{ background: "#060c1a", border: "1px solid rgba(255,255,255,0.06)" }}>
+
+            {/* Card header */}
+            <div className="px-7 py-5 border-b" style={{ borderColor: "rgba(255,255,255,0.05)" }}>
+              <div className="flex flex-wrap items-start justify-between gap-4">
+                <div>
+                  <span className="text-[9px] font-mono uppercase tracking-[0.2em] px-2 py-0.5 rounded"
+                    style={{ background: "rgba(6,182,212,0.08)", border: "1px solid rgba(6,182,212,0.15)", color: "#06b6d4" }}>
+                    JAN 2023 — PRESENT
+                  </span>
+                  <h3 className="text-xl font-black tracking-[-0.02em] text-white mt-3"
+                    style={{ fontFamily: "var(--font-geist), sans-serif" }}>
+                    Software Developer
+                    <span className="text-base font-semibold text-slate-500 ml-2">— Backend Engineering</span>
+                  </h3>
+                  <p className="text-sm font-mono mt-0.5" style={{ color: "#06b6d4" }}>Tata Elxsi Ltd.</p>
                 </div>
-
-                <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-                    {/* Left: Role description & Bullet points (span 8) */}
-                    <div className="lg:col-span-8 p-6 rounded-2xl bg-card border border-border space-y-6">
-                        <div className="flex flex-col sm:flex-row justify-between sm:items-center pb-4 border-b border-border/40 gap-2">
-                            <div>
-                                <span className="text-[10px] font-mono text-muted-foreground bg-muted px-2 py-0.5 rounded">
-                                    JAN 2023 — PRESENT
-                                </span>
-                                <h3 className="text-xl font-bold text-foreground mt-2">Software Developer (Backend Engineering)</h3>
-                                <p className="text-xs font-mono text-primary font-medium">Tata Elxsi Ltd.</p>
-                            </div>
-                        </div>
-
-                        <ul className="space-y-4">
-                            {achievements.map((item, i) => (
-                                <li key={i} className="flex items-start text-xs leading-relaxed text-slate-300">
-                                    <span className="text-primary mr-3 mt-1.5 h-1.5 w-1.5 rounded-full bg-primary shrink-0" />
-                                    {item}
-                                </li>
-                            ))}
-                        </ul>
-
-                        <div className="flex flex-wrap gap-2 pt-4 border-t border-border/40">
-                            {tags.map((tag) => (
-                                <span key={tag} className="text-[10px] font-mono text-muted-foreground uppercase tracking-wider">
-                                    #{tag}
-                                </span>
-                            ))}
-                        </div>
-                    </div>
-
-                    {/* Right: Telemetry Dashboard widget (span 4) */}
-                    <div className="lg:col-span-4 p-6 rounded-2xl bg-card border border-border lg:sticky lg:top-24 space-y-6">
-                        <div className="flex justify-between items-center pb-3 border-b border-border/40 text-[10px] font-mono text-slate-500">
-                            <span>JVM RUNTIME METRICS</span>
-                            <span>{currentTime || "ACTIVE"}</span>
-                        </div>
-
-                        {/* Telemetry rows */}
-                        <div className="space-y-4 font-mono text-[10px] text-slate-400">
-                            <div className="p-3 rounded-lg bg-slate-950 border border-border/20 flex items-center justify-between">
-                                <span className="text-slate-500">SERVICE SLA</span>
-                                <span className="font-bold text-success flex items-center">
-                                    <CheckCircle2 className="h-3.5 w-3.5 mr-1 text-success shrink-0" />
-                                    99.99% UP
-                                </span>
-                            </div>
-
-                            <div className="p-3 rounded-lg bg-slate-950 border border-border/20 flex items-center justify-between">
-                                <span className="text-slate-500">AVG SERVICE LATENCY</span>
-                                <span className="font-bold text-foreground">24 ms</span>
-                            </div>
-
-                            <div className="p-3 rounded-lg bg-slate-950 border border-border/20 flex items-center justify-between">
-                                <span className="text-slate-500">THROUGHPUT RATE</span>
-                                <span className="font-bold text-white flex items-center">
-                                    <Activity className="h-3.5 w-3.5 text-primary mr-1 shrink-0 animate-pulse" />
-                                    12,420 rps
-                                </span>
-                            </div>
-
-                            {/* Heap Usage visual slider */}
-                            <div className="p-3 rounded-lg bg-slate-950 border border-border/20 space-y-2">
-                                <div className="flex justify-between text-slate-500">
-                                    <span>JVM HEAP MEMORY</span>
-                                    <span>2.4 GB / 4.0 GB</span>
-                                </div>
-                                <div className="w-full bg-slate-900 rounded-full h-1.5 overflow-hidden">
-                                    <div className="bg-primary h-full rounded-full" style={{ width: "60%" }} />
-                                </div>
-                            </div>
-
-                            {/* Active Threads */}
-                            <div className="p-3 rounded-lg bg-slate-950 border border-border/20 space-y-1">
-                                <div className="flex justify-between text-slate-500">
-                                    <span>ACTIVE VIRTUAL THREADS</span>
-                                    <span className="text-foreground font-bold">142 Active</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div className="text-[9px] font-mono text-slate-500 text-center leading-relaxed">
-                            Telemetry sync: Connected securely over SSL to cluster deployment.
-                        </div>
-                    </div>
+                <div className="flex items-center gap-1.5">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                  <span className="text-[10px] font-mono text-emerald-400 uppercase">Current</span>
                 </div>
+              </div>
             </div>
-        </section>
-    );
+
+            {/* Achievements */}
+            <div className="px-7 py-5 space-y-3">
+              {achievements.map((item, i) => (
+                <motion.div key={i} initial={{ opacity: 0, x: -10 }} animate={inView ? { opacity: 1, x: 0 } : {}}
+                  transition={{ delay: 0.2 + i * 0.07 }}
+                  className="flex items-start gap-3 text-[12px] font-mono text-slate-400 leading-relaxed">
+                  <span className="mt-1.5 w-1.5 h-1.5 rounded-full shrink-0" style={{ background: "#06b6d4" }} />
+                  {item}
+                </motion.div>
+              ))}
+            </div>
+
+            {/* Tags */}
+            <div className="px-7 py-4 border-t flex flex-wrap gap-1.5" style={{ borderColor: "rgba(255,255,255,0.05)" }}>
+              {["Java", "Spring Boot", "Kafka", "Redis", "AWS", "Docker", "Jenkins", "JUnit", "Spring Security"].map((t) => (
+                <span key={t} className="text-[9px] font-mono px-2 py-0.5 rounded"
+                  style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.06)", color: "#475569" }}>
+                  #{t}
+                </span>
+              ))}
+            </div>
+          </motion.div>
+
+          {/* Telemetry sidebar */}
+          <motion.div initial={{ opacity: 0, x: 20 }} animate={inView ? { opacity: 1, x: 0 } : {}}
+            transition={{ duration: 0.7, delay: 0.2 }}
+            className="lg:col-span-4 rounded-2xl overflow-hidden lg:sticky lg:top-24"
+            style={{ background: "#060c1a", border: "1px solid rgba(255,255,255,0.06)" }}>
+
+            <div className="px-5 py-4 border-b flex items-center justify-between"
+              style={{ borderColor: "rgba(255,255,255,0.05)" }}>
+              <span className="text-[9px] font-mono uppercase tracking-widest text-slate-600">JVM RUNTIME TELEMETRY</span>
+              <span className="text-[9px] font-mono text-slate-600">{clock || "00:00:00"}</span>
+            </div>
+
+            <div className="p-5 space-y-3">
+              {telemetryRows.map((row) => (
+                <div key={row.label} className="p-3 rounded-xl"
+                  style={{ background: "rgba(0,0,0,0.3)", border: "1px solid rgba(255,255,255,0.04)" }}>
+                  <div className="flex justify-between items-center">
+                    <span className="text-[9px] font-mono uppercase tracking-wider text-slate-600">{row.label}</span>
+                    <span className="text-[9px] font-mono text-slate-700">{row.sub}</span>
+                  </div>
+                  <div className="text-base font-black font-mono mt-1" style={{ color: row.color }}>{row.value}</div>
+                </div>
+              ))}
+
+              {/* Heap bar */}
+              <div className="p-3 rounded-xl space-y-2" style={{ background: "rgba(0,0,0,0.3)", border: "1px solid rgba(255,255,255,0.04)" }}>
+                <div className="flex justify-between text-[9px] font-mono text-slate-600">
+                  <span>JVM HEAP</span><span>2.4 / 4.0 GB</span>
+                </div>
+                <div className="h-1 rounded-full overflow-hidden" style={{ background: "rgba(255,255,255,0.05)" }}>
+                  <motion.div className="h-full rounded-full" style={{ background: "#06b6d4" }}
+                    initial={{ width: 0 }} animate={inView ? { width: "60%" } : {}}
+                    transition={{ duration: 1.2, delay: 0.5 }} />
+                </div>
+              </div>
+
+              {/* Threads */}
+              <div className="p-3 rounded-xl flex items-center justify-between"
+                style={{ background: "rgba(0,0,0,0.3)", border: "1px solid rgba(255,255,255,0.04)" }}>
+                <span className="text-[9px] font-mono uppercase tracking-wider text-slate-600">VIRTUAL THREADS</span>
+                <span className="flex items-center gap-1.5 text-[11px] font-mono font-bold" style={{ color: "#06b6d4" }}>
+                  <Activity className="w-3 h-3 animate-pulse" />
+                  142 Active
+                </span>
+              </div>
+
+              <div className="text-[9px] font-mono text-slate-700 text-center leading-relaxed">
+                Telemetry stream: connected over SSL to cluster.
+              </div>
+            </div>
+          </motion.div>
+        </div>
+      </div>
+    </section>
+  );
 };

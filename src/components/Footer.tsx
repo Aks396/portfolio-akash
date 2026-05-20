@@ -1,85 +1,77 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Shield, Github, Linkedin, Mail, Phone } from "lucide-react";
+import { Github, Linkedin, Mail, Zap } from "lucide-react";
 
 export const Footer = () => {
-    return (
-        <footer id="contact" className="bg-slate-950 text-slate-200 py-24 relative overflow-hidden">
-            <div className="absolute inset-0 grid-pattern opacity-5" />
-            
-            <div className="container mx-auto px-4 md:px-6 relative z-10">
-                <div className="max-w-4xl mx-auto text-center space-y-12">
-                    <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        className="space-y-4"
-                    >
-                        <h2 className="text-3xl md:text-5xl font-bold tracking-tighter text-white">
-                            Ready to Build <span className="text-primary tracking-normal font-medium">Production Systems?</span>
-                        </h2>
-                        <p className="text-lg text-slate-400 max-w-3xl mx-auto leading-relaxed">
-                            Open to <span className="text-white font-semibold">Backend Engineering</span> roles focused on distributed systems, 
-                            cloud-native platforms, and <span className="text-primary italic font-bold">resilient architecture</span>. 
-                            Let's architect the secure and scalable data layers for your next-gen applications.
-                        </p>
-                    </motion.div>
+  const year = new Date().getFullYear();
 
-                    <div className="flex flex-wrap justify-center gap-4">
-                        <motion.a
-                            href="mailto:sameersoni396@gmail.com"
-                            whileHover={{ scale: 1.05 }}
-                            whileTap={{ scale: 0.95 }}
-                            className="px-8 py-4 rounded-xl bg-primary text-white font-bold flex items-center shadow-lg shadow-primary/20"
-                        >
-                            <Mail className="mr-2 h-5 w-5" />
-                            Email Me
-                        </motion.a>
-                        <motion.a
-                            href="tel:+919685406249"
-                            whileHover={{ scale: 1.05 }}
-                            whileTap={{ scale: 0.95 }}
-                            className="px-8 py-4 rounded-xl bg-slate-900 text-white font-bold flex items-center border border-slate-800 hover:bg-slate-800 transition-colors"
-                        >
-                            <Phone className="mr-2 h-5 w-5" />
-                            Call Me
-                        </motion.a>
-                        <motion.a
-                            href="https://www.linkedin.com/in/akash-soni-a45457135"
-                            target="_blank"
-                            whileHover={{ scale: 1.05 }}
-                            whileTap={{ scale: 0.95 }}
-                            className="px-8 py-4 rounded-xl bg-slate-900 text-white font-bold flex items-center border border-slate-800 hover:bg-slate-800 transition-colors"
-                        >
-                            <Linkedin className="mr-2 h-5 w-5" />
-                            LinkedIn
-                        </motion.a>
-                        <motion.a
-                            href="https://github.com/Aks396"
-                            target="_blank"
-                            whileHover={{ scale: 1.05 }}
-                            whileTap={{ scale: 0.95 }}
-                            className="px-8 py-4 rounded-xl bg-slate-900 text-white font-bold flex items-center border border-slate-800 hover:bg-slate-800 transition-colors"
-                        >
-                            <Github className="mr-2 h-5 w-5" />
-                            GitHub
-                        </motion.a>
-                    </div>
+  return (
+    <footer className="relative border-t" style={{ borderColor: "rgba(255,255,255,0.04)", background: "#010208" }}>
+      {/* Top gradient line */}
+      <div className="absolute top-0 left-0 right-0 h-[1px]"
+        style={{ background: "linear-gradient(90deg, transparent, rgba(6,182,212,0.4), rgba(139,92,246,0.2), transparent)" }} />
 
-                    <div className="pt-24 border-t border-slate-900 flex flex-col md:flex-row items-center justify-between gap-6 text-sm text-slate-500 font-mono">
-                        <div className="flex items-center space-x-2">
-                            <Shield className="h-4 w-4 text-primary" />
-                            <span>© 2026 Akash Soni. All rights reserved.</span>
-                        </div>
-                        <div className="flex items-center space-x-6">
-                            <span className="hover:text-primary transition-colors cursor-default">HIPAA Compliant Dev</span>
-                            <span className="hover:text-primary transition-colors cursor-default">AWS Certified Solutions Architect</span>
-                            <span className="hover:text-primary transition-colors cursor-default">Java/Spring Expert</span>
-                        </div>
-                    </div>
-                </div>
+      <div className="container-tight py-10">
+        <div className="flex flex-col md:flex-row items-center justify-between gap-6">
+
+          {/* Left: Logo + tagline */}
+          <div className="flex items-center gap-3">
+            <div className="w-8 h-8 rounded-lg flex items-center justify-center"
+              style={{ background: "rgba(6,182,212,0.08)", border: "1px solid rgba(6,182,212,0.15)" }}>
+              <Zap className="w-4 h-4" style={{ color: "#06b6d4" }} />
             </div>
-        </footer>
-    );
+            <div>
+              <div className="font-black text-sm tracking-[-0.03em] text-white"
+                style={{ fontFamily: "var(--font-geist), sans-serif" }}>
+                AKASH SONI
+              </div>
+              <div className="text-[9px] font-mono text-slate-600 mt-0.5">
+                Backend Engineer · AI Infrastructure
+              </div>
+            </div>
+          </div>
+
+          {/* Center: Status */}
+          <div className="flex items-center gap-1.5 text-[10px] font-mono"
+            style={{ color: "#10b981" }}>
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+            Available for New Opportunities
+          </div>
+
+          {/* Right: Socials */}
+          <div className="flex items-center gap-3">
+            {[
+              { href: "https://github.com/Aks396", icon: Github, label: "GitHub" },
+              { href: "https://linkedin.com/in/akash-soni396", icon: Linkedin, label: "LinkedIn" },
+              { href: "mailto:sameersoni396@gmail.com", icon: Mail, label: "Email" },
+            ].map(({ href, icon: Icon, label }) => (
+              <motion.a key={label} href={href} target="_blank" rel="noopener noreferrer"
+                whileHover={{ scale: 1.1, y: -2 }} whileTap={{ scale: 0.95 }}
+                aria-label={label}
+                className="w-8 h-8 rounded-lg flex items-center justify-center transition-all"
+                style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.06)" }}
+                onMouseEnter={(e) => {
+                  (e.currentTarget as HTMLElement).style.borderColor = "rgba(6,182,212,0.3)";
+                  (e.currentTarget as HTMLElement).style.background = "rgba(6,182,212,0.06)";
+                }}
+                onMouseLeave={(e) => {
+                  (e.currentTarget as HTMLElement).style.borderColor = "rgba(255,255,255,0.06)";
+                  (e.currentTarget as HTMLElement).style.background = "rgba(255,255,255,0.03)";
+                }}>
+                <Icon className="w-4 h-4 text-slate-500" />
+              </motion.a>
+            ))}
+          </div>
+        </div>
+
+        {/* Bottom */}
+        <div className="mt-8 pt-6 border-t flex flex-col md:flex-row items-center justify-between gap-2 text-[9px] font-mono text-slate-700"
+          style={{ borderColor: "rgba(255,255,255,0.04)" }}>
+          <span>© {year} Akash Soni. All rights reserved.</span>
+          <span>Built with Next.js · TypeScript · Framer Motion</span>
+        </div>
+      </div>
+    </footer>
+  );
 };
