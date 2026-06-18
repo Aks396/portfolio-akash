@@ -5,14 +5,13 @@ import { motion, useInView } from "framer-motion";
 import { Activity } from "lucide-react";
 
 const achievements = [
-  "Architected scalable microservices using Java and Spring Boot, improving service modularity and reducing cross-service dependencies by 40%.",
-  "Engineered high-throughput RESTful APIs and API gateway integrations, increasing system throughput by 30% while reducing API latency by 25%.",
-  "Optimized backend performance by 45% through async processing, Kafka-based event pipelines, query optimization, and service refactoring.",
-  "Implemented caching strategies (Redis) and optimized database interactions for low-latency API responses and improved backend scalability.",
-  "Developed secure authentication workflows using JWT and Spring Security for enterprise-grade healthcare platforms.",
+  "Architected scalable microservices using Java 21 and Spring Boot, improving service modularity and reducing cross-service dependencies by 40%.",
+  "Engineered high-throughput RESTful APIs, caching schemas (Redis), and MySQL databases for low-latency redirection services (tinyurl-ai-platform).",
+  "Designed and developed CURA-Autism-AI, a clinical diagnostic screening platform, and ATS-Checker, a resume intelligence feedback gateway using Gemini APIs.",
+  "Optimized backend performance by 45% through asynchronous event pipelines (Apache Kafka), query optimization, and memory cache tuning.",
+  "Developed secure authentication workflows using JWT and Spring Security for enterprise-grade applications and API endpoints.",
   "Increased automated test coverage from below 50% to 77% using JUnit, Mockito, and TestNG, reducing production defects by 20%.",
   "Collaborated with DevOps to implement CI/CD pipelines using Jenkins, Docker, and GitHub Actions, reducing deployment failures by 30%.",
-  "Integrated third-party healthcare APIs and real-time FHIR data services enabling seamless interoperability across distributed ecosystems.",
 ];
 
 const telemetryRows = [
@@ -67,8 +66,8 @@ export const Experience = () => {
                   </span>
                   <h3 className="text-xl font-black tracking-[-0.02em] text-white mt-3"
                     style={{ fontFamily: "var(--font-geist), sans-serif" }}>
-                    Software Developer
-                    <span className="text-base font-semibold text-slate-500 ml-2">— Backend Engineering</span>
+                    Senior Software Engineer
+                    <span className="text-base font-semibold text-slate-500 ml-2">— Full Stack &amp; Backend Systems</span>
                   </h3>
                   <p className="text-sm font-mono mt-0.5" style={{ color: "#06b6d4" }}>Tata Elxsi Ltd.</p>
                 </div>

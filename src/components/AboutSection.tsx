@@ -5,7 +5,7 @@ import { motion, type Variants, useInView } from "framer-motion";
 import { MapPin, Briefcase, GraduationCap, Award, Code2, Server } from "lucide-react";
 
 const metrics = [
-  { value: "3.4+", label: "Years Experience", color: "#06b6d4" },
+  { value: "5+", label: "Years Experience", color: "#06b6d4" },
   { value: "99.9%", label: "SLA Maintained", color: "#10b981" },
   { value: "10k+", label: "Events / Second", color: "#8b5cf6" },
   { value: "45%", label: "Perf. Improvement", color: "#f59e0b" },
@@ -50,7 +50,7 @@ export const AboutSection = () => {
 
             <motion.div variants={iV} className="space-y-4 text-sm text-slate-400 font-mono leading-relaxed">
               <p>
-                Software Developer at <span className="text-cyan-400 font-semibold">Tata Elxsi</span>, specializing in backend engineering for healthcare and AI platforms. I build distributed systems that handle real-time clinical data, AI inference pipelines, and multi-provider LLM routing at scale.
+                Senior Full Stack Developer at <span className="text-cyan-400 font-semibold">Tata Elxsi</span>, specializing in highly scalable backend architectures and AI-driven full-stack applications. I design distributed url redirection services, AI career platforms, cognitive diagnostics tools, and high-performance system designs.
               </p>
               <p>
                 My engineering philosophy: every system should be observable, resilient, and built for 10x traffic without rearchitecting. I approach software like infrastructure — designed once, operated forever.
@@ -59,7 +59,7 @@ export const AboutSection = () => {
 
             <motion.div variants={iV} className="space-y-2">
               {[
-                { icon: Briefcase, text: "Tata Elxsi Ltd. — Software Developer" },
+                { icon: Briefcase, text: "Tata Elxsi Ltd. — Senior Software Engineer" },
                 { icon: MapPin, text: "Pune, India" },
                 { icon: GraduationCap, text: "B.E. Computer Engineering" },
                 { icon: Award, text: "AWS Certified Solutions Architect – Associate" },
@@ -118,8 +118,8 @@ export const AboutSection = () => {
                   <div className="absolute -left-1.5 top-1 w-2.5 h-2.5 rounded-full"
                     style={{ background: "#06b6d4", boxShadow: "0 0 10px rgba(6,182,212,0.5)" }} />
                   <div className="text-xs font-mono font-bold text-white">Tata Elxsi Ltd.</div>
-                  <div className="text-[10px] font-mono text-slate-500">Software Developer · Jan 2023 – Present</div>
-                  <div className="text-[10px] font-mono text-cyan-400 mt-0.5">Backend Engineering · Healthcare · AI</div>
+                  <div className="text-[10px] font-mono text-slate-500">Senior Software Engineer · Jan 2023 – Present</div>
+                  <div className="text-[10px] font-mono text-cyan-400 mt-0.5">Full Stack &amp; Backend Systems · AI Integrations</div>
                 </div>
                 <div className="relative pl-4 border-l" style={{ borderColor: "rgba(255,255,255,0.05)" }}>
                   <div className="absolute -left-1.5 top-1 w-2.5 h-2.5 rounded-full bg-slate-700" />

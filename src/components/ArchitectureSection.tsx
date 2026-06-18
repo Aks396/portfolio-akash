@@ -6,104 +6,104 @@ import { Play, RefreshCw, Terminal, CheckCircle2, AlertTriangle } from "lucide-r
 
 const projects = [
   {
-    id: "idp",
+    id: "ats",
     num: "01",
-    title: "IDP Intel Engine",
-    subtitle: "Intelligent Document Processing Platform",
-    role: "Backend & AI Engineer",
-    impact: "Gemini AI · Multi-Tenant SaaS",
+    title: "ATS-Checker",
+    subtitle: "AI-Powered Career Intelligence Platform",
+    role: "Full Stack & AI Developer",
+    impact: "Gemini AI · Career Analytics",
     accentColor: "#06b6d4",
-    description: "Multi-tenant SaaS platform automating clinical insurance form extraction using Google Gemini vision models and Tesseract OCR with a human-in-the-loop verification gateway.",
+    description: "AI-powered platform that analyzes resumes, improves ATS scores, and matches candidates with job descriptions using advanced AI parser models, keyword relevance metrics, and recruiter-style feedback.",
     metrics: [
-      { label: "Extraction Accuracy", value: "98%" },
-      { label: "Processing Speed", value: "<2s" },
-      { label: "Tenants Supported", value: "Multi" },
+      { label: "Resume Parse Accuracy", value: "98%" },
+      { label: "Scan Speed", value: "<1.5s" },
+      { label: "Recruiter Feedback", value: "Automated" },
     ],
     contributions: [
-      "Designed FastAPI microservices with JWT-based role isolation for multi-tenant security",
-      "Integrated Tesseract OCR with Gemini Vision prompt models for clinical text extraction",
-      "Built human-in-the-loop audit gates before final database commits",
+      "Engineered automated resume parsing pipeline utilizing Gemini multimodal vision and extraction APIs",
+      "Designed keyword density scoring algorithms to assess job description matching accuracy",
+      "Built a modern React-based candidate feedback dashboard with detailed analytics and PDF reports",
     ],
-    tags: ["FastAPI", "Python", "Gemini AI", "Tesseract OCR", "MySQL", "JWT", "Docker"],
+    tags: ["TypeScript", "Next.js", "Gemini AI", "Tailwind CSS", "Node.js", "Docker"],
   },
   {
-    id: "llm",
+    id: "tinyurl",
     num: "02",
-    title: "MultiModel-LLM",
-    subtitle: "Unified Multi-Provider AI Gateway",
+    title: "TinyURL AI Platform",
+    subtitle: "Smart URL Shortener & Analytics Platform",
     role: "Backend & Systems Engineer",
-    impact: "Spring Boot · 4 AI Providers",
+    impact: "Spring Boot · Redis Caching",
     accentColor: "#8b5cf6",
-    description: "Secure gateway unifying OpenAI, Gemini, Claude, and Llama APIs under a single streaming routing proxy with AES-256 key vaulting and Redis-based deduplication cache.",
+    description: "AI-powered URL shortener platform built with Java 21, Spring Boot, MySQL, and Redis caching. Employs AI-based URL safety analysis, smart alias generation, and real-time security scoring.",
     metrics: [
-      { label: "API Overhead Reduction", value: "85%" },
-      { label: "AI Providers", value: "4" },
-      { label: "Encryption", value: "AES-256" },
+      { label: "Redirection SLA", value: "Sub-ms" },
+      { label: "Threat Detection", value: "Real-time" },
+      { label: "Cache Hit Ratio", value: "94%" },
     ],
     contributions: [
-      "Architected reactive Spring WebFlux backends for non-blocking event-stream responses",
-      "Implemented Redis caching reducing API overhead by 85% on duplicate queries",
-      "Built AES-256 key management vaulting client API credentials securely",
+      "Architected high-throughput redirection endpoints using Redis distributed caching to minimize database reads",
+      "Integrated Gemini API to analyze destination URL safety and dynamically generate semantic aliases",
+      "Implemented JWT security, role-based authorization, and real-time click analytics dashboard pipelines",
     ],
-    tags: ["Java", "Spring WebFlux", "Redis", "AES-256", "JWT", "TypeScript"],
+    tags: ["Java 21", "Spring Boot", "Redis", "MySQL", "Spring Security", "JWT", "Docker"],
   },
   {
-    id: "compliance",
+    id: "cura",
     num: "03",
-    title: "Label Process",
-    subtitle: "AI-Powered MDR Compliance Audit",
-    role: "AI & Full Stack Developer",
-    impact: "EU MDR 2017/745 Compliance",
+    title: "CURA Autism AI",
+    subtitle: "AI-Enabled Early Autism Screening & Care Management",
+    role: "Full Stack Developer",
+    impact: "Clinical AI · Diagnostics Support",
     accentColor: "#f59e0b",
-    description: "Automated compliance audit dashboard validating medical device product labels against EU MDR 2017/745 regulations using Gemini multimodal AI and ISO 15223-1 symbol verification.",
+    description: "Early autism screening, diagnosis support, and post-diagnosis care management platform employing AI algorithms to analyze diagnostic indicators and generate personalized care pathways.",
     metrics: [
-      { label: "Compliance Score", value: "94%" },
-      { label: "Regulations", value: "EU MDR" },
-      { label: "Checks", value: "Automated" },
+      { label: "Screening Indicators", value: "Verified" },
+      { label: "Pathway Latency", value: "Instant" },
+      { label: "Care Management", value: "Dynamic" },
     ],
     contributions: [
-      "Developed Gemini multimodal prompt matrices detecting missing ISO 15223-1 symbols",
-      "Designed automated compliance scorecard and PDF audit report generation",
-      "Engineered overlay coordinate systems placing verification rectangles on labels",
+      "Built screening models using Gemini Vision APIs to evaluate user sensory and cognitive responses",
+      "Designed a dynamic post-screening care generator creating customized daily guides and clinical resources",
+      "Developed a HIPAA-aligned client dashboard for therapists and families to monitor cognitive progression",
     ],
-    tags: ["FastAPI", "Python", "React", "Tesseract OCR", "Google Gemini", "MySQL"],
+    tags: ["Next.js", "Python", "Google Gemini", "React", "MySQL", "Tailwind CSS"],
   },
   {
-    id: "fhir",
+    id: "newspaper",
     num: "04",
-    title: "FHIR R4 Platform",
-    subtitle: "Healthcare Interoperability Platform",
-    role: "Backend Engineer",
-    impact: "PostgreSQL · Kafka · FHIR R4",
+    title: "Newspaper System Design",
+    subtitle: "High-Throughput Content Management System",
+    role: "Backend Architect",
+    impact: "Java · System Architecture",
     accentColor: "#10b981",
-    description: "High-throughput FHIR R4-compliant integration layer automating care routing events across distributed healthcare EHR services with zero-loss Kafka message delivery guarantees.",
+    description: "Java-based system design application built to handle heavy concurrent publishing, search, and distribution of articles utilizing high-throughput event queues and relational schemas.",
     metrics: [
-      { label: "Message Delivery", value: "Zero-loss" },
-      { label: "Standard", value: "FHIR R4" },
-      { label: "Event Throughput", value: "10k+/s" },
+      { label: "Event Delivery", value: "Zero-loss" },
+      { label: "Concurrency Scale", value: "High" },
+      { label: "Ingestion Speed", value: "<10ms" },
     ],
     contributions: [
-      "Implemented Spring Boot event-driven services parsing HL7 FHIR R4 clinical data",
-      "Engineered Kafka message queues with zero-loss patient vitals delivery",
-      "Optimized PostgreSQL connection pools for heavy concurrent ingestion flows",
+      "Designed database schema with query optimizations for heavy read-write operations under load",
+      "Implemented decoupled messaging publisher-subscriber architecture to handle distribution event queues",
+      "Engineered automated JUnit suite with Mockito to validate concurrency safety and database txn isolation",
     ],
-    tags: ["Java", "Spring Boot", "Kafka", "PostgreSQL", "Microservices", "JUnit"],
+    tags: ["Java", "System Design", "Apache Kafka", "MySQL", "Concurrency", "JUnit", "Mockito"],
   },
 ];
 
 // Simulator components (kept from original, visually elevated)
-const IDPSimulator = () => {
+const ATSSimulator = () => {
   const [step, setStep] = useState(0);
-  const [logs, setLogs] = useState<string[]>(["System Idle — Awaiting Document Input"]);
-  const nodes = ["File Ingest", "OCR Extract", "Gemini Validation", "Audit Check", "DB Persist"];
+  const [logs, setLogs] = useState<string[]>(["System Idle — Awaiting Resume Upload"]);
+  const nodes = ["File Ingest", "AI Parse", "Keywords", "Score Calc", "Report Ready"];
 
   const run = () => {
-    setStep(1); setLogs(["[Ingest] Inbound document received: claim_form_109.pdf"]);
+    setStep(1); setLogs(["[Ingest] Inbound resume received: cv_software_engineer.pdf"]);
     const msgs = [
-      "[OCR] Parsing PDF. Extracted 4 text blocks via Tesseract",
-      "[Gemini AI] Validating attributes. Confidence: 98%",
-      "[Audit] Score: 94 — Bypassing manual approval gate",
-      "[Storage] Persisted in MySQL. Client notified ✓",
+      "[AI Parse] Extracting text and sections using Gemini. Confidence: 99%",
+      "[Keywords] Comparing qualifications against job description. Found 87% match",
+      "[Score Calc] Calculating ATS Score: 88/100. Key keywords matched: Java, Spring Boot, Redis",
+      "[Report] Ingestion complete. Generated recruiter feedback report ✓",
     ];
     msgs.forEach((m, i) => setTimeout(() => {
       setStep(i + 2); setLogs((p) => [...p, m]);
@@ -113,11 +113,11 @@ const IDPSimulator = () => {
   return (
     <div className="space-y-4">
       <div className="flex justify-between items-center">
-        <span className="text-[10px] font-mono font-bold" style={{ color: "#06b6d4" }}>PIPELINE SIMULATION</span>
+        <span className="text-[10px] font-mono font-bold" style={{ color: "#06b6d4" }}>ATS SCAN PIPELINE</span>
         <button onClick={run} disabled={step > 0 && step < 5}
           className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[10px] font-mono font-bold transition-all disabled:opacity-40"
           style={{ background: "rgba(6,182,212,0.08)", border: "1px solid rgba(6,182,212,0.2)", color: "#06b6d4" }}>
-          <Play className="w-3 h-3" /> Run
+          <Play className="w-3 h-3" /> Analyze Resume
         </button>
       </div>
       <div className="grid grid-cols-5 gap-1.5">
@@ -139,26 +139,35 @@ const IDPSimulator = () => {
   );
 };
 
-const LLMSimulator = () => {
-  const [model, setModel] = useState("gemini-pro");
+const TinyURLSimulator = () => {
   const [messages, setMessages] = useState<Array<{ sender: "user" | "ai"; text: string }>>([
-    { sender: "ai", text: "Unified AI proxy online. Select model and send a query." },
+    { sender: "ai", text: "TinyURL API online. Choose a URL to shorten and analyze." },
   ]);
   const [streaming, setStreaming] = useState(false);
-  const [metrics, setMetrics] = useState({ latency: 0, cache: "—", size: 0 });
+  const [metrics, setMetrics] = useState({ latency: 0, cache: "—", status: "—" });
 
-  const send = (text: string) => {
-    if (!text.trim() || streaming) return;
-    setMessages((p) => [...p, { sender: "user", text }]);
+  const send = (selectedUrl: string) => {
+    if (!selectedUrl.trim() || streaming) return;
+    setMessages((p) => [...p, { sender: "user", text: `Shorten: ${selectedUrl}` }]);
     setStreaming(true);
-    const latency = text.includes("Optimize") ? 15 : 240;
+    
+    const isSafe = !selectedUrl.includes("phishing");
+    const latency = isSafe ? 12 : 280;
+
     setTimeout(() => {
-      const resp = `Routed via ${model.toUpperCase()}. AES-256 validation passed. Response time: ${latency}ms.`;
+      const shortAlias = `https://t.ly/${isSafe ? "sf39b" : "bl821"}`;
+      const safetyScore = isSafe ? "98/100 (Safe)" : "12/100 (HIGH RISK - Phishing Threat)";
+      const resp = `Shortened: ${shortAlias} | AI Security Score: ${safetyScore}. Redis Cache: ${latency === 12 ? "HIT" : "MISS"}`;
+      
       setMessages((p) => [...p, { sender: "ai", text: "" }]);
       let i = 0;
       const iv = setInterval(() => {
         setMessages((p) => { const n = [...p]; n[n.length - 1] = { sender: "ai", text: resp.slice(0, i + 1) }; return n; });
-        if (++i >= resp.length) { clearInterval(iv); setStreaming(false); setMetrics({ latency, cache: latency === 15 ? "HIT" : "MISS", size: resp.length }); }
+        if (++i >= resp.length) { 
+          clearInterval(iv); 
+          setStreaming(false); 
+          setMetrics({ latency, cache: latency === 12 ? "HIT" : "MISS", status: isSafe ? "SAFE" : "THREAT" }); 
+        }
       }, 15);
     }, 800);
   };
@@ -166,15 +175,7 @@ const LLMSimulator = () => {
   return (
     <div className="space-y-3">
       <div className="flex justify-between items-center">
-        <span className="text-[10px] font-mono font-bold" style={{ color: "#8b5cf6" }}>LIVE AI PROXY</span>
-        <select value={model} onChange={(e) => setModel(e.target.value)}
-          className="text-[10px] font-mono rounded-lg px-2 py-1 focus:outline-none"
-          style={{ background: "#060c1a", border: "1px solid rgba(255,255,255,0.08)", color: "#94a3b8" }}>
-          <option value="gemini-pro">Gemini Pro</option>
-          <option value="gpt-4o">GPT-4o</option>
-          <option value="claude-3">Claude 3</option>
-          <option value="llama-3">Llama 3</option>
-        </select>
+        <span className="text-[10px] font-mono font-bold" style={{ color: "#8b5cf6" }}>AI URL SHORTENER & SCANNER</span>
       </div>
       <div className="h-28 rounded-xl p-3 space-y-2 overflow-y-auto no-scrollbar flex flex-col"
         style={{ background: "rgba(0,0,0,0.4)", border: "1px solid rgba(255,255,255,0.05)" }}>
@@ -185,17 +186,17 @@ const LLMSimulator = () => {
           </div>
         ))}
       </div>
-      <div className="flex gap-2">
-        {["Optimize a Java connection pool", "Explain Kafka offsets"].map((p) => (
+      <div className="flex gap-2 flex-wrap">
+        {["https://github.com/Aks396/portfolio", "https://malicious-phishing.com/bank"].map((p) => (
           <button key={p} onClick={() => send(p)} disabled={streaming}
-            className="text-[9px] font-mono px-2 py-1 rounded-lg transition-all disabled:opacity-40"
+            className="text-[9px] font-mono px-2 py-1 rounded-lg transition-all disabled:opacity-40 truncate max-w-[200px]"
             style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.07)", color: "#64748b" }}>
-            {p}
+            {p.substring(8)}
           </button>
         ))}
       </div>
       <div className="grid grid-cols-3 gap-2 text-center text-[9px] font-mono">
-        {[{ l: "Latency", v: `${metrics.latency}ms`, c: "#06b6d4" }, { l: "Cache", v: metrics.cache, c: "#10b981" }, { l: "Vault", v: "AES-256", c: "#8b5cf6" }].map((m) => (
+        {[{ l: "Latency", v: `${metrics.latency}ms`, c: "#06b6d4" }, { l: "Cache Status", v: metrics.cache, c: "#10b981" }, { l: "Threat Status", v: metrics.status, c: metrics.status === "SAFE" ? "#10b981" : metrics.status === "THREAT" ? "#ef4444" : "#8b5cf6" }].map((m) => (
           <div key={m.l} className="p-2 rounded-lg" style={{ background: "rgba(0,0,0,0.3)", border: "1px solid rgba(255,255,255,0.05)" }}>
             <div className="text-slate-600 uppercase mb-0.5">{m.l}</div>
             <div className="font-bold" style={{ color: m.c }}>{m.v}</div>
@@ -206,24 +207,24 @@ const LLMSimulator = () => {
   );
 };
 
-const ComplianceSimulator = () => {
+const CURASimulator = () => {
   const [scanning, setScanning] = useState(false);
   const [score, setScore] = useState<number | null>(null);
   const [checks, setChecks] = useState<Array<{ name: string; status: "idle" | "success" | "warning" }>>([
-    { name: "CE Certificate Mark Validation", status: "idle" },
-    { name: "Sterility ISO Symbol Check", status: "idle" },
-    { name: "Expiry Date Format Alignment", status: "idle" },
-    { name: "Manufacturing Reference String", status: "idle" },
+    { name: "Sensory Overload Checklist Scan", status: "idle" },
+    { name: "Cognitive Response Benchmark Assessment", status: "idle" },
+    { name: "Early Autism Diagnostic Index Check", status: "idle" },
+    { name: "Care Plan Resource Auto-Mapping", status: "idle" },
   ]);
 
   const run = () => {
     setScanning(true); setScore(null);
     setChecks((p) => p.map((c) => ({ ...c, status: "idle" })));
-    const outcomes: Array<"success" | "warning"> = ["success", "warning", "success", "success"];
+    const outcomes: Array<"success" | "warning"> = ["success", "success", "success", "success"];
     outcomes.forEach((o, i) => {
       setTimeout(() => {
         setChecks((p) => p.map((c, ci) => ci === i ? { ...c, status: o } : c));
-        if (i === outcomes.length - 1) { setScore(94); setScanning(false); }
+        if (i === outcomes.length - 1) { setScore(96); setScanning(false); }
       }, (i + 1) * 800);
     });
   };
@@ -231,11 +232,11 @@ const ComplianceSimulator = () => {
   return (
     <div className="space-y-4">
       <div className="flex justify-between items-center">
-        <span className="text-[10px] font-mono font-bold" style={{ color: "#f59e0b" }}>MDR COMPLIANCE AUDIT</span>
+        <span className="text-[10px] font-mono font-bold" style={{ color: "#f59e0b" }}>CURA AI SCREENING DIAGNOSIS</span>
         <button onClick={run} disabled={scanning}
           className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[10px] font-mono font-bold transition-all disabled:opacity-40"
           style={{ background: "rgba(245,158,11,0.08)", border: "1px solid rgba(245,158,11,0.2)", color: "#f59e0b" }}>
-          <RefreshCw className={`w-3 h-3 ${scanning ? "animate-spin" : ""}`} /> Scan
+          <RefreshCw className={`w-3 h-3 ${scanning ? "animate-spin" : ""}`} /> Analyze Indicators
         </button>
       </div>
       <div className="relative p-3 rounded-xl overflow-hidden" style={{ background: "rgba(0,0,0,0.4)", border: "1px solid rgba(255,255,255,0.05)" }}>
@@ -245,8 +246,8 @@ const ComplianceSimulator = () => {
             style={{ background: "rgba(245,158,11,0.5)", boxShadow: "0 0 8px rgba(245,158,11,0.8)" }} />
         )}
         <div className="font-mono text-[10px] text-slate-500 space-y-1">
-          <div className="flex justify-between"><span>REF: DEV-MDR-9812</span><span style={{ color: "#f59e0b" }}>[CE 0123]</span></div>
-          <p>EXPIRY: 2028-09-12 // STERILE R</p>
+          <div className="flex justify-between"><span>PATIENT RECORD: CURA-9812</span><span style={{ color: "#f59e0b" }}>[SCREENING ACTIVE]</span></div>
+          <p>ASSESSMENT: M-CHAT-R/F // AGE: 36 MONTHS</p>
         </div>
       </div>
       <div className="space-y-1.5">
@@ -255,14 +256,14 @@ const ComplianceSimulator = () => {
             style={{ background: "rgba(0,0,0,0.3)", border: "1px solid rgba(255,255,255,0.05)" }}>
             <span className="text-slate-500">{c.name}</span>
             {c.status === "idle" && <span className="text-slate-600">WAITING</span>}
-            {c.status === "success" && <span className="flex items-center gap-1" style={{ color: "#10b981" }}><CheckCircle2 className="w-3 h-3" />VERIFIED</span>}
+            {c.status === "success" && <span className="flex items-center gap-1" style={{ color: "#10b981" }}><CheckCircle2 className="w-3 h-3" />COMPLETED</span>}
             {c.status === "warning" && <span className="flex items-center gap-1 animate-pulse" style={{ color: "#f59e0b" }}><AlertTriangle className="w-3 h-3" />WARN</span>}
           </div>
         ))}
       </div>
       {score !== null && (
         <div className="p-3 rounded-xl text-center" style={{ background: "rgba(16,185,129,0.05)", border: "1px solid rgba(16,185,129,0.15)" }}>
-          <div className="text-[10px] font-mono uppercase tracking-wider text-emerald-600 mb-1">Compliance Score</div>
+          <div className="text-[10px] font-mono uppercase tracking-wider text-emerald-600 mb-1">Pathway Alignment Score</div>
           <div className="text-2xl font-black font-mono text-emerald-400">{score}%</div>
         </div>
       )}
@@ -271,15 +272,15 @@ const ComplianceSimulator = () => {
 };
 
 const KafkaSimulator = () => {
-  const [logs, setLogs] = useState<string[]>(["Topic 'fhir_inbound_patient' initialized"]);
+  const [logs, setLogs] = useState<string[]>(["Topic 'newspaper_articles_publish' initialized"]);
   const [running, setRunning] = useState(false);
 
   const publish = () => {
     if (running) return;
     setRunning(true);
     const payloads = [
-      '{"resourceType":"Observation","code":"8867-4","value":72}',
-      '{"resourceType":"Observation","code":"8480-6","value":120}',
+      '{"articleId":"art_9182","action":"PUBLISH","authorId":"usr_41"}',
+      '{"articleId":"art_9182","action":"DISTRIBUTE","target":"web_cdn"}',
     ];
     payloads.forEach((p, i) => {
       setTimeout(() => {
@@ -300,7 +301,7 @@ const KafkaSimulator = () => {
         <button onClick={publish} disabled={running}
           className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[10px] font-mono font-bold transition-all disabled:opacity-40"
           style={{ background: "rgba(16,185,129,0.08)", border: "1px solid rgba(16,185,129,0.2)", color: "#10b981" }}>
-          <Play className="w-3 h-3" /> Publish FHIR Vitals
+          <Play className="w-3 h-3" /> Publish CMS Article
         </button>
       </div>
       <div className="p-3 rounded-xl font-mono text-[10px] space-y-1 h-36 overflow-y-auto no-scrollbar"
@@ -317,12 +318,12 @@ const KafkaSimulator = () => {
   );
 };
 
-const simulators = { idp: IDPSimulator, llm: LLMSimulator, compliance: ComplianceSimulator, fhir: KafkaSimulator };
+const simulators = { ats: ATSSimulator, tinyurl: TinyURLSimulator, cura: CURASimulator, newspaper: KafkaSimulator };
 
 export const ArchitectureSection = () => {
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, margin: "-80px" });
-  const [activeId, setActiveId] = useState("idp");
+  const [activeId, setActiveId] = useState("ats");
 
   const active = projects.find((p) => p.id === activeId)!;
   const Simulator = simulators[activeId as keyof typeof simulators];

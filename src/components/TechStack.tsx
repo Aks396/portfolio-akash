@@ -22,7 +22,7 @@ const categories = [
   {
     label: "AI & Integrations",
     color: "#10b981",
-    skills: ["Google Gemini", "OpenAI GPT-4", "Claude", "Llama", "Tesseract OCR", "FHIR R4 / HL7", "Spring Security", "OAuth2 / JWT"],
+    skills: ["Google Gemini", "OpenAI GPT-4", "Claude", "Llama", "Tesseract OCR", "AI Diagnostics & Parsing", "Spring Security", "OAuth2 / JWT"],
   },
 ];
 

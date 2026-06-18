@@ -7,6 +7,7 @@ import { SystemArchitecture } from "@/components/SystemArchitecture";
 import { StreamingSecuritySection } from "@/components/StreamingSecuritySection";
 import { AICapability } from "@/components/AICapability";
 import { Experience } from "@/components/Experience";
+import { GithubSection } from "@/components/GithubSection";
 import { CertificationsSkills } from "@/components/CertificationsSkills";
 import { ContactSection } from "@/components/ContactSection";
 import { Footer } from "@/components/Footer";
@@ -23,6 +24,7 @@ export default function Home() {
             <StreamingSecuritySection />
             <AICapability />
             <Experience />
+            <GithubSection />
             <CertificationsSkills />
             <ContactSection />
             <Footer />

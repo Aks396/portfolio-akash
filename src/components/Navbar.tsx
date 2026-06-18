@@ -147,7 +147,7 @@ export const Navbar = () => {
                   AKASH SONI
                 </div>
                 <div className="text-[9px] font-mono uppercase tracking-[0.2em] mt-0.5" style={{ color: "#06b6d4" }}>
-                  Backend Engineer
+                  Senior Full Stack Developer
                 </div>
               </div>
             </Link>

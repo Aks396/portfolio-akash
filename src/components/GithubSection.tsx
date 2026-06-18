@@ -15,28 +15,28 @@ interface PinnedRepo {
 
 const repos: PinnedRepo[] = [
     {
-        name: "distributed-fhir-microservices",
-        description: "Spring Boot 3 + Apache Kafka pipeline implementing FHIR R4 interoperability schemas for secure EHR syncing across healthcare client tenants.",
-        lang: "Java",
-        stars: 34,
-        forks: 12,
-        metrics: "99.9% Msg Delivery"
+        name: "ATS-Checker",
+        description: "AI-powered ATS Checker and Career Intelligence Platform analyzing resumes, improving ATS scores, and matching candidates with job descriptions using Google Gemini AI.",
+        lang: "TypeScript",
+        stars: 1,
+        forks: 0,
+        metrics: "98% Parse Accuracy"
     },
     {
-        name: "fastapi-gemini-idp-engine",
-        description: "Intelligent document processing backend employing Google Gemini multimodal vision APIs for digitized medical insurance document extraction.",
-        lang: "Python",
-        stars: 48,
-        forks: 9,
-        metrics: "Sub-2s OCR Ingestion"
+        name: "tinyurl-ai-platform",
+        description: "AI-powered URL Shortener built with Java 21, Spring Boot, MySQL, JWT Security, and Redis caching. Integrates Gemini AI for destination safety threat analysis.",
+        lang: "Java",
+        stars: 0,
+        forks: 0,
+        metrics: "Sub-ms Redirection"
     },
     {
-        name: "reactive-multimodel-llm-gateway",
-        description: "Unified AI Model Switcher proxy using Spring WebFlux, supporting dynamic streaming responses from Claude, Gemini, and GPT backends with Redis caching.",
-        lang: "Java",
-        stars: 42,
-        forks: 8,
-        metrics: "85% Cache Hit Ratio"
+        name: "CURA-Autism-AI",
+        description: "Early Autism screening, diagnosis support, and post-diagnosis care management platform utilizing AI to analyze developmental indicators.",
+        lang: "TypeScript",
+        stars: 0,
+        forks: 0,
+        metrics: "Early Screening AI"
     }
 ];
 
@@ -161,9 +161,15 @@ export const GithubSection = () => {
                                 <div className="flex items-center justify-between text-[10px] font-mono text-muted-foreground pt-1 border-t border-border/30">
                                     <div className="flex items-center space-x-3">
                                         <span className="flex items-center">
-                                            <span className={`w-2.5 h-2.5 rounded-full mr-1.5 ${
-                                                repo.lang === "Java" ? "bg-[#b07219]" : "bg-[#3572A5]"
-                                            }`} />
+                                            <span 
+                                                className="w-2.5 h-2.5 rounded-full mr-1.5" 
+                                                style={{
+                                                    backgroundColor: 
+                                                        repo.lang === "Java" ? "#b07219" : 
+                                                        repo.lang === "TypeScript" ? "#3178c6" : 
+                                                        repo.lang === "Python" ? "#3572A5" : "#475569"
+                                                }}
+                                            />
                                             {repo.lang}
                                         </span>
                                         <span className="flex items-center">

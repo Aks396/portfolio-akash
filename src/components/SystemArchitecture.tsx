@@ -48,7 +48,7 @@ const nodes: Node[] = [
   { id: "kafka", type: "service", position: { x: 400, y: 80 }, data: { label: "Kafka Cluster", sublabel: "Event Streaming", color: "#1a97f5", icon: "📨" } },
   { id: "redis", type: "service", position: { x: 400, y: 250 }, data: { label: "Redis Cache", sublabel: "Sub-ms Latency", color: "#ef4444", icon: "⚡" } },
   { id: "ai", type: "service", position: { x: 600, y: 30 }, data: { label: "AI Gateway", sublabel: "LLM Routing", color: "#8b5cf6", icon: "🤖" } },
-  { id: "db", type: "service", position: { x: 600, y: 200 }, data: { label: "PostgreSQL", sublabel: "FHIR R4 Data", color: "#f59e0b", icon: "🗄️" } },
+  { id: "db", type: "service", position: { x: 600, y: 200 }, data: { label: "MySQL Store", sublabel: "TinyURL Data", color: "#f59e0b", icon: "🗄️" } },
   { id: "worker", type: "service", position: { x: 800, y: 120 }, data: { label: "Workers", sublabel: "Event Consumers", color: "#10b981", icon: "⚙️" } },
 ];
 

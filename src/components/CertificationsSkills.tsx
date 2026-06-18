@@ -24,11 +24,11 @@ const certifications = [
 ];
 
 const skills = [
-  { category: "Core Languages", items: ["Java 17+", "Python 3.x", "TypeScript", "SQL"], color: "#06b6d4" },
+  { category: "Core Languages", items: ["Java 21 / 17", "Python 3.x", "TypeScript", "SQL"], color: "#06b6d4" },
   { category: "Backend Frameworks", items: ["Spring Boot 3.x", "Spring WebFlux", "FastAPI", "Spring Security"], color: "#3b82f6" },
   { category: "Messaging & Cache", items: ["Apache Kafka", "Redis", "RabbitMQ"], color: "#8b5cf6" },
   { category: "Cloud & DevOps", items: ["AWS (EC2, S3, RDS)", "Docker", "Kubernetes", "Jenkins", "GitHub Actions"], color: "#10b981" },
-  { category: "AI & Integration", items: ["Gemini API", "OpenAI GPT-4", "Claude", "FHIR R4", "HL7", "Tesseract OCR"], color: "#f59e0b" },
+  { category: "AI & Integration", items: ["Gemini API", "OpenAI GPT-4", "Claude", "Prompt Engineering", "Resume Intelligence", "Tesseract OCR"], color: "#f59e0b" },
   { category: "Data & Testing", items: ["PostgreSQL", "MySQL", "JUnit 5", "Mockito", "TestNG"], color: "#ef4444" },
 ];
 

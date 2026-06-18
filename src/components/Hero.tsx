@@ -7,40 +7,40 @@ import { ArrowRight, ChevronDown, Cpu, Database, Zap, Bot, Activity } from "luci
 const techBadges = [
   { label: "Java", color: "#f97316" },
   { label: "Spring Boot", color: "#6abf69" },
+  { label: "TypeScript", color: "#3178c6" },
+  { label: "Next.js", color: "#ffffff" },
   { label: "Kafka", color: "#1a97f5" },
   { label: "Redis", color: "#ef4444" },
   { label: "AWS", color: "#f59e0b" },
   { label: "Docker", color: "#06b6d4" },
-  { label: "Kubernetes", color: "#3b82f6" },
   { label: "FastAPI", color: "#10b981" },
   { label: "AI/LLMs", color: "#8b5cf6" },
-  { label: "PostgreSQL", color: "#60a5fa" },
 ];
 
 const terminalLines = [
-  { text: "$ Initializing Spring Boot microservice cluster...", delay: 0 },
-  { text: "> Establishing Kafka event pipeline @ 10k msg/sec", delay: 600 },
+  { text: "$ Initializing Spring Boot & Next.js microservice cluster...", delay: 0 },
+  { text: "> Establishing Kafka event pipeline for URL analytics...", delay: 600 },
   { text: "> Redis cache layer: READY [hit-ratio: 94.2%]", delay: 1200 },
   { text: "> AI inference gateway: ONLINE [models: 4]", delay: 1800 },
   { text: "> System health: ALL SERVICES OPERATIONAL ✓", delay: 2400 },
 ];
 
 const stats = [
-  { value: "3.4+", label: "Years", icon: Activity },
+  { value: "5+", label: "Years Experience", icon: Activity },
   { value: "99.9%", label: "SLA", icon: Zap },
   { value: "10k+", label: "Events/sec", icon: Database },
   { value: "4", label: "AI Models", icon: Bot },
 ];
 
 const tickerItems = [
-  "FHIR R4 Interoperability",
-  "Kafka Event Pipelines · 10k+ msg/sec",
-  "AWS Certified Solutions Architect",
-  "3.4+ Years Production Experience",
-  "AI-Powered Document Processing",
-  "Spring Boot Microservices",
+  "tinyurl-ai-platform · Java 21 & Redis",
+  "CURA-Autism-AI · AI Diagnosis Screening",
+  "ATS-Checker · AI Career Intelligence",
+  "Newspaper-System-Design · Java & Architecture",
+  "5+ Years Production Experience",
+  "Spring Boot & Next.js Microservices",
   "Redis Distributed Caching · 94% Hit Ratio",
-  "Docker · Kubernetes · CI/CD",
+  "Docker · AWS · CI/CD Pipelines",
 ];
 
 export const Hero = () => {
@@ -208,12 +208,12 @@ export const Hero = () => {
             <motion.div variants={iV} className="space-y-2">
               <p className="text-lg md:text-xl font-semibold text-slate-300 tracking-tight"
                 style={{ fontFamily: "var(--font-geist), sans-serif" }}>
-                Backend Engineer <span className="mx-2 text-slate-600">·</span>
+                Senior Full Stack Developer <span className="mx-2 text-slate-600">·</span>
                 <span className="gradient-text-cyan">AI Infrastructure</span>
                 <span className="mx-2 text-slate-600">·</span>Distributed Systems
               </p>
               <p className="text-sm text-slate-500 font-mono leading-relaxed max-w-lg">
-                Building scalable cloud-native systems and AI-powered platforms that handle millions of events per second.
+                Building scalable cloud-native systems, interactive full-stack dashboards, and AI-powered platforms at scale.
               </p>
             </motion.div>
 

@@ -19,8 +19,8 @@ export const StreamingSecuritySection = () => {
                     </motion.div>
                     <h3 className="text-3xl font-bold tracking-tight">Data Streaming & Event-Driven Architecture</h3>
                     <p className="text-muted-foreground leading-relaxed">
-                        Architecting real-time healthcare data pipelines using the <span className="text-foreground font-semibold">Confluent & Kafka ecosystem</span>.
-                        Focused on low-latency transmission of patient vitals and async processing of intensive clinical workflows.
+                        Architecting real-time event streaming and analytical pipelines using the <span className="text-foreground font-semibold">Apache Kafka ecosystem</span>.
+                        Focused on low-latency event processing, asynchronous publisher-subscriber topologies, and highly resilient workflows.
                     </p>
 
                     <div className="space-y-6">
@@ -88,7 +88,7 @@ export const StreamingSecuritySection = () => {
                                             ))}
                                             {path === 1 && (
                                                 <div className="absolute -top-3 left-1/2 -translate-x-1/2 text-[8px] font-mono opacity-40 uppercase tracking-tighter text-center">
-                                                    clinical_vitals
+                                                    article_publish_events
                                                 </div>
                                             )}
                                         </div>
@@ -171,8 +171,8 @@ export const StreamingSecuritySection = () => {
                     </div>
                     <h3 className="text-3xl font-bold tracking-tight">Security-First Engineering</h3>
                     <p className="text-muted-foreground leading-relaxed">
-                        Deep commitment to <span className="text-foreground font-semibold">HIPAA-aligned security</span>.
-                        Implementation of enterprise authorization patterns and secure data handling.
+                        Deep commitment to <span className="text-foreground font-semibold">enterprise-grade security</span>.
+                        Implementation of robust authorization patterns, JWT/OAuth2 schemes, and secure data handling.
                     </p>
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">

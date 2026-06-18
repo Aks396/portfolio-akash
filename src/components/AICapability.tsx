@@ -20,8 +20,8 @@ const capabilities = [
         icon: <Brain className="h-5 w-5" />
     },
     {
-        title: "PHI-Safe Preprocessing",
-        description: "Implementing HIPAA-compliant de-identification and filtering layers for healthcare data prior to ML consumption.",
+        title: "PII-Safe Preprocessing",
+        description: "Implementing secure PII masking and sanitization pipelines for sensitive data prior to ML consumption.",
         icon: <ShieldCheck className="h-5 w-5" />
     }
 ];
