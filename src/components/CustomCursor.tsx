@@ -14,11 +14,12 @@ export function CustomCursor() {
     let mouseX = 0, mouseY = 0;
     let ringX = 0, ringY = 0;
     let rafId: number;
+    let isHovered = false;
 
     const onMouseMove = (e: MouseEvent) => {
       mouseX = e.clientX;
       mouseY = e.clientY;
-      dot.style.transform = `translate(${mouseX - 4}px, ${mouseY - 4}px)`;
+      dot.style.transform = `translate(${mouseX - 4}px, ${mouseY - 4}px) scale(${isHovered ? 3 : 1})`;
     };
 
     const animateRing = () => {
@@ -30,11 +31,14 @@ export function CustomCursor() {
     rafId = requestAnimationFrame(animateRing);
 
     const onMouseEnterInteractive = () => {
-      dot.style.transform += " scale(3)";
+      isHovered = true;
+      dot.style.transform = `translate(${mouseX - 4}px, ${mouseY - 4}px) scale(3)`;
       ring.style.opacity = "0";
       dot.style.background = "rgba(6,182,212,0.5)";
     };
     const onMouseLeaveInteractive = () => {
+      isHovered = false;
+      dot.style.transform = `translate(${mouseX - 4}px, ${mouseY - 4}px) scale(1)`;
       dot.style.background = "#06b6d4";
       ring.style.opacity = "1";
     };
