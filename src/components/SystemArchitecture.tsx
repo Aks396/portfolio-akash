@@ -29,31 +29,30 @@ interface NodeData {
 const ServiceNode = ({ data }: NodeProps) => {
   const nd = data as unknown as NodeData;
   return (
-    <div className="relative px-4 py-3 rounded-xl text-left min-w-[140px] overflow-hidden group select-none cursor-pointer"
+    <div className="relative px-4 py-3 rounded-2xl text-left min-w-[145px] overflow-hidden group select-none cursor-pointer border backdrop-blur-md bg-white/2"
       style={{
-        background: "rgba(6, 12, 26, 0.8)",
-        border: `1px solid ${nd.color}40`,
-        boxShadow: `0 4px 20px ${nd.color}10`,
+        borderColor: "rgba(255, 255, 255, 0.08)",
+        boxShadow: "0 4px 15px rgba(0,0,0,0.25), inset 0 1px 0 rgba(255,255,255,0.05)"
       }}>
       
       {/* Node handles */}
-      <Handle type="target" position={Position.Left} style={{ background: nd.color, border: "none", width: 6, height: 6 }} />
-      <Handle type="source" position={Position.Right} style={{ background: nd.color, border: "none", width: 6, height: 6 }} />
+      <Handle type="target" position={Position.Left} style={{ background: nd.color, border: "none", width: 5, height: 5 }} />
+      <Handle type="source" position={Position.Right} style={{ background: nd.color, border: "none", width: 5, height: 5 }} />
       
       {/* Pulse led in corner */}
-      <span className="absolute top-2 right-2 w-1.5 h-1.5 rounded-full animate-pulse" style={{ background: nd.color }} />
+      <span className="absolute top-2 right-2 w-1 h-1 rounded-full animate-pulse" style={{ background: nd.color, boxShadow: `0 0 6px ${nd.color}` }} />
       
       {/* Chip pattern background */}
       <div className="absolute inset-0 opacity-[0.03] group-hover:opacity-[0.08] transition-opacity pointer-events-none"
         style={{
-          backgroundImage: `linear-gradient(90deg, ${nd.color} 1px, transparent 1px), linear-gradient(${nd.color} 1px, transparent 1px)`,
+          backgroundImage: `linear-gradient(90deg, rgba(255,255,255,0.15) 1px, transparent 1px), linear-gradient(rgba(255,255,255,0.15) 1px, transparent 1px)`,
           backgroundSize: "8px 8px"
         }} />
 
       <div className="flex items-center gap-2.5 relative z-10">
         <div className="text-base select-none">{nd.icon}</div>
         <div>
-          <div className="text-[10px] font-mono font-bold" style={{ color: nd.color }}>{nd.label}</div>
+          <div className="text-[10px] font-mono font-bold text-white">{nd.label}</div>
           {nd.sublabel && <div className="text-[7.5px] font-mono text-slate-500 mt-0.5">{nd.sublabel}</div>}
         </div>
       </div>
@@ -265,9 +264,12 @@ export const SystemArchitecture = () => {
           style={{ background: "#060c1a", borderColor: "rgba(255,255,255,0.06)", height: "420px" }}>
 
           {/* Corner labels */}
-          <div className="absolute top-4 left-4 z-10 flex items-center gap-2">
-            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-            <span className="text-[9px] font-mono uppercase tracking-widest text-slate-500">LIVE CLUSTER TOPOLOGY</span>
+          <div className="absolute top-4 left-4 z-10 flex flex-col gap-1 items-start">
+            <div className="flex items-center gap-2">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+              <span className="text-[9px] font-mono uppercase tracking-widest text-slate-500">LIVE CLUSTER TOPOLOGY</span>
+            </div>
+            <span className="text-[7px] font-mono text-slate-600 uppercase tracking-wider">* Simulated topology — illustrative of architecture.</span>
           </div>
 
           <ReactFlow

@@ -7,36 +7,34 @@ export const Footer = () => {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="relative border-t" style={{ borderColor: "rgba(255,255,255,0.04)", background: "#010208" }}>
+    <footer className="relative border-t border-white/5" style={{ background: "#050505" }}>
       {/* Top gradient line */}
       <div className="absolute top-0 left-0 right-0 h-[1px]"
-        style={{ background: "linear-gradient(90deg, transparent, rgba(6,182,212,0.4), rgba(139,92,246,0.2), transparent)" }} />
+        style={{ background: "linear-gradient(90deg, transparent, rgba(255,255,255,0.08), transparent)" }} />
 
       <div className="container-tight py-10">
         <div className="flex flex-col md:flex-row items-center justify-between gap-6">
 
           {/* Left: Logo + tagline */}
           <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded-lg flex items-center justify-center"
-              style={{ background: "rgba(6,182,212,0.08)", border: "1px solid rgba(6,182,212,0.15)" }}>
-              <Zap className="w-4 h-4" style={{ color: "#06b6d4" }} />
+            <div className="w-8 h-8 rounded-full flex items-center justify-center border border-white/8 bg-white/4">
+              <Zap className="w-4 h-4 text-white" />
             </div>
             <div>
-              <div className="font-black text-sm tracking-[-0.03em] text-white"
+              <div className="font-bold text-sm tracking-[-0.03em] text-white"
                 style={{ fontFamily: "var(--font-geist), sans-serif" }}>
                 AKASH SONI
               </div>
-              <div className="text-[9px] font-mono text-slate-600 mt-0.5">
+              <div className="text-[9px] font-mono text-slate-500 mt-0.5">
                 Backend Engineer · AI Infrastructure
               </div>
             </div>
           </div>
 
           {/* Center: Status */}
-          <div className="flex items-center gap-1.5 text-[10px] font-mono"
-            style={{ color: "#10b981" }}>
-            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-            Available for New Opportunities
+          <div className="flex items-center gap-1.5 text-[9px] font-mono text-green-400 font-bold uppercase tracking-wider">
+            <span className="w-1 h-1 rounded-full bg-green-400 animate-pulse" />
+            Available for Opportunities
           </div>
 
           {/* Right: Socials */}
@@ -47,27 +45,18 @@ export const Footer = () => {
               { href: "mailto:sameersoni396@gmail.com", icon: Mail, label: "Email" },
             ].map(({ href, icon: Icon, label }) => (
               <motion.a key={label} href={href} target="_blank" rel="noopener noreferrer"
-                whileHover={{ scale: 1.1, y: -2 }} whileTap={{ scale: 0.95 }}
+                whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}
                 aria-label={label}
-                className="w-8 h-8 rounded-lg flex items-center justify-center transition-all"
-                style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.06)" }}
-                onMouseEnter={(e) => {
-                  (e.currentTarget as HTMLElement).style.borderColor = "rgba(6,182,212,0.3)";
-                  (e.currentTarget as HTMLElement).style.background = "rgba(6,182,212,0.06)";
-                }}
-                onMouseLeave={(e) => {
-                  (e.currentTarget as HTMLElement).style.borderColor = "rgba(255,255,255,0.06)";
-                  (e.currentTarget as HTMLElement).style.background = "rgba(255,255,255,0.03)";
-                }}>
-                <Icon className="w-4 h-4 text-slate-500" />
+                className="w-8 h-8 rounded-full flex items-center justify-center border border-white/8 bg-white/2 hover:bg-white/5 transition-colors cursor-pointer"
+              >
+                <Icon className="w-4 h-4 text-slate-400" />
               </motion.a>
             ))}
           </div>
         </div>
 
         {/* Bottom */}
-        <div className="mt-8 pt-6 border-t flex flex-col md:flex-row items-center justify-between gap-2 text-[9px] font-mono text-slate-700"
-          style={{ borderColor: "rgba(255,255,255,0.04)" }}>
+        <div className="mt-8 pt-6 border-t border-white/5 flex flex-col md:flex-row items-center justify-between gap-2 text-[9px] font-mono text-slate-600">
           <span>© {year} Akash Soni. All rights reserved.</span>
           <span>Built with Next.js · TypeScript · Framer Motion</span>
         </div>

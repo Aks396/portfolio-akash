@@ -25,9 +25,9 @@ const geist = Geist({
 });
 
 export const metadata: Metadata = {
-  title: "Akash Soni | Backend Engineer · AI Infrastructure · Distributed Systems",
+  title: "Akash Soni — Backend Engineer · AI Infrastructure",
   description:
-    "Senior Backend Engineer with 3+ years building scalable cloud-native systems, AI-powered platforms, and event-driven microservices. AWS Certified Solutions Architect. Java · Spring Boot · Kafka · Redis · FastAPI.",
+    "Backend Engineer with 3.4+ years of experience building scalable backend architectures, high-performance API integrations, and event-driven distributed systems. AWS Certified Solutions Architect. Java · Spring Boot · Kafka · Redis · FastAPI.",
   keywords: [
     "Backend Engineer",
     "AI Infrastructure",
@@ -40,12 +40,11 @@ export const metadata: Metadata = {
     "Microservices",
     "Cloud Native",
     "FastAPI",
-    "FHIR R4",
   ],
   authors: [{ name: "Akash Soni" }],
   openGraph: {
     title: "Akash Soni — Backend Engineer · AI Infrastructure",
-    description: "Building scalable cloud-native systems and AI-powered platforms.",
+    description: "Building scalable distributed systems and AI-ready backend infrastructures.",
     type: "website",
   },
 };

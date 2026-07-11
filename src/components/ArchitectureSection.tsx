@@ -2,7 +2,7 @@
 
 import React, { useState, useRef } from "react";
 import { motion, useInView, AnimatePresence } from "framer-motion";
-import { Play, RefreshCw, Terminal, CheckCircle2, AlertTriangle, FileCode, ServerCrash, LayoutDashboard } from "lucide-react";
+import { Play, RefreshCw, Terminal, CheckCircle2, AlertTriangle, FileCode, ServerCrash, X, Code2, Link as LinkIcon, Info } from "lucide-react";
 
 const projects = [
   {
@@ -12,7 +12,9 @@ const projects = [
     subtitle: "AI-Powered Career Intelligence Platform",
     role: "Full Stack & AI Developer",
     impact: "Gemini AI · Career Analytics",
-    accentColor: "#06b6d4",
+    accentColor: "#ffffff",
+    githubUrl: "https://github.com/Aks396/ATS-Checker",
+    liveUrl: "https://github.com/Aks396/ATS-Checker",
     fileName: "ResumeParser.ts",
     diagram: `[PDF Inbound] -> [Scrape Bytes Node] -> [Gemini 2.5 API]
                                             |
@@ -50,7 +52,9 @@ export async function POST(req: Request) {
     subtitle: "Smart URL Shortener & Analytics Platform",
     role: "Backend & Systems Engineer",
     impact: "Spring Boot · Redis Caching",
-    accentColor: "#8b5cf6",
+    accentColor: "#2997ff",
+    githubUrl: "https://github.com/Aks396/tinyurl-ai-platform",
+    liveUrl: "https://github.com/Aks396/tinyurl-ai-platform",
     fileName: "RedirectionController.java",
     diagram: `[HTTP Get /alias] -> [Redis Cache Check] --(Hit)----> [Redirect 301]
                              |
@@ -96,7 +100,9 @@ public class RedirectionController {
     subtitle: "AI-Enabled Early Autism Screening & Care Management",
     role: "Full Stack Developer",
     impact: "Clinical AI · Diagnostics Support",
-    accentColor: "#f59e0b",
+    accentColor: "#ff9f0a",
+    githubUrl: "https://github.com/Aks396/CURA-Autism-AI",
+    liveUrl: "https://github.com/Aks396/CURA-Autism-AI",
     fileName: "AutismScreeningService.py",
     diagram: `[User Screening Inputs] -> [Gemini API Evaluation]
                                    |
@@ -137,7 +143,9 @@ def evaluate_assessment(patient_responses: list) -> dict:
     subtitle: "High-Throughput Content Management System",
     role: "Backend Architect",
     impact: "Java · System Architecture",
-    accentColor: "#10b981",
+    accentColor: "#30d158",
+    githubUrl: "https://github.com/Aks396",
+    liveUrl: "https://github.com/Aks396",
     fileName: "ArticlePublisher.java",
     diagram: `[Ingest Article] -> [Kafka Publish Thread] -> [Topic: articles_publish]
                                                       |
@@ -178,7 +186,7 @@ public class ArticlePublisher {
   },
 ];
 
-// Simulator components (visually elevated)
+// Visual Simulator Components
 const ATSSimulator = () => {
   const [step, setStep] = useState(0);
   const [logs, setLogs] = useState<string[]>(["System Idle — Awaiting Resume Upload"]);
@@ -188,106 +196,97 @@ const ATSSimulator = () => {
     setStep(1); setLogs(["[Ingest] Inbound resume received: cv_software_engineer.pdf"]);
     const msgs = [
       "[AI Parse] Extracting text and sections using Gemini. Confidence: 99%",
-      "[Keywords] Comparing qualifications against job description. Found 87% match",
-      "[Score Calc] Calculating ATS Score: 88/100. Key keywords matched: Java, Spring Boot, Redis",
-      "[Report] Ingestion complete. Generated recruiter feedback report ✓",
+      "[Keywords] Density: Java (4.2%), Spring Boot (3.1%), Kafka (1.8%)",
+      "[Score Calc] Match score computed: 88/100",
+      "[Report Ready] Success response compiled. Return JSON to Client ✓"
     ];
-    msgs.forEach((m, i) => setTimeout(() => {
-      setStep(i + 2); setLogs((p) => [...p, m]);
-    }, (i + 1) * 1200));
+    msgs.forEach((m, idx) => {
+      setTimeout(() => {
+        setStep(idx + 2);
+        setLogs((p) => [...p, m]);
+      }, (idx + 1) * 1200);
+    });
   };
 
   return (
     <div className="space-y-4">
-      <div className="flex justify-between items-center">
-        <span className="text-[10px] font-mono font-bold text-cyan-400">ATS SCAN PIPELINE</span>
-        <button onClick={run} disabled={step > 0 && step < 5}
-          className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[10px] font-mono font-bold transition-all disabled:opacity-40 cursor-pointer"
-          style={{ background: "rgba(6,182,212,0.08)", border: "1px solid rgba(6,182,212,0.2)", color: "#06b6d4" }}>
-          <Play className="w-3 h-3" /> Analyze Resume
+      <div className="flex items-center justify-between">
+        <span className="text-[9px] font-mono text-slate-500 uppercase tracking-widest">Simulator: Ingest & Parse</span>
+        <button onClick={run} disabled={step > 0}
+          className="px-3 py-1 rounded-full text-[9px] font-mono font-bold text-black bg-white hover:bg-slate-200 transition-all flex items-center gap-1.5 cursor-pointer disabled:opacity-50">
+          <Play className="w-2.5 h-2.5" /> RUN SIMULATOR
         </button>
       </div>
-      <div className="grid grid-cols-5 gap-1.5">
-        {nodes.map((n, i) => (
-          <div key={n} className="p-1.5 rounded-lg text-center text-[8px] font-mono font-bold border transition-all"
-            style={{
-              background: step === i + 1 ? "rgba(6,182,212,0.15)" : step > i + 1 ? "rgba(16,185,129,0.08)" : "rgba(255,255,255,0.02)",
-              borderColor: step === i + 1 ? "#06b6d4" : step > i + 1 ? "#10b981" : "rgba(255,255,255,0.06)",
-              color: step === i + 1 ? "#06b6d4" : step > i + 1 ? "#10b981" : "#475569",
-              boxShadow: step === i + 1 ? "0 0 12px rgba(6,182,212,0.2)" : "none",
-            }}>{n}</div>
+
+      <div className="flex justify-between items-center px-4 py-2.5 rounded-xl border border-white/5 bg-black/40">
+        {nodes.map((n, idx) => (
+          <div key={n} className="flex items-center gap-1">
+            <div className={`w-3.5 h-3.5 rounded-full flex items-center justify-center text-[7px] font-mono font-bold border transition-colors ${
+              step > idx ? "bg-white border-white text-black" : "border-white/10 text-slate-600"
+            }`}>
+              {idx + 1}
+            </div>
+            <span className={`text-[8px] font-mono hidden sm:inline ${step > idx ? "text-white" : "text-slate-600"}`}>{n}</span>
+          </div>
         ))}
       </div>
-      <div className="p-3 rounded-xl font-mono text-[10px] space-y-1 h-20 overflow-y-auto no-scrollbar"
-        style={{ background: "rgba(0,0,0,0.4)", border: "1px solid rgba(255,255,255,0.05)" }}>
-        {logs.map((l, i) => <p key={i} className="text-slate-400">{l}</p>)}
+
+      <div className="p-4 rounded-xl border border-white/5 bg-black/60 font-mono text-[9px] text-slate-400 space-y-1.5 h-32 overflow-y-auto no-scrollbar">
+        {logs.map((l, i) => (
+          <p key={i} className="flex items-start gap-1.5">
+            <span className="text-slate-600 font-bold">&gt;</span>
+            <span>{l}</span>
+          </p>
+        ))}
       </div>
     </div>
   );
 };
 
 const TinyURLSimulator = () => {
-  const [messages, setMessages] = useState<Array<{ sender: "user" | "ai"; text: string }>>([
-    { sender: "ai", text: "TinyURL API online. Choose a URL to shorten and analyze." },
-  ]);
-  const [streaming, setStreaming] = useState(false);
-  const [metrics, setMetrics] = useState({ latency: 0, cache: "—", status: "—" });
+  const [step, setStep] = useState(0);
+  const [logs, setLogs] = useState<string[]>(["Redirection Router: Idle"]);
 
-  const send = (selectedUrl: string) => {
-    if (!selectedUrl.trim() || streaming) return;
-    setMessages((p) => [...p, { sender: "user", text: `Shorten: ${selectedUrl}` }]);
-    setStreaming(true);
-    
-    const isSafe = !selectedUrl.includes("malicious-phishing.com");
-    const latency = isSafe ? 12 : 280;
-
+  const run = () => {
+    setStep(1); setLogs(["[Router] GET /t/short-alias -> Inbound redirect request"]);
     setTimeout(() => {
-      const shortAlias = `https://t.ly/${isSafe ? "sf39b" : "bl821"}`;
-      const safetyScore = isSafe ? "98/100 (Safe)" : "12/100 (HIGH RISK - Phishing Threat)";
-      const resp = `Shortened: ${shortAlias} | AI Security Score: ${safetyScore}. Redis Cache: ${latency === 12 ? "HIT" : "MISS"}`;
-      
-      setMessages((p) => [...p, { sender: "ai", text: "" }]);
-      let i = 0;
-      const iv = setInterval(() => {
-        setMessages((p) => { const n = [...p]; n[n.length - 1] = { sender: "ai", text: resp.slice(0, i + 1) }; return n; });
-        if (++i >= resp.length) { 
-          clearInterval(iv); 
-          setStreaming(false); 
-          setMetrics({ latency, cache: latency === 12 ? "HIT" : "MISS", status: isSafe ? "SAFE" : "THREAT" }); 
-        }
-      }, 15);
-    }, 800);
+      setStep(2); setLogs((p) => [...p, "[Cache] Redis check: 'urls:short-alias' -> MISS"]);
+    }, 1000);
+    setTimeout(() => {
+      setStep(3); setLogs((p) => [...p, "[MySQL] Query: SELECT destination FROM urls WHERE alias='short-alias' -> Found"]);
+    }, 2000);
+    setTimeout(() => {
+      setStep(4); setLogs((p) => [...p, "[Cache] Redis write: 'urls:short-alias' -> Cached for 24h"]);
+    }, 3000);
+    setTimeout(() => {
+      setStep(5); setLogs((p) => [...p, "[Router] Response: 301 Redirect -> Location: https://dest.com/original-url ✓"]);
+    }, 4000);
   };
 
   return (
-    <div className="space-y-3">
-      <div className="flex justify-between items-center">
-        <span className="text-[10px] font-mono font-bold text-purple-400 font-mono">AI URL SHORTENER & SCANNER</span>
+    <div className="space-y-4">
+      <div className="flex items-center justify-between">
+        <span className="text-[9px] font-mono text-slate-500 uppercase tracking-widest">Simulator: cache & router</span>
+        <button onClick={run} disabled={step > 0}
+          className="px-3 py-1 rounded-full text-[9px] font-mono font-bold text-black bg-white hover:bg-slate-200 transition-all flex items-center gap-1.5 cursor-pointer disabled:opacity-50">
+          <Play className="w-2.5 h-2.5" /> RUN SIMULATOR
+        </button>
       </div>
-      <div className="h-28 rounded-xl p-3 space-y-2 overflow-y-auto no-scrollbar flex flex-col"
-        style={{ background: "rgba(0,0,0,0.4)", border: "1px solid rgba(255,255,255,0.05)" }}>
-        {messages.map((m, i) => (
-          <div key={i} className={`max-w-[85%] p-2 rounded-lg text-[10px] font-mono ${m.sender === "user" ? "self-end" : "self-start"}`}
-            style={{ background: m.sender === "user" ? "rgba(139,92,246,0.12)" : "rgba(255,255,255,0.04)", border: `1px solid ${m.sender === "user" ? "rgba(139,92,246,0.2)" : "rgba(255,255,255,0.06)"}`, color: "#94a3b8" }}>
-            {m.text || <span className="animate-blink inline-block w-1.5 h-3 bg-purple-400" />}
-          </div>
+
+      <div className="grid grid-cols-5 gap-1.5 text-center">
+        {["Client", "Router", "Redis", "MySQL", "Redirect"].map((n, idx) => (
+          <div key={n} className={`p-2 rounded-lg border text-[8px] font-mono ${
+            step > idx ? "bg-white border-white text-black font-bold" : "border-white/5 text-slate-600"
+          }`}>{n}</div>
         ))}
       </div>
-      <div className="flex gap-2 flex-wrap">
-        {["https://github.com/Aks396/portfolio", "https://malicious-phishing.com/bank"].map((p) => (
-          <button key={p} onClick={() => send(p)} disabled={streaming}
-            className="text-[9px] font-mono px-2 py-1 rounded-lg transition-all disabled:opacity-40 truncate max-w-[200px] cursor-pointer"
-            style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.07)", color: "#64748b" }}>
-            {p.substring(8)}
-          </button>
-        ))}
-      </div>
-      <div className="grid grid-cols-3 gap-2 text-center text-[9px] font-mono">
-        {[{ l: "Latency", v: `${metrics.latency}ms`, c: "#06b6d4" }, { l: "Cache Status", v: metrics.cache, c: "#10b981" }, { l: "Threat Status", v: metrics.status, c: metrics.status === "SAFE" ? "#10b981" : metrics.status === "THREAT" ? "#ef4444" : "#8b5cf6" }].map((m) => (
-          <div key={m.l} className="p-2 rounded-lg" style={{ background: "rgba(0,0,0,0.3)", border: "1px solid rgba(255,255,255,0.05)" }}>
-            <div className="text-slate-600 uppercase mb-0.5">{m.l}</div>
-            <div className="font-bold" style={{ color: m.c }}>{m.v}</div>
-          </div>
+
+      <div className="p-4 rounded-xl border border-white/5 bg-black/60 font-mono text-[9px] text-slate-400 space-y-1.5 h-32 overflow-y-auto no-scrollbar">
+        {logs.map((l, i) => (
+          <p key={i} className="flex items-start gap-1.5">
+            <span className="text-slate-600 font-bold">&gt;</span>
+            <span>{l}</span>
+          </p>
         ))}
       </div>
     </div>
@@ -295,110 +294,98 @@ const TinyURLSimulator = () => {
 };
 
 const CURASimulator = () => {
-  const [scanning, setScanning] = useState(false);
-  const [score, setScore] = useState<number | null>(null);
-  const [checks, setChecks] = useState<Array<{ name: string; status: "idle" | "success" | "warning" }>>([
-    { name: "Sensory Overload Checklist Scan", status: "idle" },
-    { name: "Cognitive Response Benchmark Assessment", status: "idle" },
-    { name: "Early Autism Diagnostic Index Check", status: "idle" },
-    { name: "Care Plan Resource Auto-Mapping", status: "idle" },
-  ]);
+  const [step, setStep] = useState(0);
+  const [logs, setLogs] = useState<string[]>(["Diagnosis Engine: Idle"]);
 
   const run = () => {
-    setScanning(true); setScore(null);
-    setChecks((p) => p.map((c) => ({ ...c, status: "idle" })));
-    const outcomes: Array<"success" | "warning"> = ["success", "success", "success", "success"];
-    outcomes.forEach((o, i) => {
-      setTimeout(() => {
-        setChecks((p) => p.map((c, ci) => ci === i ? { ...c, status: o } : c));
-        if (i === outcomes.length - 1) { setScore(96); setScanning(false); }
-      }, (i + 1) * 800);
-    });
+    setStep(1); setLogs(["[Ingress] Screening metadata package received"]);
+    setTimeout(() => {
+      setStep(2); setLogs((p) => [...p, "[AI Model] Sending indicators to Gemini Flash context"]);
+    }, 1200);
+    setTimeout(() => {
+      setStep(3); setLogs((p) => [...p, "[AI Model] Gemini: Evaluation score 8/10, M-CHAT pathway indicated"]);
+    }, 2400);
+    setTimeout(() => {
+      setStep(4); setLogs((p) => [...p, "[Database] Saving pathway metadata and generating care guide"]);
+    }, 3600);
+    setTimeout(() => {
+      setStep(5); setLogs((p) => [...p, "[Ingress] Response compiled. Clinical portal updated ✓"]);
+    }, 4800);
   };
 
   return (
     <div className="space-y-4">
-      <div className="flex justify-between items-center">
-        <span className="text-[10px] font-mono font-bold text-amber-400">CURA AI SCREENING DIAGNOSIS</span>
-        <button onClick={run} disabled={scanning}
-          className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[10px] font-mono font-bold transition-all disabled:opacity-40 cursor-pointer"
-          style={{ background: "rgba(245,158,11,0.08)", border: "1px solid rgba(245,158,11,0.2)", color: "#f59e0b" }}>
-          <RefreshCw className={`w-3 h-3 ${scanning ? "animate-spin" : ""}`} /> Analyze Indicators
+      <div className="flex items-center justify-between">
+        <span className="text-[9px] font-mono text-slate-500 uppercase tracking-widest">Simulator: AI Assessment</span>
+        <button onClick={run} disabled={step > 0}
+          className="px-3 py-1 rounded-full text-[9px] font-mono font-bold text-black bg-white hover:bg-slate-200 transition-all flex items-center gap-1.5 cursor-pointer disabled:opacity-50">
+          <Play className="w-2.5 h-2.5" /> RUN SIMULATOR
         </button>
       </div>
-      <div className="relative p-3 rounded-xl overflow-hidden" style={{ background: "rgba(0,0,0,0.4)", border: "1px solid rgba(255,255,255,0.05)" }}>
-        {scanning && (
-          <motion.div initial={{ top: 0 }} animate={{ top: "100%" }} transition={{ repeat: Infinity, duration: 1.2, ease: "linear" }}
-            className="absolute left-0 w-full h-0.5 z-10"
-            style={{ background: "rgba(245,158,11,0.5)", boxShadow: "0 0 8px rgba(245,158,11,0.8)" }} />
-        )}
-        <div className="font-mono text-[10px] text-slate-500 space-y-1">
-          <div className="flex justify-between"><span>PATIENT RECORD: CURA-9812</span><span style={{ color: "#f59e0b" }}>[SCREENING ACTIVE]</span></div>
-          <p>ASSESSMENT: M-CHAT-R/F // AGE: 36 MONTHS</p>
-        </div>
-      </div>
-      <div className="space-y-1.5">
-        {checks.map((c) => (
-          <div key={c.name} className="flex items-center justify-between p-2.5 rounded-lg text-[10px] font-mono"
-            style={{ background: "rgba(0,0,0,0.3)", border: "1px solid rgba(255,255,255,0.05)" }}>
-            <span className="text-slate-500">{c.name}</span>
-            {c.status === "idle" && <span className="text-slate-600">WAITING</span>}
-            {c.status === "success" && <span className="flex items-center gap-1" style={{ color: "#10b981" }}><CheckCircle2 className="w-3 h-3" />COMPLETED</span>}
-            {c.status === "warning" && <span className="flex items-center gap-1 animate-pulse" style={{ color: "#f59e0b" }}><AlertTriangle className="w-3 h-3" />WARN</span>}
+
+      <div className="flex justify-between items-center px-4 py-2.5 rounded-xl border border-white/5 bg-black/40">
+        {["Screening", "Evaluation", "Diagnosis", "Care Pathway"].map((n, idx) => (
+          <div key={n} className="flex items-center gap-1">
+            <div className={`w-3.5 h-3.5 rounded-full flex items-center justify-center text-[7px] font-mono font-bold border ${
+              step > idx ? "bg-white border-white text-black" : "border-white/10 text-slate-600"
+            }`}>
+              {idx + 1}
+            </div>
+            <span className={`text-[8px] font-mono hidden sm:inline ${step > idx ? "text-white" : "text-slate-600"}`}>{n}</span>
           </div>
         ))}
       </div>
-      {score !== null && (
-        <div className="p-3 rounded-xl text-center" style={{ background: "rgba(16,185,129,0.05)", border: "1px solid rgba(16,185,129,0.15)" }}>
-          <div className="text-[10px] font-mono uppercase tracking-wider text-emerald-600 mb-1">Pathway Alignment Score</div>
-          <div className="text-2xl font-black font-mono text-emerald-400">{score}%</div>
-        </div>
-      )}
+
+      <div className="p-4 rounded-xl border border-white/5 bg-black/60 font-mono text-[9px] text-slate-400 space-y-1.5 h-32 overflow-y-auto no-scrollbar">
+        {logs.map((l, i) => (
+          <p key={i} className="flex items-start gap-1.5">
+            <span className="text-slate-600 font-bold">&gt;</span>
+            <span>{l}</span>
+          </p>
+        ))}
+      </div>
     </div>
   );
 };
 
 const KafkaSimulator = () => {
-  const [logs, setLogs] = useState<string[]>(["Topic 'newspaper_articles_publish' initialized"]);
+  const [logs, setLogs] = useState<string[]>(["Broker Cluster: Standing By"]);
   const [running, setRunning] = useState(false);
 
-  const publish = () => {
-    if (running) return;
+  const run = () => {
     setRunning(true);
-    const payloads = [
-      '{"articleId":"art_9182","action":"PUBLISH","authorId":"usr_41"}',
-      '{"articleId":"art_9182","action":"DISTRIBUTE","target":"web_cdn"}',
-    ];
-    payloads.forEach((p, i) => {
-      setTimeout(() => {
-        setLogs((prev) => [
-          ...prev,
-          `[Broker] Partition: ${i % 2} Offset: ${Math.floor(Math.random() * 100)}`,
-          `[Consumer] Payload: ${p}`,
-        ]);
-        if (i === payloads.length - 1) setRunning(false);
-      }, (i + 1) * 1200);
-    });
+    setLogs(["[Broker] Inbound event publisher: ArticlePublisher initialized"]);
+    setTimeout(() => {
+      setLogs((p) => [...p, "[Kafka] Publishing article: 'id_3962' to topic 'newspaper_articles_publish'"]);
+    }, 800);
+    setTimeout(() => {
+      setLogs((p) => [...p, "[Kafka] Event delivered successfully. Offset: 1420"]);
+    }, 1600);
+    setTimeout(() => {
+      setLogs((p) => [...p, "[CDN Sync] Synced CDN cache layer for rapid delivery"]);
+    }, 2400);
+    setTimeout(() => {
+      setLogs((p) => [...p, "[MySQL] Persistent write completed. Article operational ✓"]);
+      setRunning(false);
+    }, 3200);
   };
 
   return (
     <div className="space-y-4">
-      <div className="flex justify-between items-center">
-        <span className="text-[10px] font-mono font-bold text-emerald-400">KAFKA EVENT STREAM</span>
-        <button onClick={publish} disabled={running}
-          className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[10px] font-mono font-bold transition-all disabled:opacity-40 cursor-pointer"
-          style={{ background: "rgba(16,185,129,0.08)", border: "1px solid rgba(16,185,129,0.2)", color: "#10b981" }}>
-          <Play className="w-3 h-3" /> Publish CMS Article
+      <div className="flex items-center justify-between">
+        <span className="text-[9px] font-mono text-slate-500 uppercase tracking-widest">Simulator: message broker</span>
+        <button onClick={run} disabled={running}
+          className="px-3 py-1 rounded-full text-[9px] font-mono font-bold text-black bg-white hover:bg-slate-200 transition-all flex items-center gap-1.5 cursor-pointer disabled:opacity-50">
+          <Play className="w-2.5 h-2.5" /> PUBLISH EVENT
         </button>
       </div>
-      <div className="p-3 rounded-xl font-mono text-[10px] space-y-1 h-36 overflow-y-auto no-scrollbar"
-        style={{ background: "rgba(0,0,0,0.4)", border: "1px solid rgba(255,255,255,0.05)" }}>
-        <div className="flex justify-between text-slate-600 border-b border-white/5 pb-1.5 mb-1.5">
-          <span>BROKER CONSOLE</span>
-          <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-        </div>
+
+      <div className="p-4 rounded-xl border border-white/5 bg-black/60 font-mono text-[9px] text-slate-400 space-y-1.5 h-32 overflow-y-auto no-scrollbar">
         {logs.map((l, i) => (
-          <p key={i} style={{ color: l.includes("Payload") ? "#06b6d4" : l.includes("Broker") ? "#10b981" : "#475569" }}>{l}</p>
+          <p key={i} className="flex items-start gap-1.5">
+            <span className="text-slate-600 font-bold">&gt;</span>
+            <span>{l}</span>
+          </p>
         ))}
       </div>
     </div>
@@ -410,22 +397,20 @@ const simulators = { ats: ATSSimulator, tinyurl: TinyURLSimulator, cura: CURASim
 export const ArchitectureSection = () => {
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, margin: "-80px" });
-  const [activeId, setActiveId] = useState("ats");
+  
+  // Selected project state for Apple WWDC-style detailed overlay modal
+  const [selectedProj, setSelectedProj] = useState<typeof projects[0] | null>(null);
   const [activeTab, setActiveTab] = useState<"simulation" | "code" | "diagram">("simulation");
 
-  const active = projects.find((p) => p.id === activeId)!;
-  const Simulator = simulators[activeId as keyof typeof simulators];
+  const Simulator = selectedProj ? simulators[selectedProj.id as keyof typeof simulators] : () => null;
 
-  // Helper for inline syntax highlighting replacement in static pre block
-  const renderHighlightedCode = (codeText: string, lang: string) => {
-    // Simple mock coloring for files
+  const renderHighlightedCode = (codeText: string) => {
     const lines = codeText.split("\n");
     return (
       <pre className="text-[10px] font-mono leading-relaxed text-slate-400 overflow-x-auto p-4 select-text">
         <code>
           {lines.map((line, idx) => {
             let processed = line;
-            // Simple keyword replacements using HTML strings (safe since it is fixed code)
             processed = processed
               .replace(/import|from|export|async|function|class|public|private|new|return|def|var|const|await/g, (m) => `<span class="text-purple-400">${m}</span>`)
               .replace(/(@RestController|@RequestMapping|@Autowired|@Cacheable|@GetMapping|@PathVariable|@Service)/g, (m) => `<span class="text-amber-500">${m}</span>`)
@@ -444,175 +429,211 @@ export const ArchitectureSection = () => {
   };
 
   return (
-    <section id="projects" ref={ref} className="relative border-t" style={{ borderColor: "rgba(255,255,255,0.04)", background: "#030810" }}>
-      <div className="absolute inset-0 grid-pattern-sm opacity-50 pointer-events-none" />
+    <section id="projects" ref={ref} className="relative border-t border-white/5" style={{ background: "#050505" }}>
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[1px]"
-        style={{ background: "linear-gradient(90deg, transparent, rgba(6,182,212,0.3), transparent)" }} />
+        style={{ background: "linear-gradient(90deg, transparent, rgba(255,255,255,0.08), transparent)" }} />
 
       <div className="container-tight section-padding">
         <motion.div initial={{ opacity: 0, y: 20 }} animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }} className="mb-10">
+          transition={{ duration: 0.6 }} className="mb-14">
           <span className="mono-label">Case Studies</span>
-          <h2 className="text-3xl md:text-4xl font-black tracking-[-0.03em] text-white"
+          <h2 className="text-3xl md:text-4xl font-extrabold tracking-[-0.03em] text-white mt-2"
             style={{ fontFamily: "var(--font-geist), sans-serif" }}>
-            Technical <span className="gradient-text-cyan">Projects</span>
+            Technical <span className="text-slate-500">Projects</span>
           </h2>
-          <p className="mt-3 text-sm font-mono text-slate-500">
-            Select a project case study to explore the architecture diagram, review clean source code, and run the simulator.
+          <p className="mt-3 text-xs font-mono text-slate-500 max-w-sm">
+            Explore architectural systems, source code syntax, and interactive simulators.
           </p>
         </motion.div>
 
-        {/* Project selector tabs */}
-        <div className="flex gap-2 mb-8 flex-wrap">
-          {projects.map((p) => (
-            <motion.button key={p.id} onClick={() => { setActiveId(p.id); }}
-              whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}
-              className="px-4 py-2.5 rounded-xl text-[10px] font-mono font-bold uppercase tracking-wider transition-all cursor-pointer"
-              style={{
-                background: activeId === p.id ? `${p.accentColor}12` : "rgba(255,255,255,0.02)",
-                border: `1px solid ${activeId === p.id ? p.accentColor : "rgba(255,255,255,0.06)"}`,
-                color: activeId === p.id ? p.accentColor : "#475569",
-                boxShadow: activeId === p.id ? `0 0 20px ${p.accentColor}15` : "none",
-              }}>
-              {p.num} {p.id.toUpperCase()}
-            </motion.button>
-          ))}
-        </div>
+        {/* Apple Product Cards Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {projects.map((p, i) => (
+            <motion.div
+              key={p.id}
+              initial={{ opacity: 0, y: 30 }}
+              animate={inView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.8, delay: i * 0.08 }}
+              whileHover={{ y: -4 }}
+              className="p-6 rounded-3xl glass-card relative overflow-hidden flex flex-col justify-between min-h-[260px] group border border-white/8 bg-white/2"
+            >
+              <div className="absolute top-0 left-0 right-0 h-[1.5px]"
+                style={{ background: `linear-gradient(90deg, transparent, ${p.accentColor}30, transparent)` }} />
 
-        <AnimatePresence mode="wait">
-          <motion.div key={activeId}
-            initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -16 }}
-            transition={{ duration: 0.35, ease: "easeOut" }}
-            className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
-
-            {/* LEFT: Project info (span 5) */}
-            <div className="lg:col-span-5 p-6 rounded-2xl relative overflow-hidden flex flex-col justify-between gap-6"
-              style={{ background: "#060c1a", border: `1px solid ${active.accentColor}18` }}>
-              <div className="absolute top-0 left-0 right-0 h-[2px]"
-                style={{ background: `linear-gradient(90deg, transparent, ${active.accentColor}, transparent)` }} />
-              
               <div className="space-y-4">
+                <div className="flex justify-between items-start">
+                  <span className="text-[10px] font-mono uppercase tracking-[0.2em] font-bold text-slate-500">{p.impact}</span>
+                  <span className="text-xs font-mono font-bold text-slate-700">{p.num}</span>
+                </div>
                 <div>
-                  <div className="text-[9px] font-mono uppercase tracking-widest mb-1.5" style={{ color: active.accentColor }}>
-                    {active.impact}
-                  </div>
-                  <h3 className="text-xl font-black tracking-[-0.02em] text-white"
-                    style={{ fontFamily: "var(--font-geist), sans-serif" }}>
-                    {active.title}
-                  </h3>
-                  <p className="text-xs font-mono text-slate-500 mt-0.5">{active.subtitle}</p>
+                  <h3 className="text-lg font-bold tracking-tight text-white">{p.title}</h3>
+                  <p className="text-[11px] font-mono text-slate-500 mt-0.5">{p.subtitle}</p>
                 </div>
-                
-                <p className="text-[12px] font-mono text-slate-400 leading-relaxed">{active.description}</p>
-
-                {/* Metrics */}
-                <div className="grid grid-cols-3 gap-2">
-                  {active.metrics.map((m) => (
-                    <div key={m.label} className="p-2.5 rounded-xl text-center bg-black/35"
-                      style={{ border: "1px solid rgba(255,255,255,0.04)" }}>
-                      <div className="text-sm font-black font-mono" style={{ color: active.accentColor }}>{m.value}</div>
-                      <div className="text-[8px] font-mono text-slate-500 mt-0.5 uppercase tracking-tighter">{m.label}</div>
-                    </div>
-                  ))}
-                </div>
-
-                {/* Contributions */}
-                <div className="space-y-1.5">
-                  <p className="text-[9px] font-mono uppercase tracking-widest font-bold" style={{ color: active.accentColor }}>
-                    Contributions
-                  </p>
-                  {active.contributions.map((c, i) => (
-                    <div key={i} className="flex items-start gap-2 text-[10px] font-mono text-slate-400 leading-relaxed">
-                      <span className="mt-1.5 w-1 h-1 rounded-full shrink-0" style={{ background: active.accentColor }} />
-                      <span>{c}</span>
-                    </div>
-                  ))}
-                </div>
+                <p className="text-xs text-slate-400 font-mono leading-relaxed line-clamp-3">
+                  {p.description}
+                </p>
               </div>
 
-              {/* Tags */}
-              <div className="flex flex-wrap gap-1.5 pt-3 border-t" style={{ borderColor: "rgba(255,255,255,0.04)" }}>
-                {active.tags.map((t) => (
-                  <span key={t} className="px-2 py-0.5 rounded-md text-[9px] font-mono"
-                    style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.05)", color: "#475569" }}>
+              <div className="flex flex-wrap gap-1.5 pt-4">
+                {p.tags.slice(0, 4).map((t) => (
+                  <span key={t} className="text-[8.5px] font-mono px-2 py-0.5 rounded-full border border-white/5 bg-white/2 text-slate-500">
                     {t}
                   </span>
                 ))}
               </div>
-            </div>
 
-            {/* RIGHT: IDE Mockup (span 7) */}
-            <div className="lg:col-span-7 rounded-2xl overflow-hidden flex flex-col justify-between border"
-              style={{ background: "#080e1b", borderColor: "rgba(255,255,255,0.06)" }}>
-              
-              {/* IDE Top Bar */}
-              <div className="flex items-center justify-between px-4 py-2 border-b bg-black/30"
-                style={{ borderColor: "rgba(255,255,255,0.05)" }}>
-                
-                {/* File tab group */}
-                <div className="flex items-center gap-1.5">
-                  {[
-                    { id: "simulation", label: "simulation.sh", icon: Terminal },
-                    { id: "code", label: active.fileName, icon: FileCode },
-                    { id: "diagram", label: "architecture.txt", icon: LayoutDashboard },
-                  ].map((tab) => {
-                    const Icon = tab.icon;
-                    const isTabActive = activeTab === tab.id;
-                    return (
-                      <button key={tab.id} onClick={() => setActiveTab(tab.id as typeof activeTab)}
-                        className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[10px] font-mono transition-colors cursor-pointer select-none"
-                        style={{
-                          background: isTabActive ? "rgba(255,255,255,0.05)" : "transparent",
-                          color: isTabActive ? "#fff" : "#475569",
-                        }}>
-                        <Icon className="w-3.5 h-3.5" style={{ color: isTabActive ? active.accentColor : "#475569" }} />
-                        <span>{tab.label}</span>
-                      </button>
-                    );
-                  })}
-                </div>
-
-                <div className="flex items-center gap-1.5">
-                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-                  <span className="text-[9px] font-mono text-slate-500 uppercase tracking-widest">Workspace</span>
-                </div>
+              <div className="mt-5 pt-4 border-t border-white/5 flex items-center justify-between">
+                <span className="text-[8.5px] font-mono text-slate-600 uppercase tracking-widest">Active System</span>
+                <button
+                  onClick={() => { setSelectedProj(p); setActiveTab("simulation"); }}
+                  className="px-3.5 py-1.5 rounded-full text-[9px] font-mono font-bold text-black bg-white hover:bg-slate-200 transition-all cursor-pointer"
+                >
+                  Explore Case Study
+                </button>
               </div>
-
-              {/* IDE Window Workspace */}
-              <div className="flex-1 p-6 min-h-[300px] flex flex-col justify-center">
-                <AnimatePresence mode="wait">
-                  {activeTab === "simulation" && (
-                    <motion.div key="sim" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.15 }}>
-                      <Simulator />
-                    </motion.div>
-                  )}
-                  {activeTab === "code" && (
-                    <motion.div key="code" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.15 }}
-                      className="bg-black/40 rounded-xl border border-white/5 max-h-[320px] overflow-y-auto custom-scrollbar">
-                      {renderHighlightedCode(active.code, active.id === "ats" || active.id === "cura" ? "typescript" : "java")}
-                    </motion.div>
-                  )}
-                  {activeTab === "diagram" && (
-                    <motion.div key="diag" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.15 }}>
-                      <pre className="text-[10px] font-mono leading-relaxed text-slate-500 bg-black/40 p-5 rounded-xl border border-white/5 overflow-x-auto">
-                        <code>{active.diagram}</code>
-                      </pre>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </div>
-
-              {/* IDE Terminal Footer */}
-              <div className="px-4 py-2 border-t bg-black/20 text-[9px] font-mono text-slate-600 flex items-center justify-between"
-                style={{ borderColor: "rgba(255,255,255,0.05)" }}>
-                <span>bash - terminal - port: 8080</span>
-                <span>UTF-8</span>
-              </div>
-            </div>
-
-          </motion.div>
-        </AnimatePresence>
+            </motion.div>
+          ))}
+        </div>
       </div>
+
+      {/* Screen Backdrop Detail Modal Overlay */}
+      <AnimatePresence>
+        {selectedProj && (
+          <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
+            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+              onClick={() => setSelectedProj(null)}
+              className="absolute inset-0 bg-black/85 backdrop-blur-xl" />
+
+            <motion.div
+              initial={{ opacity: 0, scale: 0.96, y: 15 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.96, y: 15 }}
+              className="w-full max-w-4xl h-[85vh] relative z-10 overflow-hidden rounded-3xl border border-white/10 flex flex-col justify-between"
+              style={{ background: "#060c1a", boxShadow: "0 25px 50px -12px rgba(0,0,0,0.8)" }}
+            >
+              {/* Modal Header */}
+              <div className="flex items-center justify-between px-6 py-4 border-b border-white/5 bg-black/30">
+                <div className="flex items-center gap-3">
+                  <span className="text-[9px] font-mono px-2.5 py-1 rounded bg-white/5 border border-white/8 text-slate-400">
+                    CASE STUDY: {selectedProj.num}
+                  </span>
+                  <h3 className="text-sm font-bold text-white font-mono">{selectedProj.title}</h3>
+                </div>
+                <button onClick={() => setSelectedProj(null)}
+                  className="p-1 rounded-full border border-white/8 hover:border-white/20 bg-white/3 text-slate-500 hover:text-white transition-colors cursor-pointer">
+                  <X className="w-3.5 h-3.5" />
+                </button>
+              </div>
+
+              {/* Modal Body Container */}
+              <div className="flex-1 overflow-y-auto no-scrollbar p-6 grid grid-cols-1 lg:grid-cols-12 gap-6">
+                
+                {/* Left pane: Details (span 5) */}
+                <div className="lg:col-span-5 space-y-5">
+                  <div className="space-y-2">
+                    <span className="text-[8px] font-mono uppercase tracking-[0.2em] font-bold text-cyan-400">{selectedProj.impact}</span>
+                    <h4 className="text-base font-black text-white">{selectedProj.title}</h4>
+                    <p className="text-[10px] font-mono text-slate-400 leading-relaxed">{selectedProj.description}</p>
+                  </div>
+
+                  {/* Metrics */}
+                  <div className="grid grid-cols-3 gap-2">
+                    {selectedProj.metrics.map((m) => (
+                      <div key={m.label} className="p-2.5 rounded-xl text-center bg-black/40 border border-white/5">
+                        <div className="text-xs font-bold text-white font-mono">{m.value}</div>
+                        <div className="text-[7.5px] font-mono text-slate-600 mt-0.5 uppercase tracking-tighter">{m.label}</div>
+                      </div>
+                    ))}
+                  </div>
+
+                  {/* Contributions */}
+                  <div className="space-y-2 border-t border-white/5 pt-4">
+                    <span className="text-[9px] font-mono text-slate-500 uppercase tracking-widest block">Key Engineering Deliverables</span>
+                    <div className="space-y-2">
+                      {selectedProj.contributions.map((c, idx) => (
+                        <div key={idx} className="flex items-start gap-2 text-[9.5px] font-mono text-slate-400 leading-normal">
+                          <CheckCircle2 className="w-3 h-3 text-green-400 shrink-0 mt-0.5" />
+                          <span>{c}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Links */}
+                  <div className="flex gap-2 pt-2">
+                    <a href={selectedProj.githubUrl} target="_blank" rel="noopener noreferrer"
+                      className="px-3.5 py-2 rounded-xl text-[9px] font-mono font-bold text-slate-200 border border-white/8 hover:border-white/20 bg-white/2 hover:bg-white/5 transition-all flex items-center gap-1.5 cursor-pointer">
+                      <Code2 className="w-3 h-3" /> GitHub Repo
+                    </a>
+                    <a href={selectedProj.liveUrl} target="_blank" rel="noopener noreferrer"
+                      className="px-3.5 py-2 rounded-xl text-[9px] font-mono font-bold text-black bg-white hover:bg-slate-200 transition-all flex items-center gap-1.5 cursor-pointer">
+                      <LinkIcon className="w-3 h-3" /> Live Demo
+                    </a>
+                  </div>
+                </div>
+
+                {/* Right pane: Interactive workspace tab panel (span 7) */}
+                <div className="lg:col-span-7 flex flex-col justify-between border border-white/8 rounded-2xl overflow-hidden bg-black/40 h-[380px] lg:h-auto">
+                  
+                  {/* Tab header */}
+                  <div className="flex justify-between items-center px-4 py-2.5 border-b border-white/5 bg-black/20">
+                    <div className="flex items-center gap-1.5">
+                      <Terminal className="w-3.5 h-3.5 text-slate-500" />
+                      <span className="font-mono text-[9px] text-slate-400">{selectedProj.fileName}</span>
+                    </div>
+
+                    <div className="flex gap-1.5 bg-white/3 border border-white/5 p-0.5 rounded-lg">
+                      {[
+                        { id: "simulation", label: "Simulator" },
+                        { id: "code", label: "Source" },
+                        { id: "diagram", label: "Diagram" },
+                      ].map((t) => (
+                        <button key={t.id} onClick={() => setActiveTab(t.id as any)}
+                          className={`px-2.5 py-1 rounded-md text-[8px] font-mono font-bold uppercase transition-all cursor-pointer ${
+                            activeTab === t.id ? "bg-white text-black shadow-sm" : "text-slate-500 hover:text-slate-300"
+                          }`}>
+                          {t.label}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Tab content area */}
+                  <div className="flex-1 overflow-auto p-4">
+                    {activeTab === "simulation" && (
+                      <div className="h-full flex flex-col justify-between">
+                        <Simulator />
+                      </div>
+                    )}
+
+                    {activeTab === "code" && (
+                      <div className="rounded-xl border border-white/5 bg-black/50 overflow-hidden">
+                        {renderHighlightedCode(selectedProj.code)}
+                      </div>
+                    )}
+
+                    {activeTab === "diagram" && (
+                      <div className="h-full flex flex-col justify-between gap-4">
+                        <div className="flex items-center gap-1.5">
+                          <Info className="w-3.5 h-3.5 text-slate-500" />
+                          <span className="font-mono text-[9px] text-slate-500 uppercase tracking-widest">ASCIi Architecture Graph</span>
+                        </div>
+                        <pre className="p-4 rounded-xl border border-white/5 bg-black/50 text-[9px] font-mono text-cyan-400 leading-normal overflow-x-auto select-all">
+                          {selectedProj.diagram}
+                        </pre>
+                        <div className="text-[7.5px] font-mono text-slate-600 text-center leading-normal">
+                          Diagram maps logical request hops through container endpoints.
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                </div>
+
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
     </section>
   );
 };
